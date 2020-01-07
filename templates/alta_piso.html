@@ -3,19 +3,26 @@
 {% block content %}
 <div class="container">
 
-{% if session["mensajeerror"] == True%}
+{% if session["mensajeerror"] == 0%}
 <h1 class=" label-danger">YA EXISTE EL INMUEBLE</h1>
 <!-- mostrar los datos ya introducidos -->
 
-{% else %}
+{% elif session["mensajeerror"] == 1 %}
+
+{% elif session["mensajeerror"] == 2 %}
 <h1 class="  label-success">DADO DE ALTA CORRECTAMNTE</h1>
+
 {% endif %}
 
     <form action="{{url_for("recibir_alta_piso") }}" method="POST">
-        
         <div class="row">
+            <h1>ALTA VIVIENDA</h1>
+        </div>
 
-<label>Tipo de Casa:</label>
+        <div class="row">
+            
+
+<label>Tipo de Vivienda:</label>
 
     <label for="casa1">Piso: </label>
 
@@ -68,6 +75,19 @@
     <input type="text" name="numero" value="">
 </div>
 
+<div class="row">
+
+    <label>Codigo Postal</label>
+    <input type="text" name="cp" value="">
+</div>
+
+<div class="row">
+
+    <label>Localidad</label>
+    <input type="text" name="localidad" value="">
+</div>
+
+
 
     <div class="row">
         <label>Habitaciones</label>
@@ -89,6 +109,11 @@
         <label for="otro_habitacion">En caso de otro, Cantidad Habitaciones:</label>
         <input type="text" name="habitaciones_otro" value="">
 
+    </div>
+
+    <div class="row">
+        <label for="banos">Baños:</label>
+        <input type="text"  id="banos" name="numerobanos" value="">
     </div>
 
     <div class="row">
@@ -126,24 +151,29 @@
     </div>
 
     <div class="row">
-        <label for="alquiler1">Alquiler:</label>
-        <input type="radio" id="alquiler1" name="alquiler" value="1" checked>
 
-        <label for="alquiler2"> Venta:</label>
-        <input type="radio" id="alquiler2" name="alquiler" value="2" checked>
+<label>Negocio: </label>
 
+  <label for="alquiler1"> Venta:</label>
+  <input type="radio" id="alquiler1" name="alquiler" value="1" checked>
+
+
+        <label for="alquiler2">Alquiler:</label>
+        <input type="radio" id="alquiler2" name="alquiler" value="2">
+
+      
     </div>
             
 
 
             <!-- imagen para subir-->
-
-
+<br><br>
+<button type="submit">ALTA PISO</button>
 
         </div>
 
     
-    <button type="submit">ALTA PISO</button>
+    
     
     </form>
 

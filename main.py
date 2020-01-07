@@ -58,10 +58,10 @@ def recibir_alta_piso():
             request.form["numero"]
         )
         if ok == True:
-            session["mensajeerror"] = False
+            session["mensajeerror"] = 1
         else:
             # ya existe mensaje de error
-            session["mensajeerror"] = True
+            session["mensajeerror"] = 0
         pass
     
     return redirect(url_for("alta_piso"))
