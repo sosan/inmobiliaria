@@ -1,0 +1,95 @@
+{% extends "baseadmin.html" %}
+
+{% block content %}
+<div class="container">
+
+
+
+    <form action="{{url_for("recibir_alta_piso") }}" method="POST">
+        
+        <div class="row">
+
+<label>Tipo de Casa:</label>
+
+<label for="casa1">Piso: </label>
+
+            <input type="radio" id="casa1" name="tipocasa" value="1" checked>
+            <label for="casa1">Chalet: </label>
+            <input type="radio" id="casa2" name="tipocasa" value="2">
+            <label for="casa1">Casa Rural: </label>
+            <input type="radio" id="casa3" name="tipocasa" value="3">
+            <label for="casa1">Oficina: </label>
+            <input type="radio" id="casa4" name="tipocasa" value="4">
+        </div>
+    <div class="row">
+
+            <label>Calle</label>
+            <input type="text" name="calle" value="">
+    </div>
+    <div class="row">
+        <label>Habitaciones</label>
+        <select name="habitaciones" >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="otro">otro</option>
+        </select>
+        <input type="text" name="habitaciones_otro" value="">
+
+    </div>
+
+    <div class="row">
+        <label>Tipo de planta:(Template)</label>
+    
+         <label for="template1">Planta 1</label>
+        <input type="radio" id="template1" name="template" value="1" checked>
+        <label for="template2">Planta 2</label>
+        <input type="radio" id="template2" name="template" value="2" >
+        <label for="template3">Planta 3</label>
+        <input type="radio" id="template3" name="template" value="3" >
+        <label for="template4">Planta 4</label>
+        <input type="radio" id="template4" name="template" value="4" >
+
+
+
+    </div>
+
+    <div class="row">
+        <label for="alquiler1">Alquiler:</label>
+        <input type="radio" id="alquiler1" name="alquiler" value="1" checked>
+
+        <label for="alquiler2"> Venta:</label>
+        <input type="radio" id="alquiler2" name="alquiler" value="2" checked>
+
+    </div>
+            
+
+
+            <!-- imagen para subir-->
+
+
+
+        </div>
+
+    
+    <button type="submit">ALTA PISO</button>
+    
+    </form>
+
+
+
+
+</div>
+
+
+
+{% endblock %}
