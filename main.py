@@ -50,13 +50,21 @@ def alta_piso():
 def recibir_alta_piso():
     
     if "" in request.form:
-    
-    
+        pass
     
     return redirect(url_for("alta_piso"))
     
     
+@app.route("/profile/ver", methods=["GET"])
+def ver_piso():
     
+    return render_template("ver_piso.html")
+
+
+@app.route("/profile/modificar", methods=["GET"])
+def modificar_piso():
+    
+    return render_template("modificar_piso.html")
 
 
     
