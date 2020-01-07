@@ -5,11 +5,12 @@ from flask import url_for
 from flask import session
 from flask import request
 from ModuloMongodb.ManagerMongodb import managermongo
-
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.secret_key = "holaa"
 
+bootstrap = Bootstrap(app)
 
 
 ###################################

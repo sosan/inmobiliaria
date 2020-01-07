@@ -2,9 +2,27 @@
 
 {% block content %}
 <div class="container">
-<a href="{{ url_for("alta_piso") }}">1. ALTA PISO</a>
-<a href="{{ url_for("ver_piso") }}">2. VER PISO</a>
-<a href="{{ url_for("modificar_piso") }}">2. MODIFICAR PISO</a>
+    <div class="row pull-left"><h1>MENU PRINCIPAL</h1></div> 
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <a href="{{ url_for("alta_piso") }}">1. ALTA PISO</a>
+
+
+    </div>
+    <div class="row">
+        <a href="{{ url_for("ver_piso") }}">2. VER PISO</a>
+
+
+    </div>
+<div class="row">
+
+    <a href="{{ url_for("modificar_piso") }}">2. MODIFICAR PISO</a>
+
+</div>
+
 
 </div>
 
