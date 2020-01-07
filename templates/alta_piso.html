@@ -84,15 +84,34 @@
                 <option value="10">10</option>
                 <option value="11">11</option>
                 <option value="12">12</option>
-                <option value="otro">otro</option>
+                <option value="0">otro</option>
         </select>
+        <label for="otro_habitacion">En caso de otro, Cantidad Habitaciones:</label>
         <input type="text" name="habitaciones_otro" value="">
 
     </div>
 
     <div class="row">
         <label>Tipo de planta:(Template)</label>
-    
+
+    <!-- IMAGENES -->
+        <label>
+            <input type="radio" name="template" value="1" checked>
+            <img src="{{url_for("static", filename="images/template1.png")}}" width="100">
+        </label>
+
+        <label>
+            <input type="radio" name="template" value="2">
+            <img src="{{url_for("static", filename="images/template2.png")}}" width="100">
+        </label>
+
+        <label>
+            <input type="radio" name="template" value="3">
+            <img src="{{url_for("static", filename="images/template3.png")}}" width="100">
+        </label>
+
+
+<!-- 
          <label for="template1">Planta 1</label>
         <input type="radio" id="template1" name="template" value="1" checked>
         <label for="template2">Planta 2</label>
@@ -100,7 +119,7 @@
         <label for="template3">Planta 3</label>
         <input type="radio" id="template3" name="template" value="3" >
         <label for="template4">Planta 4</label>
-        <input type="radio" id="template4" name="template" value="4" >
+        <input type="radio" id="template4" name="template" value="4" > -->
 
 
 
