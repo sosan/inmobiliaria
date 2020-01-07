@@ -6,11 +6,14 @@ from flask import session
 from flask import request
 from ModuloMongodb.ManagerMongodb import managermongo
 from flask_bootstrap import Bootstrap
+from ModuloHelper.ManagerHelper import ManagerHelper
+
 
 app = Flask(__name__)
 app.secret_key = "holaa"
 
 bootstrap = Bootstrap(app)
+helper = ManagerHelper()
 
 
 ###################################
@@ -50,7 +53,9 @@ def alta_piso():
 @app.route("/profile/alta", methods=["POST"])
 def recibir_alta_piso():
     
-    if "" in request.form:
+    if "alquiler" and "calle" \
+    "cp" and "habitaciones" and "habitaciones_otro" and "localidad" and "numero" and \
+    "numerobanos" and "template" and "tipocasa" and "zonas" in request.form:
         
         # comprobacion de si ya existe
         ok = managermongo.comprobarexisteinmueble(
@@ -58,10 +63,30 @@ def recibir_alta_piso():
             request.form["numero"]
         )
         if ok == True:
-            session["mensajeerror"] = 1
+            ok = managermongo.altaproducto(
+                request.form["calle"],
+                request.form["alquiler"],
+                request.form["cp"],
+                request.form["habitaciones"],
+                request.form["habitaciones_otro"],
+                request.form["localidad"],
+                request.form["numero"],
+                request.form["numerobanos"],
+                request.form["template"],
+                request.form["tipocasa"],
+                request.form["zonas"]
+                
+            )
+            
+            if ok == True:
+                session["mensajeerror"] = helper.errores.insertado_correctamente
+            else:
+                session["mensajeerror"] == helper.errores.no_insertado
+            
+            
         else:
             # ya existe mensaje de error
-            session["mensajeerror"] = 0
+            session["mensajeerror"] = helper.errores.no_insertado
         pass
     
     return redirect(url_for("alta_piso"))

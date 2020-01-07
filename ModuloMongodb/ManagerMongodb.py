@@ -44,20 +44,32 @@ class ManagerMongoDb:
 
         return True, id_autoincremental["cantidadproductos"]
 
-    def altaproducto(self, id_auto, fecha, nombreproducto, urlproducto, urlimagenproducto, h, v):
+    def altaproducto(self, 
+                       calle,
+                alquiler,
+                cp,
+                habitaciones,
+                habitaciones_otro,
+                localidad,
+                numero,
+                numerobanos,
+                template,
+                tipocasa,
+                zonas):
 
         ok = self.cursor.insert_one(
             {
-                "id_auto": NumberInt(id_auto),
-                "fecha": fecha,
-                "fecha_mod": fecha,
-                "nombreproducto": nombreproducto,
-                "urlproducto": urlproducto,
-                "urlimagenproducto": urlimagenproducto,
-                "h": h,
-                "v": v,
-                "principal": False,
-                "modificado": False
+                "calle": calle,
+                "alquiler": alquiler,
+                "cp": cp,
+                "habitaciones": habitaciones,
+                "habitaciones_otro": habitaciones_otro,
+                "localidad": localidad,
+                "numero": numero,
+                "numerobanos": numerobanos,
+                "template": template,
+                "tipocasa": tipocasa,
+                "zonas": zonas 
             }
         )
         if ok.inserted_id != None:
