@@ -63,6 +63,13 @@ class ManagerMongoDb:
         if ok.inserted_id != None:
             return True
         return False
+    
+    
+    def comprobarexisteinmueble(self, calle, numero):
+        ok = self.cursorpisos.find({"cale": calle, "numero": numero})
+        if ok != None:
+            return True
+        return False
 
 
     def getcantidadproductos(self):

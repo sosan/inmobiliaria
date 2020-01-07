@@ -50,6 +50,17 @@ def alta_piso():
 def recibir_alta_piso():
     
     if "" in request.form:
+        
+        # comprobacion de si ya existe
+        ok = mongocliente.comprobarexisteinmueble(
+            request.form["calle"],
+            request.form["numero"]
+        )
+        if ok == True:
+            session["mensajeerror"] = False
+        else:
+            # ya existe mensaje de error
+            session["mensajeerror"] = True
         pass
     
     return redirect(url_for("alta_piso"))

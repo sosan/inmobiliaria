@@ -3,7 +3,13 @@
 {% block content %}
 <div class="container">
 
+{% if session["mensajeerror"] == True%}
+<h1 class=" label-danger">YA EXISTE EL INMUEBLE</h1>
+<!-- mostrar los datos ya introducidos -->
 
+{% else %}
+<h1 class="  label-success">DADO DE ALTA CORRECTAMNTE</h1>
+{% endif %}
 
     <form action="{{url_for("recibir_alta_piso") }}" method="POST">
         
@@ -26,6 +32,13 @@
             <label>Calle</label>
             <input type="text" name="calle" value="">
     </div>
+<div class="row">
+
+    <label>numero</label>
+    <input type="text" name="numero" value="">
+</div>
+
+
     <div class="row">
         <label>Habitaciones</label>
         <select name="habitaciones" >
