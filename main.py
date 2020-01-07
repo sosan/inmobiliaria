@@ -24,7 +24,7 @@ def recibir_login():
     
     if "usuario" and "password" in request.form:
         
-        ok = mongocliente.comprobarlogin(request.form["usuario"], request.form["password"])
+        ok = mongocliente.comprobaradmin(request.form["usuario"], request.form["password"])
         if ok == True:
             session["usuario"] = request.form["usuario"]
             session["password"] = request.form["password"]
