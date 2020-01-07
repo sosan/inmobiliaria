@@ -1,5 +1,6 @@
 Click==7.0
 dnspy==3.0
+dnspython==1.16.0
 dominate==2.4.0
 Flask==1.1.1
 Flask-Bootstrap==3.3.7.1

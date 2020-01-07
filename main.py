@@ -4,7 +4,7 @@ from flask import redirect
 from flask import url_for
 from flask import session
 from flask import request
-from ModuloMongodb.ManagerMongodb import mongocliente
+from ModuloMongodb.ManagerMongodb import managermongo
 
 
 app = Flask(__name__)
@@ -24,7 +24,7 @@ def recibir_login():
     
     if "usuario" and "password" in request.form:
         
-        ok = mongocliente.comprobaradmin(request.form["usuario"], request.form["password"])
+        ok = managermongo.comprobaradmin(request.form["usuario"], request.form["password"])
         if ok == True:
             session["usuario"] = request.form["usuario"]
             session["password"] = request.form["password"]
@@ -52,7 +52,7 @@ def recibir_alta_piso():
     if "" in request.form:
         
         # comprobacion de si ya existe
-        ok = mongocliente.comprobarexisteinmueble(
+        ok = managermongo.comprobarexisteinmueble(
             request.form["calle"],
             request.form["numero"]
         )
