@@ -59,8 +59,10 @@ class ManagerMongoDb:
                 x_longitud_txt,
                 y_longitud_txt,
                 x_latitud_txt,
-                y_latitud_txt
-                
+                y_latitud_txt,
+                dueno,
+                precio,
+                totalmetros
                 ):
                 
         try:
@@ -82,6 +84,9 @@ class ManagerMongoDb:
                 "template": template,
                 "tipocasa": tipocasa,
                 "zonas": zonas,
+                "dueno": dueno,
+                "totalmetros": totalmetros,
+                
                 "datosgps": {
                     "longitud": [x_longitud, y_longitud],
                     "latitud": [x_latitud, y_latitud]

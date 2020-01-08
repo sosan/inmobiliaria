@@ -78,10 +78,14 @@ def recibir_alta_piso():
                 request.form["template"],
                 request.form["tipocasa"],
                 request.form["zonas"],
-                request.form["x_longitud"],
-                request.form["y_longitud"],
-                request.form["x_latitud"],
-                request.form["y_latitud"]
+                request.form["x_longitud_gps"],
+                request.form["y_longitud_gps"],
+                request.form["x_latitud_gps"],
+                request.form["y_latitud_gps"],
+                request.form["dueno"],
+                request.form["precio"],
+                request.form["totalmetros"]
+                
                 
             )
 

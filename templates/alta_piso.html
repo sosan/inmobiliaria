@@ -16,40 +16,41 @@
 
     <form action="{{url_for("recibir_alta_piso") }}" method="POST">
         <div class="row">
-            <h1>ALTA VIVIENDA</h1>
+            <h1>DATOS DE LA VIVIENDA</h1>
         </div>
 
         <div class="row center-block">
            
-                DATOS DE LA VIVIENDA
+               
 
-                 <fieldset>Tipo de Vivienda</fieldset>
-                 <legend>123werwer</legend>
- <label>Tipo de Vivienda:</label>
+                <fieldset class="borde_fieldset">
+                    <legend class="borde_fieldset">Tipo de Vivienda</legend>
+                     <ul>
+                         <li>
+                             <label for="casa1">Piso: </label>
+                             <input type="radio" id="casa1" name="tipocasa" value="1" checked>
+                         </li>
 
- <ul>
-    <li>
-        <label for="casa1">Piso: </label>
-        <input type="radio" id="casa1" name="tipocasa" value="1" checked>
-    </li>
+                         <li>
+                             <label for="casa1">Chalet: </label>
+                             <input type="radio" id="casa2" name="tipocasa" value="2">
+                         </li>
 
-    <li>
-        <label for="casa1">Chalet: </label>
-        <input type="radio" id="casa2" name="tipocasa" value="2">
-    </li>
+                         <li>
+                             <label for="casa1">Casa Rural: </label>
+                             <input type="radio" id="casa3" name="tipocasa" value="3">
+                         </li>
+                         <li>
 
-    <li>
- <label for="casa1">Casa Rural: </label>
- <input type="radio" id="casa3" name="tipocasa" value="3">
-    </li>
-<li>
+                             <label for="casa1">Oficina: </label>
+                             <input type="radio" id="casa4" name="tipocasa" value="4">
 
- <label for="casa1">Oficina: </label>
- <input type="radio" id="casa4" name="tipocasa" value="4">
+                         </li>
 
-</li>
+                     </ul>
+                </fieldset
+ 
 
- </ul>
 
 
 
@@ -110,6 +111,22 @@
      <label>Localidad</label>
      <input type="text" name="localidad" value="">
  </div>
+
+  <div class="row center-block">
+
+      <label>Dueño:</label>
+      <input type="text" name="dueno" value="">
+  </div>
+
+    <div class="row center-block">
+        <label>Precio:</label>
+        <input type="text" name="precio" value="">
+    </div>
+
+    <div class="row center-block">
+        <label>Total metros cuadrados:</label>
+        <input type="text" name="totalmetros" value="">
+    </div>
 
 
 
@@ -181,28 +198,39 @@
 
     </div>
     <div class="row center-block">
-        <label>Posicion GPS: </label>
-        <label for="x_longitud_gps">Longitud X: </label>
-        <input type="text" id="x_longitud_gps" name="x_longitud_gps" value="">
+        <fieldset class="borde_fieldset">
 
-         <label for="y_longitud_gps">Longitud Y: </label>
-         <input type="text" id="y_longitud_gps" name="y_longitud_gps" value="">
+            
+            <legend class="borde_fieldset">Posicion GPS:</legend>
+
+<div class="control-group">
+
+            <label for="x_longitud_gps">Longitud X: </label>
+            <input type="text" id="x_longitud_gps" name="x_longitud_gps" value="">
+    
+             <label for="y_longitud_gps">Longitud Y: </label>
+             <input type="text" id="y_longitud_gps" name="y_longitud_gps" value="">
+</div>
+<div class="control-group">
+    
+             <label for="x_latitud_gps">Latitud X: </label>
+             <input type="text" id="x_latitud_gps" name="x_latitud_gps" value="">
+    
+             <label for="y_latitud_gps">Latitud Y: </label>
+             <input type="text" id="y_latitud_gps" name="y_latitud_gps" value="">
+</div>
 
 
-         <label for="x_latitud_gps">Latitud X: </label>
-         <input type="text" id="x_latitud_gps" name="x_latitud_gps" value="">
-
-         <label for="y_latitud_gps">Latitud Y: </label>
-         <input type="text" id="y_latitud_gps" name="y_latitud_gps" value="">
+        </fieldset>
 
     </div>        
 
        </fieldset>
 
             <!-- imagen para subir-->
-<br><br>
+<br>
 
-<button type="submit" class="center-block">ALTA PISO</button>
+<button type="submit" class="center-block btn btn-success">ALTA PISO</button>
 
         </div>
 
@@ -210,6 +238,8 @@
     
     
     </form>
+
+    <br><br>
 
 
 
