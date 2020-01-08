@@ -11,7 +11,9 @@
 
 {% elif session["mensajeerror"] == 1 %}
 <h3 class="  label-success">DADO DE ALTA CORRECTAMNTE</h3>
-<p>Calle: {% anterior_calle %} Numero: {% anterior_numero %}</p>
+    {% if anterior_calle and anterior_numero %}
+        <p>Calle: {{ anterior_calle }} Numero: {{ anterior_numero }}</p>
+    {% endif %}
 
 {% endif %}
 

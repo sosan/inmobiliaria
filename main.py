@@ -57,6 +57,9 @@ def alta_piso():
         
         return render_template("alta_piso.html", anterior_calle=anterior_calle, anterior_numero=anterior_numero)
     
+    if "mensajeerror" in session:
+        session.pop("mensajerror")
+    
     return render_template("alta_piso.html")
 
 
