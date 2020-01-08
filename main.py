@@ -50,6 +50,13 @@ def menu_admin():
 
 @app.route("/profile/alta", methods=["GET"])
 def alta_piso():
+    
+    if "anterior_calle" and "anterior_numero" in session:
+        anterior_calle = session.pop("anterior_calle")
+        anterior_numero = session.pop("anterior_numero")
+        
+        return render_template("alta_piso.html", anterior_calle=anterior_calle, anterior_numero=anterior_numero)
+    
     return render_template("alta_piso.html")
 
 
@@ -91,6 +98,8 @@ def recibir_alta_piso():
 
             if ok == True:
                 session["mensajeerror"] = helper.errores.insertado_correctamente
+                session["anterior_calle"] = request.form["calle"]
+                session["anterior_numero"] = request.form["numero"]
             else:
                 session["mensajeerror"] = helper.errores.no_insertado
 

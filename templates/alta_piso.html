@@ -7,12 +7,15 @@
 <h1 class=" label-danger">YA EXISTE EL INMUEBLE</h1>
 <!-- mostrar los datos ya introducidos -->
 
-{% elif session["mensajeerror"] == 1 %}
-
 {% elif session["mensajeerror"] == 2 %}
-<h1 class="  label-success">DADO DE ALTA CORRECTAMNTE</h1>
+
+{% elif session["mensajeerror"] == 1 %}
+<h3 class="  label-success">DADO DE ALTA CORRECTAMNTE</h3>
+<p>Calle: {% anterior_calle %} Numero: {% anterior_numero %}</p>
 
 {% endif %}
+
+
 
     <form action="{{url_for("recibir_alta_piso") }}" method="POST">
         <div class="row">
