@@ -45,7 +45,7 @@ class ManagerMongoDb:
         return True, id_autoincremental["cantidadproductos"]
 
     def altaproducto(self, 
-                       calle,
+                calle,
                 alquiler,
                 cp,
                 habitaciones,
@@ -55,9 +55,21 @@ class ManagerMongoDb:
                 numerobanos,
                 template,
                 tipocasa,
-                zonas):
-
-        ok = self.cursor.insert_one(
+                zonas,
+                x_longitud_txt,
+                y_longitud_txt,
+                x_latitud_txt,
+                y_latitud_txt
+                
+                ):
+                
+        try:
+            x_longitud = float(x_longitud_txt)
+            y_longitud = float(y_longitud_txt)
+            x_latitud = float(x_latitud_txt)
+            y_latitud = float(y_latitud_txt)
+            
+            ok = self.cursorpisos.insert_one(
             {
                 "calle": calle,
                 "alquiler": alquiler,
@@ -69,16 +81,27 @@ class ManagerMongoDb:
                 "numerobanos": numerobanos,
                 "template": template,
                 "tipocasa": tipocasa,
-                "zonas": zonas 
-            }
-        )
-        if ok.inserted_id != None:
-            return True
-        return False
+                "zonas": zonas,
+                "datosgps": {
+                    "longitud": [x_longitud, y_longitud],
+                    "latitud": [x_latitud, y_latitud]
+                    
+                    }
+                }
+            )
+            if ok.inserted_id != None:
+                return True
+            return False
+            
+        except ValueError:
+            raise Exception("Conversion no posible")
+            
+
+       
     
     
     def comprobarexisteinmueble(self, calle, numero):
-        ok = self.cursorpisos.find({"cale": calle, "numero": numero})
+        ok = self.cursorpisos.find({"calle": calle, "numero": numero})
         if ok != None:
             return True
         return False
@@ -98,12 +121,12 @@ class ManagerMongoDb:
         return False
 
     def getallproductos(self):
-        resultados = list(self.cursor.find({}))
+        resultados = list(self.cursorpisos.find({}))
         return resultados
 
     def updateproducto(self, fecha, idproducto, nombreproducto, urlproducto, urlimagenproducto, h, v):
 
-        ok = self.cursor.update_one({"_id": ObjectId(idproducto)}, {"$set":
+        ok = self.cursorpisos.update_one({"_id": ObjectId(idproducto)}, {"$set":
             {
                 "fecha_mod": fecha,
                 "nombreproducto": nombreproducto,
@@ -118,7 +141,7 @@ class ManagerMongoDb:
         return False
 
     def deleteproducto(self, idproducto):
-        ok = self.cursor.delete_one({"_id": ObjectId(idproducto)})
+        ok = self.cursorpisos.delete_one({"_id": ObjectId(idproducto)})
         if ok.deleted_count == 1:
 
             ok = self.cursoradmin.update_one(

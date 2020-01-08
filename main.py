@@ -55,6 +55,8 @@ def alta_piso():
 
 @app.route("/profile/alta", methods=["POST"])
 def recibir_alta_piso():
+    
+    print("hola")
     if "alquiler" and "calle" and "cp" and "habitaciones" and "habitaciones_otro" and "localidad" and "numero" \
             and "numerobanos" and "template" and "tipocasa" and "zonas" in request.form:
 
@@ -75,7 +77,12 @@ def recibir_alta_piso():
                 request.form["numerobanos"],
                 request.form["template"],
                 request.form["tipocasa"],
-                request.form["zonas"]
+                request.form["zonas"],
+                request.form["x_longitud"],
+                request.form["y_longitud"],
+                request.form["x_latitud"],
+                request.form["y_latitud"]
+                
             )
 
             if ok == True:
