@@ -1,7 +1,7 @@
 {% extends "baseadmin.html" %}
 
 {% block content %}
-<div class="container">
+<div class="container center-block">
 
 {% if session["mensajeerror"] == 0%}
 <h1 class=" label-danger">YA EXISTE EL INMUEBLE</h1>
@@ -19,159 +19,173 @@
             <h1>ALTA VIVIENDA</h1>
         </div>
 
-        <div class="row">
-            
+        <div class="row center-block">
+           
+                DATOS DE LA VIVIENDA
 
-<label>Tipo de Vivienda:</label>
+                 <fieldset>Tipo de Vivienda</fieldset>
+                 <legend>123werwer</legend>
+ <label>Tipo de Vivienda:</label>
 
-    <label for="casa1">Piso: </label>
+ <ul>
+    <li>
+        <label for="casa1">Piso: </label>
+        <input type="radio" id="casa1" name="tipocasa" value="1" checked>
+    </li>
 
-            <input type="radio" id="casa1" name="tipocasa" value="1" checked>
-            <label for="casa1">Chalet: </label>
-            <input type="radio" id="casa2" name="tipocasa" value="2">
-            <label for="casa1">Casa Rural: </label>
-            <input type="radio" id="casa3" name="tipocasa" value="3">
-            <label for="casa1">Oficina: </label>
-            <input type="radio" id="casa4" name="tipocasa" value="4">
-        </div>
+    <li>
+        <label for="casa1">Chalet: </label>
+        <input type="radio" id="casa2" name="tipocasa" value="2">
+    </li>
 
+    <li>
+ <label for="casa1">Casa Rural: </label>
+ <input type="radio" id="casa3" name="tipocasa" value="3">
+    </li>
+<li>
 
-        <div class="row">
-            <label>Zona de Palma:</label>
-                    <select name="zonas">
-                        <option value="" selected disabled hidden>Elegir  Zona</option>
-                        <option value="1">Jaume III</option>
-                        <option value="2">Son Canals</option>
-                        <option value="3">Santa Calatina</option>
-                        <option value="4">Son Espanyolet</option>
-                        <option value="5">Archiduc</option>
-                        <option value="6">Es Forti</option>
-                        <option value="7">Can Capes</option>
-                        <option value="8">Sant Juame</option>
-                        <option value="9">Montision</option>
-                        <option value="10">Plaça Patins</option>
-                        <option value="11">Bons Aires</option>
-                        <option value="12">Calatrava</option>
-                        <option value="13">Son Fortesa</option>
-                        <option value="14">Cort</option>
-                        <option value="15">Son Rullan</option>
-                        <option value="16">San Nicolau</option>
-                        <option value="17">Sindicat</option>
-                        <option value="18">Fuera Palma</option>
+ <label for="casa1">Oficina: </label>
+ <input type="radio" id="casa4" name="tipocasa" value="4">
 
+</li>
 
-                    </select>
-        </div>
-
-         
+ </ul>
 
 
 
-    <div class="row">
 
-            <label>Calle</label>
-            <input type="text" name="calle" value="">
-    </div>
-<div class="row">
-
-    <label>numero</label>
-    <input type="text" name="numero" value="">
-</div>
-
-<div class="row">
-
-    <label>Codigo Postal</label>
-    <input type="text" name="cp" value="">
-</div>
-
-<div class="row">
-
-    <label>Localidad</label>
-    <input type="text" name="localidad" value="">
-</div>
+ </div>
 
 
-
-    <div class="row">
-        <label>Habitaciones</label>
-        <select name="habitaciones" >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="0">otro</option>
-        </select>
-        <label for="otro_habitacion">En caso de otro, Cantidad Habitaciones:</label>
-        <input type="text" name="habitaciones_otro" value="">
-
-    </div>
-
-    <div class="row">
-        <label for="banos">Baños:</label>
-        <input type="text"  id="banos" name="numerobanos" value="">
-    </div>
-
-    <div class="row">
-        <label>Tipo de planta:(Template)</label>
-
-    <!-- IMAGENES -->
-        <label>
-            <input type="radio" name="template" value="1" checked>
-            <img src="{{url_for("static", filename="images/template1.png")}}" width="100">
-        </label>
-
-        <label>
-            <input type="radio" name="template" value="2">
-            <img src="{{url_for("static", filename="images/template2.png")}}" width="100">
-        </label>
-
-        <label>
-            <input type="radio" name="template" value="3">
-            <img src="{{url_for("static", filename="images/template3.png")}}" width="100">
-        </label>
+ <div class="row center-block">
+     <label>Zona de Palma:</label>
+     <select name="zonas">
+         <option value="" selected disabled hidden>Elegir Zona</option>
+         <option value="1">Jaume III</option>
+         <option value="2">Son Canals</option>
+         <option value="3">Santa Calatina</option>
+         <option value="4">Son Espanyolet</option>
+         <option value="5">Archiduc</option>
+         <option value="6">Es Forti</option>
+         <option value="7">Can Capes</option>
+         <option value="8">Sant Juame</option>
+         <option value="9">Montision</option>
+         <option value="10">Plaça Patins</option>
+         <option value="11">Bons Aires</option>
+         <option value="12">Calatrava</option>
+         <option value="13">Son Fortesa</option>
+         <option value="14">Cort</option>
+         <option value="15">Son Rullan</option>
+         <option value="16">San Nicolau</option>
+         <option value="17">Sindicat</option>
+         <option value="18">Fuera Palma</option>
 
 
-<!-- 
-         <label for="template1">Planta 1</label>
-        <input type="radio" id="template1" name="template" value="1" checked>
-        <label for="template2">Planta 2</label>
-        <input type="radio" id="template2" name="template" value="2" >
-        <label for="template3">Planta 3</label>
-        <input type="radio" id="template3" name="template" value="3" >
-        <label for="template4">Planta 4</label>
-        <input type="radio" id="template4" name="template" value="4" > -->
+     </select>
+ </div>
 
 
 
-    </div>
-
-    <div class="row">
-
-<label>Negocio: </label>
-
-  <label for="alquiler1"> Venta:</label>
-  <input type="radio" id="alquiler1" name="alquiler" value="1" checked>
 
 
-        <label for="alquiler2">Alquiler:</label>
-        <input type="radio" id="alquiler2" name="alquiler" value="2">
+ <div class="row center-block">
 
-      
+     <label>Calle</label>
+     <input type="text" name="calle" value="">
+ </div>
+ <div class="row center-block">
+
+     <label>numero</label>
+     <input type="text" name="numero" value="">
+ </div>
+
+ <div class="row center-block">
+
+     <label>Codigo Postal</label>
+     <input type="text" name="cp" value="">
+ </div>
+
+ <div class="row center-block">
+
+     <label>Localidad</label>
+     <input type="text" name="localidad" value="">
+ </div>
+
+
+
+ <div class="row center-block">
+     <label>Habitaciones</label>
+     <select name="habitaciones">
+         <option value="1">1</option>
+         <option value="2">2</option>
+         <option value="3">3</option>
+         <option value="4">4</option>
+         <option value="5">5</option>
+         <option value="6">6</option>
+         <option value="7">7</option>
+         <option value="8">8</option>
+         <option value="9">9</option>
+         <option value="10">10</option>
+         <option value="11">11</option>
+         <option value="12">12</option>
+         <option value="0">otro</option>
+     </select>
+     <label for="otro_habitacion">En caso de otro, Cantidad Habitaciones:</label>
+     <input type="text" name="habitaciones_otro" value="">
+
+ </div>
+
+ <div class="row center-block">
+     <label for="banos">Baños:</label>
+     <input type="text" id="banos" name="numerobanos" value="">
+ </div>
+
+ <div class="row center-block ">
+     <label>Tipo de planta:(Template)</label>
+
+     <!-- IMAGENES -->
+     <label>
+         <input type="radio" name="template" value="1" checked>
+         <img src="{{url_for("static", filename="images/template1.png")}}" width="100">
+     </label>
+
+     <label>
+         <input type="radio" name="template" value="2">
+         <img src="{{url_for("static", filename="images/template2.png")}}" width="100">
+     </label>
+
+     <label>
+         <input type="radio" name="template" value="3">
+         <img src="{{url_for("static", filename="images/template3.png")}}" width="100">
+     </label>
+
+
+
+
+ </div>
+
+ <div class="row center-block">
+
+     <label>Negocio: </label>
+
+     <label for="alquiler1"> Venta:</label>
+     <input type="radio" id="alquiler1" name="alquiler" value="1" checked>
+
+
+     <label for="alquiler2">Alquiler:</label>
+     <input type="radio" id="alquiler2" name="alquiler" value="2">
+
+
+            </fieldset>
+
     </div>
             
 
 
             <!-- imagen para subir-->
 <br><br>
-<button type="submit">ALTA PISO</button>
+
+<button type="submit" class="center-block">ALTA PISO</button>
 
         </div>
 

@@ -1,4 +1,7 @@
 {% extends "baseadmin.html" %}
+{% block body_attrs %}
+
+{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -7,21 +10,23 @@
 
 
 <div class="container">
-    <div class="row">
-        <a href="{{ url_for("alta_piso") }}">1. ALTA PISO</a>
+    <div class="row center-block">
+        <ul id="lista_menu">
+            <li>
+                <a href="{{ url_for("alta_piso") }}">1. ALTA PISO</a>
+            </li>
+            <li>
+                <a href="{{ url_for("ver_piso") }}">2. VER PISO</a>
+            </li>
+            <li>
+                <a href="{{ url_for("modificar_piso") }}">2. MODIFICAR PISO</a>
+            </li>
+        </ul>
+
+
 
 
     </div>
-    <div class="row">
-        <a href="{{ url_for("ver_piso") }}">2. VER PISO</a>
-
-
-    </div>
-<div class="row">
-
-    <a href="{{ url_for("modificar_piso") }}">2. MODIFICAR PISO</a>
-
-</div>
 
 
 </div>

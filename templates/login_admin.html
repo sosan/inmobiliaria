@@ -1,22 +1,24 @@
 {% extends "baseadmin.html" %}
-{% block body_attribs %}
-    class="mask bgImage"
 
-
-{% endblock %}
 {% block content %}
 <div class="">
     <div class="pageTitle">LOGIN</div>
 
 <div class="container">
-<div class="row">
+<div class="row center-block">
 
     <p class="lOGINWITH">LOGIN WITH</p>
 
+
     <form action="{{ url_for("recibir_login") }}" method="post">
-        Usuario: <input type="text" name="usuario" value="" placeholder="usuario" class="login">
-        Password: <input type="text" name="password" value="" placeholder="password">
-        <button type="submit" class="loginButto texto_login">ENVIAR</button>
+       
+            Usuario: <input type="text" name="usuario" value="" placeholder="usuario" class="login col-lg-2">
+
+
+       
+        Password: <input type="text" name="password" value="" placeholder="password" class="col-lg-2">
+        
+        <button type="submit" class="loginButto buttonsWhi rectangle center-block">LOGIN</button>
     </form>
 
 
@@ -28,4 +30,8 @@
 
 
 </div>
+<div class="container abajo_texto_explicacion">
+<div class="row text-center"><b>Si tienes algun problema peganos un telefonazo</b></div>
+</div>
+
 {% endblock %}

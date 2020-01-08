@@ -6,12 +6,18 @@
 {% endblock %}
 
 
+
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for("static", filename="css/reset.css") }}">
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for("static", filename="css/main.css") }}">
 <link rel="icon" href="{{ url_for("static", filename="images/favicon.ico") }}">
 {% endblock %}
+
+{% block body_attribs %}
+class="bgImage mask blurMask"
+{% endblock %}
+
 
 {% block content %}
 {% endblock %}
