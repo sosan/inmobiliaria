@@ -4,15 +4,59 @@ from flask import redirect
 from flask import url_for
 from flask import session
 from flask import request
+
+
+
+
+# nos permite servir archivos de forma estatico o absoluta
+from flask import send_from_directory
+
+
+
 from ModuloMongodb.ManagerMongodb import managermongo
 from flask_bootstrap import Bootstrap
 from ModuloHelper.ManagerHelper import ManagerHelper
 
 app = Flask(__name__)
 app.secret_key = "holaa"
+# MUCHO CUIDADO EN NO PISAR LAS VARIABLES YA CREADAS
+app.config["DEBUG"] = True
+
+import os
+# recuperar una ruta absoluta
+CARPETA_UPLOAD = os.path.abspath("./archivos_subidos")
+print(CARPETA_UPLOAD)
+app.config["CARPETA"] = CARPETA_UPLOAD
+
+
+
 
 bootstrap = Bootstrap(app)
 helper = ManagerHelper()
+
+
+
+@app.route("/css/<path:path>")
+def ruta_css(path):
+    if request.method == "POST":
+        f = request.files["fichero"]
+        # recuperar el nombre del archivo
+        nombre_archivo = f.filenmae
+        # la ruta donde queremos que se guarde nuestor archivo
+        # recien subido y ademas que nos quede claro que os.path.join 
+        # lo utilizamos para acceder a un directorio
+        f.save(os.path.join(app.config["CARPETA"]), nombre_archivo)
+
+    # return send_from_directory("css", path)
+
+    
+    return """
+    <form method="post" enctype="multipart/form-data">
+    <input type="file" name="fichero">
+    <input type="submit" value="submit">
+    <form>
+    """
+    
 
 
 ###################################

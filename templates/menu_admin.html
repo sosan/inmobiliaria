@@ -1,16 +1,62 @@
 {% extends "baseadmin.html" %}
-{% block body_attrs %}
-
+{% block body_attribs %}
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row pull-left"><h1>MENU PRINCIPAL</h1></div> 
+
+<div class="navbar navbar-fixed-bottom">
+    <div class="container-fluid">
+    <div class="row">
+        <div class="submenu ">
+            <div class=" rectangle7 menu_enlinia">
+                <div class="col-sm-12">
+                    <span class="glyphicon glyphicon-th-list glyphicon_font"></span>
+                    <div class="pageTitleC">VER</div>
+                </div>
+    
+                <div class="col-sm-12 ">
+                    <span class="glyphicon glyphicon-plus glyphicon_font"></span>
+                    <div class="pageTitleC">AÑADIR</div>
+                </div>
+                <div class="col-sm-12 ">
+                    <span class="glyphicon glyphicon-pencil glyphicon_font"></span>
+                    <div class="pageTitleC">MODIFICAR</div>
+                </div>
+    
+                <div class="col-sm-12 ">
+                    <span class="glyphicon glyphicon-tag glyphicon_font"></span>
+                    <div class="pageTitleC">TOMAR MEDIDAS PRO</div>
+                </div>
+    
+                <div class="col-sm-12 ">
+                    <span class="glyphicon glyphicon-tag glyphicon_font"></span>
+                    <div class="pageTitleC">TOMAR MEDIDAS</div>
+                </div>
+            </div>
+        </div>
+    
+    
+    </div>
+    
+    
+    </div>
 </div>
 
 
+
 <div class="container">
-    <div class="row center-block">
+    <div class="row pull-left"><h1>MENU PRINCIPAL</h1></div> 
+</div>
+<div class="row center-block">
+
+
+<div class="container">
+
+
+    <button type="button" class=""></button>
+
+
+
         <ul id="lista_menu">
             <li>
                 <a href="{{ url_for("alta_piso") }}">ALTA PISO</a>

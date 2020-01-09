@@ -142,7 +142,7 @@
   height: 40px;
   border-radius: 25px;
   background: linear-gradient(90deg, #0D9DA6, #11DBB3);
-  display:flex; justify-content:center; align-items:center;
+  /*display:flex; justify-content:center; align-items:center;*/
    vertical-align: center;
 }
 
@@ -161,5 +161,51 @@
    vertical-align: center;
   border: white;
 }
+
+
+/* ------------ MENU ADMIN --------------*/
+
+
+
+.submenu {
+  z-index: 4;
+  width: 355px;
+  height: 60px;
+  bottom: 10vh;
+}
+
+.rectangle7 {
+  z-index: 5;
+  width: 355px;
+  height: 60px;
+  background: rgba(255,255,255,0.6);
+  box-shadow: 0px 2px 15px rgba(0,0,0,0.16);
+}
+
+.pageTitleC {
+  z-index: 5;
+  width: 30px;
+  height: 13px;
+  color: #50505a;
+  font-family: "SFProText-Medium", monospace;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 13px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.glyphicon_font
+{
+  font-size: 35px;
+
+}
+
+
+.menu_enlinia {
+    display: flex;
+    align-items: center;
+}
+
 
 

@@ -3,22 +3,37 @@
 {% endblock %}
 
 {% block content %}
-     <div class="mask">
-        <div class="darkgradie">
 
-            <form action="{{ url_for("home") }}" method="post">
-                <button type="submit"  class="tabColor_pago rectangulo_pago text_pago">
-                   INICIAR MEDICION
-                </button>
+    <div class="mask">
+            <div class="darkgradie">
+
+                <!-- formulario -->
+                <form action="{{ url_for("home") }}" method="post">
+                    <div class="form-inline  text-center">
+
+                        <button type="submit"  class="text-center tabColor_pago rectangulo_pago text_pago">
+                            INICIAR MEDICION
+                        </button>
 
 
 
-            </form>
+
+                        <button type="submit"  class="text-center tabColor_pago rectangulo_pago text_pago">
+                            INICIAR MEDICION
+                        </button>
 
 
 
+
+                    </div>
+
+
+                </form>
+
+
+
+            </div>
         </div>
-     </div>
 
 
 
