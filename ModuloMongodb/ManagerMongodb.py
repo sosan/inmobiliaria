@@ -80,6 +80,7 @@ class ManagerMongoDb:
                     "zonas": zonas,
                     "dueno": dueno,
                     "totalmetros": totalmetros,
+                    "medicion": False,
                     "datosgps": {
                         "gps": [latitud, longitud],
                     }
@@ -113,6 +114,10 @@ class ManagerMongoDb:
 
     def getallproductos(self):
         resultados = list(self.cursorpisos.find({}))
+        return resultados
+    
+    def get_sin_mediciones(self):
+        resultados = list(self.cursorpisos.find({"medicion": False}, {"_id": False}))
         return resultados
 
     def updateproducto(self, fecha, idproducto, nombreproducto, urlproducto, urlimagenproducto, h, v):

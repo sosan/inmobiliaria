@@ -95,9 +95,14 @@ def menu_admin():
         ok = managermongo.comprobaradmin(session["usuario"], session["password"])
         if ok == True:
             
-            listado = managermongo.getallproductos()
-            
-            return render_template("menu_admin.html", datos=listado)
+            # listado = managermongo.getallproductos()
+            # dependiende de la configuracion elegir que mostrar primero
+            # if config == True:
+            listado = managermongo.get_sin_mediciones()
+            #else .......
+                # listado = managermongo.get_con_mediciones()
+            if len(listado) > 0:
+                return render_template("menu_admin.html", datos=listado)
 
     return redirect(url_for("admin_login"))
 
@@ -245,11 +250,12 @@ def recibir_menu_medicion():
     
     if "sin" in request.form:
         listado = managermongo.get_sin_mediciones()
-        
-        
-        
+        session["listado_viviendas"] = listado
+        return redirect(url_for("menu_admin"))
     elif "con" in request.form:
         listado = managermongo.get_con_mediciones()
+        session["listado_viviendas"] = listado
+        return redirect(url_for("menu_admin"))
     
     return render_template("listado_sin_mediciones.html")
 
