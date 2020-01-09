@@ -6,13 +6,34 @@
 <script>
     function showPosition() {
         if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
+            navigator.geolocation.getCurrentPosition(function(position) 
+            {
                 var positionInfo = "Your current position is (" + "Latitude: " + position.coords.latitude + ", " +
                 "Longitude: " + position.coords.longitude + ", " + "Altitud: " + position.coords.altitude + ")";
                 
 
                 document.getElementById("result").innerHTML = positionInfo;
+            }, function(error)
+            {
+
+                switch(error.code)
+                {
+                    case error.PERMISSION_DENIED:
+                        x.innerHTML = "User denied the request for Geolocation.";
+                    break;
+                    case error.POSITION_UNAVAILABLE:
+                        x.innerHTML = "Location information is unavailable.";
+                    break;
+                    case error.TIMEOUT:
+                        x.innerHTML = "The request to get user location timed out.";
+                    break;
+                    default:
+                        x.innerHTML = "An unknown error occurred.";
+                    break;
+                }
+
             });
+
         } else {
             alert("Sorry, your browser does not support HTML5 geolocation.");
         }
