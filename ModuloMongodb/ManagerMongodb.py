@@ -29,7 +29,6 @@ class ManagerMongoDb:
         except ConnectionFailure:
             raise Exception("Servidor no disponible")
 
-
     def getid_autoincremental(self, idcontador, keyaumentar):
         id_autoincremental = self.cursoradmin.find_one_and_update(
             {"_id": idcontador},
@@ -44,80 +43,66 @@ class ManagerMongoDb:
 
         return True, id_autoincremental["cantidadproductos"]
 
-    def altaproducto(self, 
-                calle,
-                alquiler,
-                cp,
-                habitaciones,
-                habitaciones_otro,
-                localidad,
-                numero,
-                numerobanos,
-                template,
-                tipocasa,
-                zonas,
-                x_longitud_txt,
-                y_longitud_txt,
-                x_latitud_txt,
-                y_latitud_txt,
-                dueno,
-                precio,
-                totalmetros
-                ):
-                
+    def altaproducto(self,
+                     calle,
+                     alquiler,
+                     cp,
+                     habitaciones,
+                     localidad,
+                     numero,
+                     numerobanos,
+                     template,
+                     tipocasa,
+                     zonas,
+                     x_txt,
+                     y_txt,
+                     dueno,
+                     precio,
+                     totalmetros
+                     ):
+
         try:
-            x_longitud = float(x_longitud_txt)
-            y_longitud = float(y_longitud_txt)
-            x_latitud = float(x_latitud_txt)
-            y_latitud = float(y_latitud_txt)
-            
+            x = float(x_txt)
+            y = float(y_txt)
+
             ok = self.cursorpisos.insert_one(
-            {
-                "calle": calle,
-                "alquiler": alquiler,
-                "cp": cp,
-                "habitaciones": habitaciones,
-                "habitaciones_otro": habitaciones_otro,
-                "localidad": localidad,
-                "numero": numero,
-                "numerobanos": numerobanos,
-                "template": template,
-                "tipocasa": tipocasa,
-                "zonas": zonas,
-                "dueno": dueno,
-                "totalmetros": totalmetros,
-                
-                "datosgps": {
-                    "longitud": [x_longitud, y_longitud],
-                    "latitud": [x_latitud, y_latitud]
-                    
+                {
+                    "calle": calle,
+                    "alquiler": alquiler,
+                    "cp": cp,
+                    "habitaciones": habitaciones,
+                    "precio": precio,
+                    "localidad": localidad,
+                    "numero": numero,
+                    "numerobanos": numerobanos,
+                    "template": template,
+                    "tipocasa": tipocasa,
+                    "zonas": zonas,
+                    "dueno": dueno,
+                    "totalmetros": totalmetros,
+                    "datosgps": {
+                        "gps": [x, y],
                     }
                 }
             )
             if ok.inserted_id != None:
                 return True
             return False
-            
+
         except ValueError:
             raise Exception("Conversion no posible")
-            
 
-       
-    
-    
     def comprobarexisteinmueble(self, calle, numero):
         ok = self.cursorpisos.find({"calle": calle, "numero": numero})
         if ok != None:
             return True
         return False
 
-
     def getcantidadproductos(self):
         resultados = self.cursoradmin.find_one({"_id": "contador"}, {"_id": False})
         if resultados == None:
             return False
         return True, resultados["cantidadproductos"]
-
 
     def comprobaradmin(self, usuario, password):
         resultado = self.cursoradmin.find_one({"usuario": usuario, "password": password}, {"_id": False})
@@ -157,10 +142,7 @@ class ManagerMongoDb:
                 return True
         return False
 
-   
-
 
 managermongo = ManagerMongoDb()
 managermongo.conectDB("pepito", "pepito", "cluster0-6oq5a.gcp.mongodb.net/test?retryWrites=true&w=majority",
                       db="inmobiliaria", coleccion="pisos")
-

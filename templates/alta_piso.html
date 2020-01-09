@@ -3,246 +3,174 @@
 {% block content %}
 <div class="container center-block">
 
-{% if session["mensajeerror"] == 0%}
-<h1 class=" label-danger">YA EXISTE EL INMUEBLE</h1>
-<!-- mostrar los datos ya introducidos -->
-
-{% elif session["mensajeerror"] == 2 %}
-
-{% elif session["mensajeerror"] == 1 %}
-<h3 class="  label-success">DADO DE ALTA CORRECTAMNTE</h3>
-    {% if anterior_calle and anterior_numero %}
-        <p>Calle: {{ anterior_calle }} Numero: {{ anterior_numero }}</p>
-    {% endif %}
-
-{% endif %}
-
-
-
     <form action="{{url_for("recibir_alta_piso") }}" method="POST">
         <div class="row">
             <h1>DATOS DE LA VIVIENDA</h1>
         </div>
 
+        {% if session["mensajeerror"] == 0%}
+            <h1 class=" label-danger">YA EXISTE EL INMUEBLE</h1>
+        <!-- mostrar los datos ya introducidos -->
+
+        {% elif session["mensajeerror"] == 2 %}
+
+        {% elif session["mensajeerror"] == 1 %}
+            <h3 class="  label-success">DADO DE ALTA CORRECTAMNTE</h3>
+            {% if anterior_calle and anterior_numero %}
+                <p>Calle: {{ anterior_calle }} Numero: {{ anterior_numero }}</p>
+            {% endif %}
+
+        {% endif %}
         <div class="row center-block">
-           
-               
+            <fieldset class="borde_fieldset">
+                <legend class="borde_fieldset">Tipo de Vivienda</legend>
+                 <ul>
+                     <li>
+                         <label for="casa1">Piso: </label>
+                         <input type="radio" id="casa1" name="tipocasa" value="1" checked>
+                     </li>
 
-                <fieldset class="borde_fieldset">
-                    <legend class="borde_fieldset">Tipo de Vivienda</legend>
-                     <ul>
-                         <li>
-                             <label for="casa1">Piso: </label>
-                             <input type="radio" id="casa1" name="tipocasa" value="1" checked>
-                         </li>
+                     <li>
+                         <label for="casa1">Chalet: </label>
+                         <input type="radio" id="casa2" name="tipocasa" value="2">
+                     </li>
 
-                         <li>
-                             <label for="casa1">Chalet: </label>
-                             <input type="radio" id="casa2" name="tipocasa" value="2">
-                         </li>
+                     <li>
+                         <label for="casa1">Casa Rural: </label>
+                         <input type="radio" id="casa3" name="tipocasa" value="3">
+                     </li>
+                     <li>
 
-                         <li>
-                             <label for="casa1">Casa Rural: </label>
-                             <input type="radio" id="casa3" name="tipocasa" value="3">
-                         </li>
-                         <li>
+                         <label for="casa1">Oficina: </label>
+                         <input type="radio" id="casa4" name="tipocasa" value="4">
 
-                             <label for="casa1">Oficina: </label>
-                             <input type="radio" id="casa4" name="tipocasa" value="4">
+                     </li>
 
-                         </li>
-
-                     </ul>
-                </fieldset
- 
-
-
-
-
-
- </div>
-
-
- <div class="row center-block">
-     <label>Zona de Palma:</label>
-     <select name="zonas">
-         <option value="" selected disabled hidden>Elegir Zona</option>
-         <option value="1">Jaume III</option>
-         <option value="2">Son Canals</option>
-         <option value="3">Santa Calatina</option>
-         <option value="4">Son Espanyolet</option>
-         <option value="5">Archiduc</option>
-         <option value="6">Es Forti</option>
-         <option value="7">Can Capes</option>
-         <option value="8">Sant Juame</option>
-         <option value="9">Montision</option>
-         <option value="10">Plaça Patins</option>
-         <option value="11">Bons Aires</option>
-         <option value="12">Calatrava</option>
-         <option value="13">Son Fortesa</option>
-         <option value="14">Cort</option>
-         <option value="15">Son Rullan</option>
-         <option value="16">San Nicolau</option>
-         <option value="17">Sindicat</option>
-         <option value="18">Fuera Palma</option>
-
-
-     </select>
- </div>
-
-
-
-
-
- <div class="row center-block">
-
-     <label>Calle</label>
-     <input type="text" name="calle" value="">
- </div>
- <div class="row center-block">
-
-     <label>numero</label>
-     <input type="text" name="numero" value="">
- </div>
-
- <div class="row center-block">
-
-     <label>Codigo Postal</label>
-     <input type="text" name="cp" value="">
- </div>
-
- <div class="row center-block">
-
-     <label>Localidad</label>
-     <input type="text" name="localidad" value="">
- </div>
-
-  <div class="row center-block">
-
-      <label>Dueño:</label>
-      <input type="text" name="dueno" value="">
-  </div>
-
-    <div class="row center-block">
-        <label>Precio:</label>
-        <input type="text" name="precio" value="">
-    </div>
-
-    <div class="row center-block">
-        <label>Total metros cuadrados:</label>
-        <input type="text" name="totalmetros" value="">
-    </div>
-
-
-
- <div class="row center-block">
-     <label>Habitaciones</label>
-     <select name="habitaciones">
-         <option value="1">1</option>
-         <option value="2">2</option>
-         <option value="3">3</option>
-         <option value="4">4</option>
-         <option value="5">5</option>
-         <option value="6">6</option>
-         <option value="7">7</option>
-         <option value="8">8</option>
-         <option value="9">9</option>
-         <option value="10">10</option>
-         <option value="11">11</option>
-         <option value="12">12</option>
-         <option value="0">otro</option>
-     </select>
-     <label for="otro_habitacion">En caso de otro, Cantidad Habitaciones:</label>
-     <input type="text" name="habitaciones_otro" value="">
-
- </div>
-
- <div class="row center-block">
-     <label for="banos">Baños:</label>
-     <input type="text" id="banos" name="numerobanos" value="">
- </div>
-
- <div class="row center-block ">
-     <label>Tipo de planta:(Template)</label>
-
-     <!-- IMAGENES -->
-     <label>
-         <input type="radio" name="template" value="1" checked>
-         <img src="{{url_for("static", filename="images/template1.png")}}" width="100">
-     </label>
-
-     <label>
-         <input type="radio" name="template" value="2">
-         <img src="{{url_for("static", filename="images/template2.png")}}" width="100">
-     </label>
-
-     <label>
-         <input type="radio" name="template" value="3">
-         <img src="{{url_for("static", filename="images/template3.png")}}" width="100">
-     </label>
-
-
-
-
- </div>
-
- <div class="row center-block">
-
-     <label>Negocio: </label>
-
-     <label for="alquiler1"> Venta:</label>
-     <input type="radio" id="alquiler1" name="alquiler" value="1" checked>
-
-
-     <label for="alquiler2">Alquiler:</label>
-     <input type="radio" id="alquiler2" name="alquiler" value="2">
-
-
-
-     
-
-    </div>
-    <div class="row center-block">
-        <fieldset class="borde_fieldset">
-
-            
-            <legend class="borde_fieldset">Posicion GPS:</legend>
-
-<div class="control-group">
-
-            <label for="x_longitud_gps">Longitud X: </label>
-            <input type="text" id="x_longitud_gps" name="x_longitud_gps" value="">
-    
-             <label for="y_longitud_gps">Longitud Y: </label>
-             <input type="text" id="y_longitud_gps" name="y_longitud_gps" value="">
-</div>
-<div class="control-group">
-    
-             <label for="x_latitud_gps">Latitud X: </label>
-             <input type="text" id="x_latitud_gps" name="x_latitud_gps" value="">
-    
-             <label for="y_latitud_gps">Latitud Y: </label>
-             <input type="text" id="y_latitud_gps" name="y_latitud_gps" value="">
-</div>
-
-
-        </fieldset>
-
-    </div>        
-
-       </fieldset>
-
-            <!-- imagen para subir-->
-<br>
-
-<button type="submit" class="center-block btn btn-success">ALTA PISO</button>
-
+                 </ul>
+            </fieldset>
         </div>
 
-    
-    
-    
+
+        <div class="row center-block">
+             <label>Zona de Palma:</label>
+             <select name="zonas">
+                 <option value="1">Jaume III</option>
+                 <option value="2">Son Canals</option>
+                 <option value="3">Santa Calatina</option>
+                 <option value="4">Son Espanyolet</option>
+                 <option value="5">Archiduc</option>
+                 <option value="6">Es Forti</option>
+                 <option value="7">Can Capes</option>
+                 <option value="8">Sant Juame</option>
+                 <option value="9">Montision</option>
+                 <option value="10">Plaça Patins</option>
+                 <option value="11">Bons Aires</option>
+                 <option value="12">Calatrava</option>
+                 <option value="13">Son Fortesa</option>
+                 <option value="14">Cort</option>
+                 <option value="15">Son Rullan</option>
+                 <option value="16">San Nicolau</option>
+                 <option value="17">Sindicat</option>
+                 <option value="18" selected>Fuera Palma</option>
+             </select>
+        </div>
+        <div class="row center-block">
+             <label>Calle</label>
+             <input type="text" name="calle" value="">
+        </div>
+        <div class="row center-block">
+             <label>numero</label>
+             <input type="text" name="numero" value="">
+        </div>
+        <div class="row center-block">
+         <label>Codigo Postal</label>
+         <input type="text" name="cp" value="">
+        </div>
+        <div class="row center-block">
+
+         <label>Localidad</label>
+         <input type="text" name="localidad" value="">
+        </div>
+        <div class="row center-block">
+
+          <label>Dueño:</label>
+          <input type="text" name="dueno" value="">
+        </div>
+        <div class="row center-block">
+            <label>Precio:</label>
+            <input type="text" name="precio" value="">
+        </div>
+        <div class="row center-block">
+            <label>Total metros cuadrados:</label>
+            <input type="text" name="totalmetros" value="">
+        </div>
+        <div class="row center-block">
+         <label>Habitaciones</label>
+
+         <input type="text" name="habitaciones" value="">
+
+        </div>
+        <div class="row center-block">
+         <label for="banos">Baños:</label>
+         <input type="text" id="banos" name="numerobanos" value="">
+        </div>
+        <div class="row center-block ">
+         <label>Tipo de planta:(Template)</label>
+
+         <!-- IMAGENES -->
+         <label>
+             <input type="radio" name="template" value="1" checked>
+             <img src="{{url_for("static", filename="images/template1.png")}}" width="100">
+         </label>
+
+         <label>
+             <input type="radio" name="template" value="2">
+             <img src="{{url_for("static", filename="images/template2.png")}}" width="100">
+         </label>
+
+         <label>
+             <input type="radio" name="template" value="3">
+             <img src="{{url_for("static", filename="images/template3.png")}}" width="100">
+         </label>
+
+
+
+
+        </div>
+        <div class="row center-block">
+
+         <label>Negocio: </label>
+
+         <label for="alquiler1"> Venta:</label>
+         <input type="radio" id="alquiler1" name="alquiler" value="1" checked>
+
+
+         <label for="alquiler2">Alquiler:</label>
+         <input type="radio" id="alquiler2" name="alquiler" value="2">
+        </div>
+        <div class="row center-block">
+            <fieldset class="borde_fieldset">
+                <legend class="borde_fieldset">Posicion GPS:</legend>
+                <div class="control-group">
+
+                        <label for="x_gps">Longitud X: </label>
+                        <input type="text" id="x_gps" name="x_gps" value="">
+
+                         <label for="y_gps">Altitud Y: </label>
+                         <input type="text" id="y_gps" name="y_gps" value="">
+                </div>
+            </fieldset>
+
+        </div>
+            <!-- imagen para subir-->
+        <br>
+        <button type="submit" class="center-block btn btn-success">ALTA PISO</button>
     </form>
+</div>
+
+
+
+
 
     <br><br>
 

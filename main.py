@@ -50,24 +50,22 @@ def menu_admin():
 
 @app.route("/profile/alta", methods=["GET"])
 def alta_piso():
-    
     if "anterior_calle" and "anterior_numero" in session:
         anterior_calle = session.pop("anterior_calle")
         anterior_numero = session.pop("anterior_numero")
-        
+
         return render_template("alta_piso.html", anterior_calle=anterior_calle, anterior_numero=anterior_numero)
-    
+
     if "mensajeerror" in session:
-        session.pop("mensajerror")
-    
+        session.pop("mensajeerror")
+
     return render_template("alta_piso.html")
 
 
 @app.route("/profile/alta", methods=["POST"])
 def recibir_alta_piso():
-    
-    print("hola")
-    if "alquiler" and "calle" and "cp" and "habitaciones" and "habitaciones_otro" and "localidad" and "numero" \
+
+    if "alquiler" and "calle" and "cp" and "habitaciones" and "localidad" and "numero" \
             and "numerobanos" and "template" and "tipocasa" and "zonas" in request.form:
 
         # comprobacion de si ya existe el piso en la db
@@ -81,22 +79,18 @@ def recibir_alta_piso():
                 request.form["alquiler"],
                 request.form["cp"],
                 request.form["habitaciones"],
-                request.form["habitaciones_otro"],
                 request.form["localidad"],
                 request.form["numero"],
                 request.form["numerobanos"],
                 request.form["template"],
                 request.form["tipocasa"],
                 request.form["zonas"],
-                request.form["x_longitud_gps"],
-                request.form["y_longitud_gps"],
-                request.form["x_latitud_gps"],
-                request.form["y_latitud_gps"],
+                request.form["x_gps"],
+                request.form["y_gps"],
                 request.form["dueno"],
                 request.form["precio"],
                 request.form["totalmetros"]
-                
-                
+
             )
 
             if ok == True:
