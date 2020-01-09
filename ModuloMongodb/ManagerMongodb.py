@@ -54,16 +54,16 @@ class ManagerMongoDb:
                      template,
                      tipocasa,
                      zonas,
-                     x_txt,
-                     y_txt,
+                     latitud_txt,
+                     longitud_txt,
                      dueno,
                      precio,
                      totalmetros
                      ):
 
         try:
-            x = float(x_txt)
-            y = float(y_txt)
+            latitud = float(latitud_txt)
+            longitud = float(longitud_txt)
 
             ok = self.cursorpisos.insert_one(
                 {
@@ -81,7 +81,7 @@ class ManagerMongoDb:
                     "dueno": dueno,
                     "totalmetros": totalmetros,
                     "datosgps": {
-                        "gps": [x, y],
+                        "gps": [latitud, longitud],
                     }
                 }
             )

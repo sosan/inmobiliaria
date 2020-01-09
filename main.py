@@ -57,7 +57,7 @@ def alta_piso():
         return render_template("alta_piso.html", anterior_calle=anterior_calle, anterior_numero=anterior_numero)
 
     if "calle" and "alquiler" and "cp" and "habitaciones" and "localidad" and "numero" and "numerobanos" \
-            and "template" and "tipocasa" and "zonas" and "x_gps" and "y_gps" and "dueno" and "precio" and "totalmetros" \
+            and "template" and "tipocasa" and "zonas" and "latitude_gps" and "longitude_gps" and "dueno" and "precio" and "totalmetros" \
             in session:
         calle = session.pop("calle")
         alquiler = session.pop("alquiler")
@@ -69,8 +69,8 @@ def alta_piso():
         template = session.pop("template")
         tipocasa = session.pop("tipocasa")
         zonas = session.pop("zonas")
-        x_gps = session.pop("x_gps")
-        y_gps = session.pop("y_gps")
+        latitude_gps = session.pop("latitude_gps")
+        longitude_gps = session.pop("longitude_gps")
         dueno = session.pop("dueno")
         precio = session.pop("precio")
         totalmetros = session.pop("totalmetros")
@@ -86,8 +86,8 @@ def alta_piso():
                                template=template,
                                tipocasa=tipocasa,
                                zonas=zonas,
-                               x_gps=x_gps,
-                               y_gps=y_gps,
+                               latitude_gps=latitude_gps,
+                               longitude_gps=longitude_gps,
                                dueno=dueno,
                                precio=precio,
                                totalmetros=totalmetros
@@ -122,8 +122,8 @@ def recibir_alta_piso():
                 request.form["template"],
                 request.form["tipocasa"],
                 request.form["zonas"],
-                request.form["x_gps"],
-                request.form["y_gps"],
+                request.form["latitude_gps"],
+                request.form["longitude_gps"],
                 request.form["dueno"],
                 request.form["precio"],
                 request.form["totalmetros"]
@@ -149,8 +149,8 @@ def recibir_alta_piso():
             session["template"] = request.form["template"]
             session["tipocasa"] = request.form["tipocasa"]
             session["zonas"] = request.form["zonas"]
-            session["x_gps"] = request.form["x_gps"]
-            session["y_gps"] = request.form["y_gps"]
+            session["latitude_gps"] = request.form["latitude_gps"]
+            session["longitude_gps"] = request.form["longitude_gps"]
             session["dueno"] = request.form["dueno"]
             session["precio"] = request.form["precio"]
             session["totalmetros"] = request.form["totalmetros"]
