@@ -10,7 +10,8 @@
             {
                 var positionInfo = " Latitude: " + position.coords.latitude +
                     " Longitude: " + position.coords.longitude +
-                    " Altitud: " + position.coords.altitude;
+                    " Precision: " +  position.coords.accuracy +
+                    " Elevacion: " + position.coords.altitude;
 
                 document.getElementById("result").innerHTML = positionInfo;
             }, function(error)
@@ -32,7 +33,7 @@
                     break;
                 }
 
-            });
+            }, {maximumAge:10000, timeout:5000, enableHighAccuracy: true});
 
         } else {
             alert("Sorry, your browser does not support HTML5 geolocation.");
