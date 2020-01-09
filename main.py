@@ -24,39 +24,46 @@ app.config["DEBUG"] = True
 
 import os
 # recuperar una ruta absoluta
-CARPETA_UPLOAD = os.path.abspath("./archivos_subidos")
-print(CARPETA_UPLOAD)
-app.config["CARPETA"] = CARPETA_UPLOAD
-
-
-
+CARPETA = os.path.abspath(".//archivos_subidos")
+app.config["CARPETA"] = CARPETA
 
 bootstrap = Bootstrap(app)
 helper = ManagerHelper()
 
 
 
-@app.route("/css/<path:path>")
-def ruta_css(path):
+@app.route("/c", methods=["GET", "POST"])
+def ruta_css():
     if request.method == "POST":
         f = request.files["fichero"]
         # recuperar el nombre del archivo
-        nombre_archivo = f.filenmae
+        if f.filename == "":
+            return "No seleccionado fichero"
+        
+        nombre_archivo = f.filename
+        
         # la ruta donde queremos que se guarde nuestor archivo
         # recien subido y ademas que nos quede claro que os.path.join 
         # lo utilizamos para acceder a un directorio
+        print("NOMBRE ARCHIVO => {0}".format( nombre_archivo))
+        print("APP CONFIG CARPETA {0}".format(app.config["CARPETA"]), os.path.join(app.config["CARPETA"], nombre_archivo))
         f.save(os.path.join(app.config["CARPETA"]), nombre_archivo)
+        return redirect(url_for("recibir_nombre"))
 
     # return send_from_directory("css", path)
 
     
     return """
     <form method="post" enctype="multipart/form-data">
-    <input type="file" name="fichero">
-    <input type="submit" value="submit">
+    <input type="file" name="fichero" required accepted="*.png">
+    <button type="submit">ENVIAR</button>
     <form>
     """
     
+@app.route("/verarchivos/<nombre_archivo>")
+def recibir_nombre(nombre_archivo):
+    
+    return send_from_directory(app.config["CARPETA"], nombre_archivo)
 
 
 ###################################
@@ -227,3 +234,8 @@ def tomar_medidas_light():
 @app.route("/")
 def home():
     return render_template("geo.html")
+
+
+
+if __name__ == "__main__":
+    app.run("127.0.0.1", 5000, debug=True)
