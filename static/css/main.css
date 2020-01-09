@@ -105,7 +105,55 @@
   box-shadow: 0px 0px 0px 0px white;
 }
 
+/*------------ FONDO PAGOOOOOO --*/
+.imageBackg {
+  z-index: 3;
+  width: 375px;
+  height: 812px;
+}
+
+.mask {
+  z-index: 4;
+  width: 375px;
+  height: 812px;
+  background: #d8d8d8;
+}
+
+.darkgradie {
+  z-index: 4;
+  width: 375px;
+  height: 159px;
+  background: linear-gradient(0deg, #00000000, #67000000);
+}
 
 
 
+/*----------- BOTON PAGO ------------------*/
+.tabColor_pago {
+  z-index: 5;
+  width: 173px;
+  height: 40px;
+}
+
+.rectangulo_pago {
+  z-index: 6;
+  width: 173px;
+  height: 40px;
+  border-radius: 25px;
+  background: linear-gradient(90deg, #0D9DA6, #11DBB3);
+}
+
+.text_pago {
+  z-index: 6;
+  width: 173px;
+  height: 40px;
+  color: #ffffff;
+  font-family: "SFProText-Semibold", monospace;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: center;
+  vertical-align: middle;
+  letter-spacing: 1px;
+}
 

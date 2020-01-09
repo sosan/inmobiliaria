@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Get Current Position</title>
+   <link rel="stylesheet" href="{{ url_for("static", filename="css/main.css") }}">
 <script>
     function showPosition() {
         if(navigator.geolocation) {
@@ -10,7 +11,7 @@
             {
                 var positionInfo = " Latitude: " + position.coords.latitude +
                     " Longitude: " + position.coords.longitude +
-                    " Precision: " +  position.coords.accuracy +
+                    " Precision: " +  position.coords.accuracy + " metros" +
                     " Elevacion: " + position.coords.altitude;
 
                 document.getElementById("result").innerHTML = positionInfo;
@@ -42,9 +43,18 @@
 </script>
 </head>
 <body>
-    <div id="result">
+ <div class="mask">
+
+        <div class="darkgradie">
+
+            <div id="result">
         <!--Position information will be inserted here-->
     </div>
     <button type="button" onclick="showPosition();">Show Position</button>
+        </div>
+    </div>
+
+
+
 </body>
 </html>
