@@ -133,6 +133,7 @@
   z-index: 5;
   width: 173px;
   height: 40px;
+ vertical-align: center;
 }
 
 .rectangulo_pago {
@@ -141,6 +142,8 @@
   height: 40px;
   border-radius: 25px;
   background: linear-gradient(90deg, #0D9DA6, #11DBB3);
+  display:flex; justify-content:center; align-items:center;
+   vertical-align: center;
 }
 
 .text_pago {
@@ -153,7 +156,10 @@
   font-weight: 400;
   line-height: 16px;
   text-align: center;
-  vertical-align: middle;
+  /*vertical-align: middle;*/
   letter-spacing: 1px;
+   vertical-align: center;
+  border: white;
 }
+
 
