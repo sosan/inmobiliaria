@@ -56,6 +56,45 @@ def alta_piso():
 
         return render_template("alta_piso.html", anterior_calle=anterior_calle, anterior_numero=anterior_numero)
 
+    if "calle" and "alquiler" and "cp" and "habitaciones" and "localidad" and "numero" and "numerobanos" \
+            and "template" and "tipocasa" and "zonas" and "x_gps" and "y_gps" and "dueno" and "precio" and "totalmetros" \
+            in session:
+        calle = session.pop("calle")
+        alquiler = session.pop("alquiler")
+        cp = session.pop("cp")
+        habitaciones = session.pop("habitaciones")
+        localidad = session.pop("localidad")
+        numero = session.pop("numero")
+        numerobanos = session.pop("numerobanos")
+        template = session.pop("template")
+        tipocasa = session.pop("tipocasa")
+        zonas = session.pop("zonas")
+        x_gps = session.pop("x_gps")
+        y_gps = session.pop("y_gps")
+        dueno = session.pop("dueno")
+        precio = session.pop("precio")
+        totalmetros = session.pop("totalmetros")
+        # mensajeerror = session.pop("mensajeerror")
+
+        return render_template("alta_piso.html",
+                               calle=calle,
+                               aquiler=alquiler,
+                               cp=cp,
+                               habitaciones=habitaciones,
+                               localidad=localidad,
+                               numero=numero,
+                               numerobanos=numerobanos,
+                               template=template,
+                               tipocasa=tipocasa,
+                               zonas=zonas,
+                               x_gps=x_gps,
+                               y_gps=y_gps,
+                               dueno=dueno,
+                               precio=precio,
+                               totalmetros=totalmetros
+
+                               )
+
     if "mensajeerror" in session:
         session.pop("mensajeerror")
 
@@ -64,7 +103,6 @@ def alta_piso():
 
 @app.route("/profile/alta", methods=["POST"])
 def recibir_alta_piso():
-
     if "alquiler" and "calle" and "cp" and "habitaciones" and "localidad" and "numero" \
             and "numerobanos" and "template" and "tipocasa" and "zonas" in request.form:
 
@@ -99,12 +137,24 @@ def recibir_alta_piso():
                 session["anterior_numero"] = request.form["numero"]
             else:
                 session["mensajeerror"] = helper.errores.no_insertado
-
-
         else:
             # ya existe mensaje de error
             session["mensajeerror"] = helper.errores.no_insertado
-        pass
+            session["calle"] = request.form["calle"]
+            session["alquiler"] = request.form["alquiler"]
+            session["cp"] = request.form["cp"]
+            session["habitaciones"] = request.form["habitaciones"]
+            session["localidad"] = request.form["localidad"]
+            session["numero"] = request.form["numero"]
+            session["numerobanos"] = request.form["numerobanos"]
+            session["template"] = request.form["template"]
+            session["tipocasa"] = request.form["tipocasa"]
+            session["zonas"] = request.form["zonas"]
+            session["x_gps"] = request.form["x_gps"]
+            session["y_gps"] = request.form["y_gps"]
+            session["dueno"] = request.form["dueno"]
+            session["precio"] = request.form["precio"]
+            session["totalmetros"] = request.form["totalmetros"]
 
     return redirect(url_for("alta_piso"))
 

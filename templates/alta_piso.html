@@ -9,11 +9,9 @@
         </div>
 
         {% if session["mensajeerror"] == 0%}
-            <h1 class=" label-danger">YA EXISTE EL INMUEBLE</h1>
-        <!-- mostrar los datos ya introducidos -->
 
         {% elif session["mensajeerror"] == 2 %}
-
+            <h1 class=" label-danger">YA EXISTE EL INMUEBLE</h1>
         {% elif session["mensajeerror"] == 1 %}
             <h3 class="  label-success">DADO DE ALTA CORRECTAMNTE</h3>
             {% if anterior_calle and anterior_numero %}
@@ -76,11 +74,11 @@
         </div>
         <div class="row center-block">
              <label>Calle</label>
-             <input type="text" name="calle" value="">
+             <input type="text" name="calle" value="{{ calle }}">
         </div>
         <div class="row center-block">
              <label>numero</label>
-             <input type="text" name="numero" value="">
+             <input type="text" name="numero" value="{{ numero }}">
         </div>
         <div class="row center-block">
          <label>Codigo Postal</label>

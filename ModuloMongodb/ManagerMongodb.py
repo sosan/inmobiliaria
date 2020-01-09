@@ -93,9 +93,10 @@ class ManagerMongoDb:
             raise Exception("Conversion no posible")
 
     def comprobarexisteinmueble(self, calle, numero):
-        ok = self.cursorpisos.find({"calle": calle, "numero": numero})
+        ok = list(self.cursorpisos.find({"calle": calle, "numero": numero}))
         if ok != None:
-            return True
+            if len(ok) <= 0:
+                return True
         return False
 
     def getcantidadproductos(self):
