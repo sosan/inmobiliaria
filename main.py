@@ -74,7 +74,6 @@ def alta_piso():
         dueno = session.pop("dueno")
         precio = session.pop("precio")
         totalmetros = session.pop("totalmetros")
-        # mensajeerror = session.pop("mensajeerror")
 
         return render_template("alta_piso.html",
                                calle=calle,
@@ -167,6 +166,16 @@ def ver_piso():
 @app.route("/profile/modificar", methods=["GET"])
 def modificar_piso():
     return render_template("modificar_piso.html")
+
+
+@app.route("/profile/tomar_medidas_pago", methods=["GET"])
+def tomar_medidas_pago():
+    return render_template("tomar_medidas_pago.html")
+
+
+@app.route("/profile/tomar_medidas", methods=["GET"])
+def tomar_medidas_light():
+    return render_template("tomar_medidas_light.html")
 
 
 ##################################

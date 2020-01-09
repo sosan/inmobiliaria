@@ -52,24 +52,24 @@
         <div class="row center-block">
              <label>Zona de Palma:</label>
              <select name="zonas">
-                 <option value="1">Jaume III</option>
-                 <option value="2">Son Canals</option>
-                 <option value="3">Santa Calatina</option>
-                 <option value="4">Son Espanyolet</option>
-                 <option value="5">Archiduc</option>
-                 <option value="6">Es Forti</option>
-                 <option value="7">Can Capes</option>
-                 <option value="8">Sant Juame</option>
-                 <option value="9">Montision</option>
-                 <option value="10">Plaça Patins</option>
-                 <option value="11">Bons Aires</option>
-                 <option value="12">Calatrava</option>
-                 <option value="13">Son Fortesa</option>
-                 <option value="14">Cort</option>
-                 <option value="15">Son Rullan</option>
-                 <option value="16">San Nicolau</option>
-                 <option value="17">Sindicat</option>
-                 <option value="18" selected>Fuera Palma</option>
+                 <option value="1" {% if zonas == "1" %} selected {% endif %}>Jaume III</option>
+                 <option value="2"{% if zonas == "2" %} selected {% endif %} >Son Canals</option>
+                 <option value="3" {% if zonas == "3" %} selected {% endif %} >Santa Calatina</option>
+                 <option value="4" {% if zonas == "4" %} selected {% endif %} >Son Espanyolet</option>
+                 <option value="5" {% if zonas == "5" %} selected {% endif %}>Archiduc</option>
+                 <option value="6" {% if zonas == "6" %} selected {% endif %}>Es Forti</option>
+                 <option value="7" {% if zonas == "7" %} selected {% endif %}>Can Capes</option>
+                 <option value="8" {% if zonas == "8" %} selected {% endif %}>Sant Juame</option>
+                 <option value="9" {% if zonas == "9" %} selected {% endif %}>Montision</option>
+                 <option value="10" {% if zonas == "10" %} selected {% endif %}>Plaça Patins</option>
+                 <option value="11" {% if zonas == "11" %} selected {% endif %}>Bons Aires</option>
+                 <option value="12" {% if zonas == "12" %} selected {% endif %}>Calatrava</option>
+                 <option value="13" {% if zonas == "13" %} selected {% endif %}>Son Fortesa</option>
+                 <option value="14"{% if zonas == "14" %} selected {% endif %}>Cort</option>
+                 <option value="15"{% if zonas == "15" %} selected {% endif %}>Son Rullan</option>
+                 <option value="16"{% if zonas == "16" %} selected {% endif %}>San Nicolau</option>
+                 <option value="17"{% if zonas == "17" %} selected {% endif %}>Sindicat</option>
+                 <option value="18"{% if zonas == "18" %} selected {% endif %}>Fuera Palma</option>
              </select>
         </div>
         <div class="row center-block">
@@ -117,17 +117,17 @@
 
          <!-- IMAGENES -->
          <label>
-             <input type="radio" name="template" value="1" checked>
+             <input type="radio" name="template" value="1"  {% if template == "1" %} checked {% endif %}>
              <img src="{{url_for("static", filename="images/template1.png")}}" width="100">
          </label>
 
          <label>
-             <input type="radio" name="template" value="2">
+             <input type="radio" name="template" value="2" {% if template == "2" %} checked {% endif %}>
              <img src="{{url_for("static", filename="images/template2.png")}}" width="100">
          </label>
 
          <label>
-             <input type="radio" name="template" value="3">
+             <input type="radio" name="template" value="3" {% if template == "3" %} checked {% endif %}>
              <img src="{{url_for("static", filename="images/template3.png")}}" width="100">
          </label>
 
@@ -140,11 +140,11 @@
          <label>Negocio: </label>
 
          <label for="alquiler1"> Venta:</label>
-         <input type="radio" id="alquiler1" name="alquiler" value="1" checked>
+         <input type="radio" id="alquiler1" name="alquiler" value="1"  {% if alquiler == "1" %} checked {% endif %}>
 
 
          <label for="alquiler2">Alquiler:</label>
-         <input type="radio" id="alquiler2" name="alquiler" value="2">
+         <input type="radio" id="alquiler2" name="alquiler" value="2" {% if alquiler == "2" %} checked {% endif %}>
         </div>
         <div class="row center-block">
             <fieldset class="borde_fieldset">
@@ -162,7 +162,15 @@
         </div>
             <!-- imagen para subir-->
         <br>
-        <button type="submit" class="center-block btn btn-success">ALTA PISO</button>
+
+    <div class="form-inline  text-center">
+        <a href="{{ url_for("menu_admin") }}" class="pull-left"><button class="btn btn-danger" type="button">HOME</button></a>
+
+
+        <button type="submit" class="pull-right btn btn-success">ALTA PISO</button>
+
+
+    </div>
     </form>
 </div>
 
