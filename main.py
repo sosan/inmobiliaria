@@ -94,7 +94,10 @@ def menu_admin():
     if "usuario" and "password" in session:
         ok = managermongo.comprobaradmin(session["usuario"], session["password"])
         if ok == True:
-            return render_template("menu_admin.html")
+            
+            listado = managermongo.getallproductos()
+            
+            return render_template("menu_admin.html", datos=listado)
 
     return redirect(url_for("admin_login"))
 
@@ -214,6 +217,14 @@ def ver_piso():
     return render_template("ver_piso.html")
 
 
+@app.route("/profile/ver", methods=["GET"])
+def buscar_piso():
+    return render_template("buscar_piso.html")
+
+
+
+
+
 @app.route("/profile/modificar", methods=["GET"])
 def modificar_piso():
     return render_template("modificar_piso.html")
@@ -227,6 +238,23 @@ def tomar_medidas_pago():
 @app.route("/profile/tomar_medidas", methods=["GET"])
 def tomar_medidas_light():
     return render_template("tomar_medidas_light.html")
+
+
+@app.route("/profile/recibir_menu_medicion", methods=["POST"])
+def recibir_menu_medicion():
+    
+    if "sin" in request.form:
+        listado = managermongo.get_sin_mediciones()
+        
+        
+        
+    elif "con" in request.form:
+        listado = managermongo.get_con_mediciones()
+    
+    return render_template("listado_sin_mediciones.html")
+
+
+
 
 
 ##################################

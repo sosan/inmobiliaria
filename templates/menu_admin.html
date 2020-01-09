@@ -9,29 +9,36 @@
     <div class="row">
         <div class="submenu ">
             <div class=" rectangle7 menu_enlinia">
+            <a href="{{ url_for("buscar_piso") }}">
                 <div class="col-sm-12">
-                    <span class="glyphicon glyphicon-th-list glyphicon_font"></span>
-                    <div class="pageTitleC">VER</div>
+                    <span class="glyphicon glyphicon-search glyphicon_font"></span>
+                    <div class="pageTitleC text-center">BUSCAR</div>
                 </div>
-    
+            </a>
+            <a href="{{ url_for("alta_piso") }}">
                 <div class="col-sm-12 ">
                     <span class="glyphicon glyphicon-plus glyphicon_font"></span>
-                    <div class="pageTitleC">AÑADIR</div>
+                    <div class="pageTitleC text-center">AÑADIR</div>
                 </div>
+            </a>
+            <a href="{{ url_for("modificar_piso") }}">
                 <div class="col-sm-12 ">
                     <span class="glyphicon glyphicon-pencil glyphicon_font"></span>
-                    <div class="pageTitleC">MODIFICAR</div>
+                    <div class="pageTitleC text-center">MODIFICAR</div>
                 </div>
-    
+            </a>
+            <a href="{{ url_for("tomar_medidas_pago") }}">
+                <div class="col-sm-12 ">
+                    <span class="glyphicon glyphicon-euro glyphicon_font"></span>
+                    <div class="pageTitleC text-center ">PRO</div>
+                </div>
+            </a>
+            <a href="{{ url_for("tomar_medidas_light") }}">
                 <div class="col-sm-12 ">
                     <span class="glyphicon glyphicon-tag glyphicon_font"></span>
-                    <div class="pageTitleC">TOMAR MEDIDAS PRO</div>
+                    <div class="pageTitleC text-center">MEDIDAS</div>
                 </div>
-    
-                <div class="col-sm-12 ">
-                    <span class="glyphicon glyphicon-tag glyphicon_font"></span>
-                    <div class="pageTitleC">TOMAR MEDIDAS</div>
-                </div>
+            </a>
             </div>
         </div>
     
@@ -45,44 +52,48 @@
 
 
 <div class="container">
-    <div class="row pull-left"><h1>MENU PRINCIPAL</h1></div> 
+    <div class="row pull-left"><h1>LISTADO PISOS</h1></div> 
 </div>
+<div class="row">
+    <hr class=" linea_listado">
+</div>
+<div class="row">
+    <form action="{{ recibir_menu_medicion }}" method="POST">
+        <button type="submit" class="btn btn-success" name="sin">SIN MEDICION</button>
+        <button type="submit" class="btn btn-default" name="con">CON MEDICION</button>
+
+    </form>
+
+</div>
+
+
 <div class="row center-block">
+    {% if listado%}
+        <div class="container">
+            <ul id="lista_menu">
+                {% for elemento in listado %}
+                <li>
+                    <a href="{{ url_for("alta_piso") }}">
+                        <div class="">
+                            Calle: {{ elemento["calle"] }} Numero: {{ elemento["numero"] }}
+                        </div>
+                        <div class="">
+                            {{elemento["precio"]}}
 
+                        </div>  
+                        <div class="">
+                            <img src="{{ elemento["foto"] }}">
 
-<div class="container">
+                        </div>
+                        
+                    </a>
 
+                </li>
 
-    <button type="button" class=""></button>
-
-
-
-        <ul id="lista_menu">
-            <li>
-                <a href="{{ url_for("alta_piso") }}">ALTA PISO</a>
-            </li>
-            <li>
-                <a href="{{ url_for("ver_piso") }}">VER PISO</a>
-            </li>
-            <li>
-                <a href="{{ url_for("modificar_piso") }}">MODIFICAR PISO</a>
-            </li>
-            <li>
-                <a href="{{ url_for("tomar_medidas_pago") }}">TOMAR MEDIDAS( PRESTACION DE PAGO )</a>
-            </li>
-
-            <li>
-                <a href="{{ url_for("tomar_medidas_light") }}">TOMAR MEDIDAS</a>
-            </li>
-
-        </ul>
-
-
-
-
-    </div>
-
-
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 </div>
 
 

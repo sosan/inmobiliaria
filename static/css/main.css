@@ -207,5 +207,16 @@
     align-items: center;
 }
 
+.linea_listado
+{
+  z-index: 3;
+  width: 375px;
+  height: 1px;
+  background: #d8d8d8;
+}
+
+
+}
+
 
 
