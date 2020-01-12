@@ -5,13 +5,8 @@ from flask import url_for
 from flask import session
 from flask import request
 
-
-
-
 # nos permite servir archivos de forma estatico o absoluta
 from flask import send_from_directory
-
-
 
 from ModuloMongodb.ManagerMongodb import managermongo
 from flask_bootstrap import Bootstrap
@@ -20,16 +15,16 @@ from ModuloHelper.ManagerHelper import ManagerHelper
 app = Flask(__name__)
 app.secret_key = "holaa"
 # MUCHO CUIDADO EN NO PISAR LAS VARIABLES YA CREADAS
-app.config["DEBUG"] = True
+# app.config["DEBUG"] = True
 
 import os
+
 # recuperar una ruta absoluta
 CARPETA = os.path.abspath(".//archivos_subidos")
 app.config["CARPETA"] = CARPETA
 
 bootstrap = Bootstrap(app)
 helper = ManagerHelper()
-
 
 
 @app.route("/c", methods=["GET", "POST"])
@@ -39,30 +34,30 @@ def ruta_css():
         # recuperar el nombre del archivo
         if f.filename == "":
             return "No seleccionado fichero"
-        
+
         nombre_archivo = f.filename
-        
+
         # la ruta donde queremos que se guarde nuestor archivo
         # recien subido y ademas que nos quede claro que os.path.join 
         # lo utilizamos para acceder a un directorio
-        print("NOMBRE ARCHIVO => {0}".format( nombre_archivo))
-        print("APP CONFIG CARPETA {0}".format(app.config["CARPETA"]), os.path.join(app.config["CARPETA"], nombre_archivo))
+        print("NOMBRE ARCHIVO => {0}".format(nombre_archivo))
+        print("APP CONFIG CARPETA {0}".format(app.config["CARPETA"]),
+              os.path.join(app.config["CARPETA"], nombre_archivo))
         f.save(os.path.join(app.config["CARPETA"]), nombre_archivo)
         return redirect(url_for("recibir_nombre"))
 
     # return send_from_directory("css", path)
 
-    
     return """
     <form method="post" enctype="multipart/form-data">
     <input type="file" name="fichero" required accepted="*.png">
     <button type="submit">ENVIAR</button>
     <form>
     """
-    
+
+
 @app.route("/verarchivos/<nombre_archivo>")
 def recibir_nombre(nombre_archivo):
-    
     return send_from_directory(app.config["CARPETA"], nombre_archivo)
 
 
@@ -76,7 +71,6 @@ def admin_login():
 @app.route("/admin", methods=["POST"])
 def recibir_login():
     if "usuario" and "password" in request.form:
-
         ok = managermongo.comprobaradmin(request.form["usuario"], request.form["password"])
         if ok == True:
             session["usuario"] = request.form["usuario"]
@@ -94,17 +88,24 @@ def menu_admin():
     if "usuario" and "password" in session:
         ok = managermongo.comprobaradmin(session["usuario"], session["password"])
         if ok == True:
-            
+
             # listado = managermongo.getallproductos()
             # dependiende de la configuracion elegir que mostrar primero
             # if config == True:
             listado = managermongo.get_sin_mediciones()
-            #else .......
-                # listado = managermongo.get_con_mediciones()
+            # else .......
+            # listado = managermongo.get_con_mediciones()
             if len(listado) > 0:
                 return render_template("menu_admin.html", datos=listado)
+            else:
+                return render_template("menu_admin.html", datos=None)
 
     return redirect(url_for("admin_login"))
+
+
+@app.route("/profile", methods=["POST"])
+def menu_admin_post():
+    return redirect(url_for("menu_admin"))
 
 
 @app.route("/profile/alta", methods=["GET"])
@@ -227,9 +228,6 @@ def buscar_piso():
     return render_template("buscar_piso.html")
 
 
-
-
-
 @app.route("/profile/modificar", methods=["GET"])
 def modificar_piso():
     return render_template("modificar_piso.html")
@@ -247,7 +245,6 @@ def tomar_medidas_light():
 
 @app.route("/profile/recibir_menu_medicion", methods=["POST"])
 def recibir_menu_medicion():
-    
     if "sin" in request.form:
         listado = managermongo.get_sin_mediciones()
         session["listado_viviendas"] = listado
@@ -256,11 +253,8 @@ def recibir_menu_medicion():
         listado = managermongo.get_con_mediciones()
         session["listado_viviendas"] = listado
         return redirect(url_for("menu_admin"))
-    
+
     return render_template("listado_sin_mediciones.html")
-
-
-
 
 
 ##################################
@@ -268,7 +262,6 @@ def recibir_menu_medicion():
 @app.route("/")
 def home():
     return render_template("geo.html")
-
 
 
 if __name__ == "__main__":

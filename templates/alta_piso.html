@@ -113,38 +113,64 @@
          <input type="text" id="banos" name="numerobanos" value="{{ numerobanos }}">
         </div>
         <div class="row center-block ">
-         <label>Tipo de planta:(Template)</label>
+        {% if template %}
+            <label>Tipo de planta:</label>
+            <label>
+                <input type="radio" name="template" value="1" {% if template == "1" %} checked {% endif %}>
+                <img src="{{url_for("static", filename="images/template1.png")}}" width="100">
+            </label>
 
-         <!-- IMAGENES -->
-         <label>
-             <input type="radio" name="template" value="1"  {% if template == "1" %} checked {% endif %}>
-             <img src="{{url_for("static", filename="images/template1.png")}}" width="100">
-         </label>
+            <label>
+                <input type="radio" name="template" value="2" {% if template == "2" %} checked {% endif %}>
+                <img src="{{url_for("static", filename="images/template2.png")}}" width="100">
+            </label>
 
-         <label>
-             <input type="radio" name="template" value="2" {% if template == "2" %} checked {% endif %}>
-             <img src="{{url_for("static", filename="images/template2.png")}}" width="100">
-         </label>
+            <label>
+                <input type="radio" name="template" value="3" {% if template == "3" %} checked {% endif %}>
+                <img src="{{url_for("static", filename="images/template3.png")}}" width="100">
+            </label>
+        {% else %}
+            <label>Tipo de planta:</label>
+            <label>
+                <input type="radio" name="template" value="1" checked>
+                <img src="{{url_for("static", filename="images/template1.png")}}" width="100">
+            </label>
 
-         <label>
-             <input type="radio" name="template" value="3" {% if template == "3" %} checked {% endif %}>
-             <img src="{{url_for("static", filename="images/template3.png")}}" width="100">
-         </label>
+            <label>
+                <input type="radio" name="template" value="2" checked>
+                <img src="{{url_for("static", filename="images/template2.png")}}" width="100">
+            </label>
+
+            <label>
+                <input type="radio" name="template" value="3" checked>
+                <img src="{{url_for("static", filename="images/template3.png")}}" width="100">
+            </label>
 
 
+        {% endif %}
 
-
-        </div>
+         
+            </div>
         <div class="row center-block">
 
          <label>Negocio: </label>
 
-         <label for="alquiler1"> Venta:</label>
-         <input type="radio" id="alquiler1" name="alquiler" value="1"  {% if alquiler == "1" %} checked {% endif %}>
+         {% if alquiler %}
+            <label for="alquiler1"> Venta:</label>
+            <input type="radio" id="alquiler1" name="alquiler" value="1"  {% if alquiler == "1" %} checked {% endif %}>
+
+            <label for="alquiler2">Alquiler:</label>
+            <input type="radio" id="alquiler2" name="alquiler" value="2" {% if alquiler == "2" %} checked {% endif %}>
+        {% else %}
+            <label for="alquiler1"> Venta:</label>
+            <input type="radio" id="alquiler1" name="alquiler" value="1" checked>
+
+            <label for="alquiler2">Alquiler:</label>
+            <input type="radio" id="alquiler2" name="alquiler" value="2">
+        {% endif %}
 
 
-         <label for="alquiler2">Alquiler:</label>
-         <input type="radio" id="alquiler2" name="alquiler" value="2" {% if alquiler == "2" %} checked {% endif %}>
+
         </div>
         <div class="row center-block">
             <fieldset class="borde_fieldset">

@@ -3,6 +3,7 @@ import uuid
 
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+
 from datetime import datetime
 from datetime import timedelta
 from pymongo.collection import Collection, ReturnDocument
@@ -82,7 +83,8 @@ class ManagerMongoDb:
                     "totalmetros": totalmetros,
                     "medicion": False,
                     "datosgps": {
-                        "gps": [latitud, longitud],
+                        "coordenadas": [latitud, longitud]
+                        
                     }
                 }
             )
@@ -120,16 +122,30 @@ class ManagerMongoDb:
         resultados = list(self.cursorpisos.find({"medicion": False}, {"_id": False}))
         return resultados
 
-    def updateproducto(self, fecha, idproducto, nombreproducto, urlproducto, urlimagenproducto, h, v):
+    def updateproducto(self, fecha, idproducto, calle, alquiler, cp, habitaciones, precio, localidad, numero, numerobanos,
+                       template, tipocasa, zonas, dueno, totalmetros, medicion, latitud, longitud
+                       ):
 
         ok = self.cursorpisos.update_one({"_id": ObjectId(idproducto)}, {"$set":
             {
-                "fecha_mod": fecha,
-                "nombreproducto": nombreproducto,
-                "urlproducto": urlproducto,
-                "urlimagenproducto": urlimagenproducto,
-                "h": h,
-                "v": v
+                "calle": calle,
+                "alquiler": alquiler,
+                "cp": cp,
+                "habitaciones": habitaciones,
+                "precio": precio,
+                "localidad": localidad,
+                "numero": numero,
+                "numerobanos": numerobanos,
+                "template": template,
+                "tipocasa": tipocasa,
+                "zonas": zonas,
+                "dueno": dueno,
+                "totalmetros": totalmetros,
+                "medicion": medicion,
+                "datosgps": {
+                    "coordenadas": [latitud, longitud]
+
+                }
 
             }})
         if ok.modified_count == 1:
