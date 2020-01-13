@@ -29,10 +29,14 @@ COPY . /app
 # instalar las dependencias
 RUN pip3 --no-cache install -r requirements.txt
 
+# docker run -it --publish 7050:5000 nombreapp
+
 # lista de tareas pendientes
 # CMD [ "python3", "main.py" ]
 # CMD [ "SET FLASK APP", "main.py" ]
-CMD [ "python3", "flask", "main.py" ]
+# las ips de entorno locla son diferentes a las ips de la imagen docker
+CMD [ "python3", "main.py" ]
+
 
 
 
