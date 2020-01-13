@@ -17,7 +17,7 @@
 
     <form action="{{url_for("recibir_alta_piso") }}" method="POST">
         <div class="row ">
-            <h1 class="titulo">DATOS DE LA VIVIENDA</h1>
+            <h1 class="titulo">RELLENAR DATOS VIVIENDA</h1>
         </div>
         <input type="hidden" name="usuario" value="{{ session["usuario"] }}">
 
@@ -220,8 +220,11 @@
                             <input type="text" id="precision" name="precision" value="">
                         {% endif %}
 
-                <div id="result"></div>
-                <button type="button" onclick="showPosition();">Show Position</button>
+{#                <div id="result"></div>#}
+                <button type="button" onclick="showPosition();">Obtener posicion
+                    <span class="col-xs-12 glyphicon glyphicon-screenshot pull-right glyphicon_font paderecha col-xs-12_fix_padding"></span>
+
+                </button>
 
 
                 </div>
@@ -232,12 +235,7 @@
         <br>
 
     <div class="container-fluid  text-center">
-{#        <a href="{{ url_for("menu_admin") }}" class="pull-left"><button class="btn btn-danger" type="button">HOME</button></a>#}
-
-
         <button type="submit" class="btn btn-success btn-lg">ALTA PISO</button>
-
-
     </div>
     </form>
 </div>
@@ -255,15 +253,8 @@
 
         if(navigator.geolocation)
         {
-            alert("12")
             navigator.geolocation.getCurrentPosition(function(position)
             {
-                var positionInfo = " Latitude: " + position.coords.latitude +
-                    " Longitude: " + position.coords.longitude +
-                    " Precision: " +  position.coords.accuracy + " metros" +
-                    " Elevacion: " + position.coords.altitude;
-
-                document.getElementById("result").value = positionInfo;
                 document.getElementById("latitude_gps").value =  position.coords.latitude.toString();
                 document.getElementById("longitude_gps").value =  position.coords.longitude.toString() ;
                 document.getElementById("precision").value = position.coords.accuracy.toString();
