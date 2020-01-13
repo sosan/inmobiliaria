@@ -1,3 +1,12 @@
+/*body {*/
+/*    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
+/*    font-size: 14px;*/
+/*    line-height: 1.42857143;*/
+/*    !*color: whitesmoke;*!*/
+/*    background-color: #fff;*/
+/*}*/
+
+
 .bgImage {
   z-index: 3;
   width: 375px;
@@ -170,13 +179,8 @@
   z-index: 31;
   width: auto;
   height: auto;
-  /*background: #414141;*/
-  background-image: url("../images/full_bg.png");
-
   /* Create the parallax scrolling effect */
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: #414141 url("../images/full_bg.png") no-repeat fixed center;
   background-size: cover;
   /*background: linear-gradient(213deg, #F3C7A1, #E87975);*/
   /*background: rgba(255,255,255,0);*/
@@ -362,6 +366,20 @@ margin-right: 0;
 
 }
 
+.titulo
+{
+
+  color: #b4b2b0;
+  font-family: "Baloo Bhai", serif;
+  font-size: 7vw;
+  font-weight: 400;
+  /*line-height: 45px;*/
+  text-align: center;
+  /*display: flex;*/
+  height: 30px;
+    margin-top: 2px;
+}
+
 .show_clicked_abajo
 {
   z-index: 0;
@@ -380,13 +398,39 @@ margin-right: 0;
   margin-top: 1px;
   /*background-color: #0D9DA6;*/
     overflow-y: scroll;
-    color: whitesmoke;
+    /*color: whitesmoke;*/
+
+}
+legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 21px;
+  line-height: inherit;
+  color: red;
+  border: 0;
+  border-bottom: 1px solid #e5e5e5;
 }
 
+label {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-top: 20px;
+  font-size: 15px;
+  /*line-height: inherit;*/
+  color: whitesmoke;
+  border: 0;
+  /*border-bottom: 1px solid #e5e5e5;*/
+}
 
-/*.foo{*/
-/*    margin-top: calc( var(windowHeight) / 2 );*/
-/*}*/
+.fuente_anadir_viviendas
+{
+
+
+
+}
 
 
 

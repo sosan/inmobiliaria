@@ -16,8 +16,8 @@
     <div class="container center-block">
 
     <form action="{{url_for("recibir_alta_piso") }}" method="POST">
-        <div class="row">
-            <h1>DATOS DE LA VIVIENDA</h1>
+        <div class="row ">
+            <h1 class="titulo">DATOS DE LA VIVIENDA</h1>
         </div>
         <input type="hidden" name="usuario" value="{{ session["usuario"] }}">
 
@@ -37,23 +37,30 @@
                 <legend class="borde_fieldset">Tipo de Vivienda</legend>
                  <ul>
                      <li>
-                         <label for="casa1">Piso: </label>
-                         <input type="radio" id="casa1" name="tipocasa" value="1" checked>
+                         <div class="fuente_anadir_viviendas menu_enlinia">
+                             <label for="casa1">Piso: </label>
+                             <input type="radio" id="casa1" name="tipocasa" value="1" checked>
+                         </div>
                      </li>
 
                      <li>
+                         <div class="fuente_anadir_viviendas menu_enlinia">
                          <label for="casa1">Chalet: </label>
                          <input type="radio" id="casa2" name="tipocasa" value="2">
+                         </div>
                      </li>
 
                      <li>
+                         <div class="fuente_anadir_viviendas menu_enlinia">
                          <label for="casa1">Casa Rural: </label>
                          <input type="radio" id="casa3" name="tipocasa" value="3">
+                         </div>
                      </li>
                      <li>
-
+<div class="fuente_anadir_viviendas menu_enlinia">
                          <label for="casa1">Oficina: </label>
                          <input type="radio" id="casa4" name="tipocasa" value="4">
+</div>
 
                      </li>
 
@@ -63,7 +70,7 @@
 
 
         <div class="row center-block">
-             <label>Zona de Palma:</label>
+             <label >Zona de Palma:</label>
              <select name="zonas">
                  <option value="1" {% if zonas == "1" %} selected {% endif %}>Jaume III</option>
                  <option value="2"{% if zonas == "2" %} selected {% endif %} >Son Canals</option>
@@ -191,13 +198,30 @@
                 <div class="control-group">
 
                         <label for="latitude_gps">Latitud: </label>
-                        <input type="text" id="latitude_gps" name="latitude_gps" value="{{ latitude_gps }}">
+                        {% if latitude_gps %}
+                            <input type="text" id="latitude_gps" name="latitude_gps" value="{{ latitude_gps }}">
+                        {% else %}
+                            <input type="text" id="latitude_gps" name="latitude_gps" value="">
+                        {% endif %}
 
-                         <label for="longitude_gps">Longitud: </label>
-                         <input type="text" id="longitude_gps" name="longitude_gps" value="{{ longitude_gps }}">
+                        <label for="longitude_gps">Longitud: </label>
+                        {% if longitude_gps %}
+                            <input type="text" id="longitude_gps" name="longitude_gps" value="{{ longitude_gps }}">
+
+                        {% else %}
+                            <input type="text" id="longitude_gps" name="longitude_gps" value="">
+                        {% endif %}
+
 
                          <label for="precision">Precision: </label>
-                         <input type="text" id="precision" name="precision" value="{{ precision }}">
+                        {% if precision %}
+                            <input type="text" id="precision" name="precision" value="{{ precision }}">
+                        {% else %}
+                            <input type="text" id="precision" name="precision" value="">
+                        {% endif %}
+
+                <div id="result"></div>
+                <button type="button" onclick="showPosition();">Show Position</button>
 
 
                 </div>
@@ -226,8 +250,12 @@
     <script>
     $(document).ready(showPosition());
 
-    function showPosition() {
-        if(navigator.geolocation) {
+    function showPosition()
+    {
+
+        if(navigator.geolocation)
+        {
+            alert("12")
             navigator.geolocation.getCurrentPosition(function(position)
             {
                 var positionInfo = " Latitude: " + position.coords.latitude +
@@ -235,9 +263,10 @@
                     " Precision: " +  position.coords.accuracy + " metros" +
                     " Elevacion: " + position.coords.altitude;
 
-                document.getElementById("latitude_gps").innerHTML =  position.coords.latitude.toString() ;
-                document.getElementById("longitude_gps").innerHTML =  position.coords.longitude.toString() ;
-                document.getElementById("precision").innerHTML = position.coords.accuracy.toString();
+                document.getElementById("result").value = positionInfo;
+                document.getElementById("latitude_gps").value =  position.coords.latitude.toString();
+                document.getElementById("longitude_gps").value =  position.coords.longitude.toString() ;
+                document.getElementById("precision").value = position.coords.accuracy.toString();
 
 
             }, function(error)
@@ -246,16 +275,16 @@
                 switch(error.code)
                 {
                     case error.PERMISSION_DENIED:
-                        x.innerHTML = "User denied the request for Geolocation.";
+                         document.getElementById("latitude_gps").innerHTML = "User denied the request for Geolocation.";
                     break;
                     case error.POSITION_UNAVAILABLE:
-                        x.innerHTML = "Location information is unavailable.";
+                         document.getElementById("latitude_gps").innerHTML = "Location information is unavailable.";
                     break;
                     case error.TIMEOUT:
-                        x.innerHTML = "The request to get user location timed out.";
+                         document.getElementById("latitude_gps").innerHTML = "The request to get user location timed out.";
                     break;
                     default:
-                        x.innerHTML = "An unknown error occurred.";
+                         document.getElementById("latitude_gps").innerHTML = "An unknown error occurred.";
                     break;
                 }
 
