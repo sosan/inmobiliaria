@@ -190,7 +190,8 @@ def recibir_alta_piso():
                 request.form["dueno"],
                 request.form["precio"],
                 request.form["totalmetros"],
-                session["usuario"]
+                session["usuario"],
+                request.form["precision"]
 
             )
 

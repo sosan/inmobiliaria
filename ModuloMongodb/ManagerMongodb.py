@@ -60,12 +60,14 @@ class ManagerMongoDb:
                      dueno,
                      precio,
                      totalmetros,
-                     usuario
+                     usuario,
+                     precision_txt
                      ):
 
         try:
             latitud = float(latitud_txt)
             longitud = float(longitud_txt)
+            precision = float(precision_txt)
 
             ok = self.cursorpisos.insert_one(
                 {
@@ -85,7 +87,8 @@ class ManagerMongoDb:
                     "medicion": False,
                     "usuario": usuario,
                     "datosgps": {
-                        "coordenadas": [latitud, longitud]
+                        "coordenadas": [latitud, longitud],
+                        "precision": precision
                         
                     }
                 }
