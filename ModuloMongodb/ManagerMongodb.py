@@ -59,7 +59,8 @@ class ManagerMongoDb:
                      longitud_txt,
                      dueno,
                      precio,
-                     totalmetros
+                     totalmetros,
+                     usuario
                      ):
 
         try:
@@ -82,6 +83,7 @@ class ManagerMongoDb:
                     "dueno": dueno,
                     "totalmetros": totalmetros,
                     "medicion": False,
+                    "usuario": usuario,
                     "datosgps": {
                         "coordenadas": [latitud, longitud]
                         

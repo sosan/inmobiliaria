@@ -1,12 +1,25 @@
-{% extends "baseadmin.html" %}
+{% extends "base_menu_admin.html" %}
 
-{% block content %}
-<div class="container center-block">
+{% block titulo %}AÑADIR VIVIENDA{% endblock %}
+
+{% block footer_alta_piso %}
+    <div class="col-xs-5 show_clicked_abajo text-center">
+         <a href="{{ url_for("alta_piso") }}">
+        <span class="glyphicon glyphicon-plus glyphicon_font_footer"></span>
+        <div class="pageTitleC ">AÑADIR</div>
+             </a>
+    </div>
+{% endblock %}
+
+
+{% block contenido_central %}
+    <div class="container center-block">
 
     <form action="{{url_for("recibir_alta_piso") }}" method="POST">
         <div class="row">
             <h1>DATOS DE LA VIVIENDA</h1>
         </div>
+        <input type="hidden" name="usuario" value="{{ session["usuario"] }}">
 
         {% if session["mensajeerror"] == 0%}
 
@@ -149,7 +162,7 @@
 
         {% endif %}
 
-         
+
             </div>
         <div class="row center-block">
 
@@ -189,28 +202,16 @@
             <!-- imagen para subir-->
         <br>
 
-    <div class="form-inline  text-center">
-        <a href="{{ url_for("menu_admin") }}" class="pull-left"><button class="btn btn-danger" type="button">HOME</button></a>
+    <div class="container-fluid  text-center">
+{#        <a href="{{ url_for("menu_admin") }}" class="pull-left"><button class="btn btn-danger" type="button">HOME</button></a>#}
 
 
-        <button type="submit" class="pull-right btn btn-success">ALTA PISO</button>
+        <button type="submit" class="btn btn-success btn-lg">ALTA PISO</button>
 
 
     </div>
     </form>
 </div>
-
-
-
-
-
     <br><br>
-
-
-
-
-</div>
-
-
-
+    </div>
 {% endblock %}

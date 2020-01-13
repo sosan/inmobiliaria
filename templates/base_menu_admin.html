@@ -16,7 +16,7 @@ class="fondo_menu_admin"
             123123123123123
           </div>
         </div>
-        <div class="col-xs-12 paderecha fuente_listado_pisos">LISTADO PISOS</div>
+        <div class="col-xs-12 paderecha fuente_listado_pisos">{% block titulo %}{% endblock %}</div>
         <span class="col-xs-12 glyphicon glyphicon-screenshot pull-right glyphicon_font paderecha col-xs-12_fix_padding"></span>
     </div>
     <div class="row" id="arriba_2">
@@ -24,46 +24,13 @@ class="fondo_menu_admin"
     </div>
 
     <div class="row text-center paderecha  " id="arriba_3">
-
-        <ul class="nav nav-tabs tabs_fixed ul_fixed">
-            <li role="presentation" class="active" id="sin_medicion" onclick="cambiar_pest(this);"><a href="#" >SIN MEDICION</a></li>
-            <li role="presentation" class="" id="con_medicion" onclick="cambiar_pest(this);"><a href="#" >CON MEDICION</a></li>
-        </ul>
+{% block menu_medicion %}
+{% endblock %}
     </div>
 
 <div class="row center-block centro_contenido" id="contenido_central">
-
-{% block contenido_central %}
-{% endblock %}
-
-
-
-    {% if listado%}
-        <div class="container">
-            <ul id="lista_menu">
-                {% for elemento in listado %}
-                <li>
-                    <a href="{{ url_for("alta_piso") }}">
-                        <div class="">
-                            Calle: {{ elemento["calle"] }} Numero: {{ elemento["numero"] }}
-                        </div>
-                        <div class="">
-                            {{elemento["precio"]}}
-
-                        </div>
-                        <div class="">
-                            <img src="{{ elemento["foto"] }}">
-
-                        </div>
-
-                    </a>
-
-                </li>
-
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
+    {% block contenido_central %}
+    {% endblock %}
 </div>
 
 
@@ -85,43 +52,51 @@ class="fondo_menu_admin"
     <div class="row">
         <div class=" rectangle7 menu_enlinia">
 
-                <div class=" col-xs-5 show_clicked_abajo text-center">
-                    <a href="{{ url_for("tomar_medidas_light") }}">
+
+        {% block footer_medidas %}
+                <div class=" col-xs-5 text-center">
+                    <a href="{{ url_for("menu_admin") }}">
                     <span class="glyphicon glyphicon-tag glyphicon_font_footer"></span>
                     <div class="pageTitleC">MEDIDAS</div>
                         </a>
                 </div>
+        {% endblock %}
 
+            {% block footer_medidas_pro %}
                 <div class="col-xs-5 text-center">
                     <a href="{{ url_for("tomar_medidas_pago") }}">
                     <span class="glyphicon glyphicon-euro glyphicon_font_footer"></span>
                     <div class="pageTitleC  ">PRO</div>
                          </a>
                 </div>
+            {% endblock %}
 
-
-
+{% block footer_alta_piso %}
                 <div class="col-xs-5 text-center">
                      <a href="{{ url_for("alta_piso") }}">
                     <span class="glyphicon glyphicon-plus glyphicon_font_footer"></span>
                     <div class="pageTitleC ">AÑADIR</div>
                          </a>
                 </div>
+{% endblock %}
 
-
+        {% block footer_modificar_piso %}
                 <div class="col-xs-5 text-center">
                     <a href="{{ url_for("modificar_piso") }}">
                     <span class="glyphicon glyphicon-pencil glyphicon_font_footer"></span>
                     <div class="pageTitleC">MODIFICAR</div>
                         </a>
                 </div>
+            {% endblock %}
 
+        {% block footer_buscar %}
                 <div class="col-xs-5 text-center">
-                    <a href="{{ url_for("buscar_piso") }}" onclick="click_buscar(this);">
+                    <a href="{{ url_for("buscar_piso") }}">
                     <span class="glyphicon glyphicon-search glyphicon_font_footer"></span>
                     <div class="pageTitleC  " >BUSCAR</div>
                         </a>
                 </div>
+{% endblock %}
 
         </div>
     </div>
@@ -143,14 +118,7 @@ class="fondo_menu_admin"
         var elemento_abajo = $("#abajo").height();
         div.css("height", ( $(window).height() - (elemento_arriba + elemento_abajo) )  + 'px' );
 
-
         var sin_medicion_activo = true;
-        {#var con = document.getElementById("con_medicion");#}
-        {#var sin = document.getElementById("sin_medicion");#}
-        {##}
-        {#con.classList.remove("active");#}
-        {#sin.classList.add("active");#}
-
 
         function cambiar_pest(elemento)
         {
@@ -176,31 +144,6 @@ class="fondo_menu_admin"
 
 
         }
-
-
-        function click_buscar(elemento) {
-
-        }
-
-        function click_anadir(elemento) {
-
-        }
-
-        function click_modificar(elemento) {
-
-        }
-
-        function click_pro(elemento) {
-
-        }
-
-        function click_medidas(elemento) {
-
-        }
-
-
-
-
 
 
     </script>

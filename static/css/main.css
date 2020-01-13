@@ -378,7 +378,9 @@ margin-right: 0;
   z-index: 3;
   width: auto;
   margin-top: 1px;
-  background-color: #0D9DA6;
+  /*background-color: #0D9DA6;*/
+    overflow-y: scroll;
+    color: whitesmoke;
 }
 
 

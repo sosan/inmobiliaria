@@ -162,6 +162,9 @@ def alta_piso():
 
 @app.route("/profile/alta", methods=["POST"])
 def recibir_alta_piso():
+    if "usuario" or "password" not in session:
+        return redirect(url_for("alta_piso"))
+
     if "alquiler" and "calle" and "cp" and "habitaciones" and "localidad" and "numero" \
             and "numerobanos" and "template" and "tipocasa" and "zonas" in request.form:
 
@@ -186,7 +189,8 @@ def recibir_alta_piso():
                 request.form["longitude_gps"],
                 request.form["dueno"],
                 request.form["precio"],
-                request.form["totalmetros"]
+                request.form["totalmetros"],
+                session["usuario"]
 
             )
 

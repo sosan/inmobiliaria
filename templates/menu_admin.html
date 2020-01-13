@@ -1,5 +1,48 @@
 {% extends "base_menu_admin.html" %}
 
+{% block titulo %}LISTADO VIVIENDAS{% endblock %}
+
+{% block menu_medicion  %}
+    <ul class="nav nav-tabs tabs_fixed ul_fixed">
+    <li role="presentation" class="active" id="sin_medicion" onclick="cambiar_pest(this);"><a href="#" >SIN MEDICION</a></li>
+    <li role="presentation" class="" id="con_medicion" onclick="cambiar_pest(this);"><a href="#" >CON MEDICION</a></li>
+    </ul>
+{% endblock %}
+
 {% block contenido_central %}
-    contenidoskdjsdkjflsdf
+     {% if listado%}
+        <div class="container">
+            <ul id="lista_menu">
+                {% for elemento in listado %}
+                <li>
+                    <a href="{{ url_for("alta_piso") }}">
+                        <div class="">
+                            Calle: {{ elemento["calle"] }} Numero: {{ elemento["numero"] }}
+                        </div>
+                        <div class="">
+                            {{elemento["precio"]}}
+
+                        </div>
+                        <div class="">
+                            <img src="{{ elemento["foto"] }}">
+
+                        </div>
+
+                    </a>
+
+                </li>
+
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block footer_medidas %}
+        <div class=" col-xs-5 show_clicked_abajo text-center">
+            <a href="{{ url_for("menu_admin") }}">
+            <span class="glyphicon glyphicon-tag glyphicon_font_footer"></span>
+            <div class="pageTitleC">MEDIDAS</div>
+                </a>
+        </div>
 {% endblock %}
