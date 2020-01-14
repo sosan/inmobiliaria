@@ -7,8 +7,9 @@
 FROM alpine:3.11.2
 
 # instalar python 3 y la ultima version de pip
-RUN apk add --no-cache python3-dev && pip3 install --upgrade pip
 
+RUN apk add --no-cache python3-dev && pip3 install --upgrade pip
+#RUN apk --update add bash nano
 
 # en terminal 
 
@@ -30,12 +31,26 @@ COPY . /app
 RUN pip3 --no-cache install -r requirements.txt
 
 # docker run -it --publish 7050:5000 nombreapp
+# docker run -it -p 7050:5000 inmobiliaria
 
 # lista de tareas pendientes
 # CMD [ "python3", "main.py" ]
 # CMD [ "SET FLASK APP", "main.py" ]
 # las ips de entorno locla son diferentes a las ips de la imagen docker
-CMD [ "python3", "main.py" ]
+ENV FLASK_APP=main.py:app
+CMD ["flask", "run", "--host", "0.0.0.0"]
+
+# debug=True
+
+# ejecutamos apllicacion de docker
+#docker run -it -p 7050:5000 -d nombreapp
+
+#docker
+# docker container ls
+
+# docker stop ids_del container
+
+
 
 
 

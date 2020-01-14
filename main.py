@@ -162,7 +162,7 @@ def alta_piso():
 
 @app.route("/profile/alta", methods=["POST"])
 def recibir_alta_piso():
-    if "usuario" or "password" not in session:
+    if "usuario" not in session or "password" not in session:
         return redirect(url_for("alta_piso"))
 
     if "alquiler" and "calle" and "cp" and "habitaciones" and "localidad" and "numero" \
