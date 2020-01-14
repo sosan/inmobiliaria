@@ -51,6 +51,36 @@ CMD ["flask", "run", "--host", "0.0.0.0"]
 # docker stop ids_del container
 
 
+# docker build -t flask_new .
+
+
+## 
+##normalamente se explica para mostrar como 
+#imagen cuando esta apagada
+# docker run 
+
+# docker exec cuando tenemos la imagen cargada
+# docker ps
+# docker run -it nomreapp /bin/sh  # se va ha abrir en shell
+# cd src es donde esta totod el contentido
+# main nos importa ...
+
+# src
+#   conexion.py
+# conexiones 
+# from flask import Flask
+
+#Docckerfile
+# cerrar la aimagne
+# dodcker run -it -p 5050:5000 -d nombreapp
+
+# volumenes dentro de docker
+# docker exec -i -t id:iamgend  /bin/sh
+# lo mas comane es hacer en caprta
+# docker run -it -p 5100:5000 -v ruta_absoluta:carpeta_dentro_de_docker__/app/src -d nombre_docker
+
+
+
 
 
 
