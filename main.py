@@ -13,11 +13,14 @@ from flask import send_from_directory
 from ModuloMongodb.ManagerMongodb import managermongo
 from flask_bootstrap import Bootstrap
 from ModuloHelper.ManagerHelper import ManagerHelper
+from ModuloWeb.ManagerWeb import ManagerWeb
+
 
 app = Flask(__name__)
 app.secret_key = "holaa"
 # MUCHO CUIDADO EN NO PISAR LAS VARIABLES YA CREADAS
 # app.config["DEBUG"] = True
+managerweb = ManagerWeb()
 
 import os
 
@@ -133,13 +136,14 @@ def getlocation():
     """
     "https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.{format}"
     "https://geocoder.ls.hereapi.com/6.2/geocode.{format}"
+    # uri = """
+    #     https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?apiKey=k-EckgQuyQOTGQoMy54SsslKuX9oMP8PFj2SyV-_wJM
+    #     &mode=retrieveAddresses
+    #     &prox={0},{1}
+    #     &maxresults=1
+    #     """.format(request.form["latitude"], request.form["longitud"])
 
-    uri = """
-        https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?apiKey=k-EckgQuyQOTGQoMy54SsslKuX9oMP8PFj2SyV-_wJM
-        &mode=retrieveAddresses
-        &prox={0},{1}
-        &maxresults=1
-        """.format(request.form["latitude"], request.form["longitud"])
+    v = managerweb.getstreet(request.form["latitude"], request.form["longitud"])
 
 
 @app.route("/profile/alta", methods=["GET"])
@@ -196,6 +200,11 @@ def alta_piso():
 
 @app.route("/profile/alta", methods=["POST"])
 def recibir_alta_piso():
+    if "obtener_calle" in request.form:
+        print("obtnerecalle")
+
+
+
     if "usuario" not in session or "password" not in session:
         return redirect(url_for("alta_piso"))
 
