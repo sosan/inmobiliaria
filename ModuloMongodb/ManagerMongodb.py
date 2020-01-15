@@ -104,13 +104,19 @@ class ManagerMongoDb:
         except ValueError:
             raise Exception("Conversion no posible")
 
-    def comprobarexisteinmueble(self, calle, latitude, altitude):
-        patron = {"calle": calle, "datosgps": {"coordenadas": [latitude, altitude]}}
-        ok = list(self.cursorpisos.find(patron))
-        if ok != None:
-            if len(ok) <= 0:
-                return True
-        return False
+    def comprobarexisteinmueble(self, calle, latitud_txt, longitud_txt):
+
+        try:
+            latitud = float(latitud_txt)
+            longitud = float(longitud_txt)
+            patron = {"calle": calle, "datosgps": {"coordenadas": [latitud, longitud]}}
+            ok = list(self.cursorpisos.find(patron))
+            if ok != None:
+                if len(ok) <= 0:
+                    return True
+            return False
+        except ValueError:
+            raise Exception("no podidod conversion {0}".format(latitud_txt, longitud_txt))
 
     def getcantidadproductos(self):
         resultados = self.cursoradmin.find_one({"_id": "contador"}, {"_id": False})
