@@ -115,35 +115,27 @@ def menu_admin_post():
     return redirect(url_for("menu_admin"))
 
 
-@app.route("/profile/getlocation", mehtods=["POST"])
-def getlocation():
-    """
-    https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?prox=
-    41.8842,-87.6388,250
-    &mode=retrieveAddresses
-    &maxresults=1
-    &gen=9
-    &apiKey=k-EckgQuyQOTGQoMy54SsslKuX9oMP8PFj2SyV-_wJM
-
-    """
-
-    """
-    https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json
-        ?apiKey=k-EckgQuyQOTGQoMy54SsslKuX9oMP8PFj2SyV-_wJM
-        &mode=retrieveAddresses
-        &prox=41.8842,-87.6388,250
-        &maxresults=1
-    """
-    "https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.{format}"
-    "https://geocoder.ls.hereapi.com/6.2/geocode.{format}"
-    # uri = """
-    #     https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?apiKey=k-EckgQuyQOTGQoMy54SsslKuX9oMP8PFj2SyV-_wJM
-    #     &mode=retrieveAddresses
-    #     &prox={0},{1}
-    #     &maxresults=1
-    #     """.format(request.form["latitude"], request.form["longitud"])
-
-    v = managerweb.getstreet(request.form["latitude"], request.form["longitud"])
+# @app.route("/profile/getlocation", mehtods=["POST"])
+# def getlocation():
+#     """
+#     https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?prox=
+#     41.8842,-87.6388,250
+#     &mode=retrieveAddresses
+#     &maxresults=1
+#     &gen=9
+#     &apiKey=k-EckgQuyQOTGQoMy54SsslKuX9oMP8PFj2SyV-_wJM
+#
+#     """
+#
+# """ https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json
+# ?apiKey=k-EckgQuyQOTGQoMy54SsslKuX9oMP8PFj2SyV-_wJM &mode=retrieveAddresses &prox=41.8842,-87.6388,
+# 250 &maxresults=1 """ "https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.{format}"
+# "https://geocoder.ls.hereapi.com/6.2/geocode.{format}" # uri = """ #
+# https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?apiKey=k-EckgQuyQOTGQoMy54SsslKuX9oMP8PFj2SyV-_wJM
+#     &mode=retrieveAddresses #     &prox={0},{1} #     &maxresults=1 #     """.format(request.form["latitude"],
+#     request.form["longitud"])
+#
+#     v = managerweb.getstreet(request.form["latitude"], request.form["longitud"])
 
 
 @app.route("/profile/alta", methods=["GET"])
