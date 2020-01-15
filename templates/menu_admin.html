@@ -10,31 +10,101 @@
 {% endblock %}
 
 {% block contenido_central %}
-     {% if listado%}
-        <div class="container">
-            <ul id="lista_menu">
-                {% for elemento in listado %}
-                <li>
-                    <a href="{{ url_for("alta_piso") }}">
-                        <div class="">
-                            Calle: {{ elemento["calle"] }} Numero: {{ elemento["numero"] }}
-                        </div>
-                        <div class="">
-                            {{elemento["precio"]}}
+ {% if datos %}
+     {% for elemento in datos %}
+         <div class="aditem">
+             <div class="aditem-header">
+             <!-- quine lo ha introducido -->
+                <div class="x3">{{ elemento.localidad }} - {{ elemento.nombre }}</div>
+                <div class="x6" >
+                    {% if elemento.fechadelta >= fechaahora  %}
+                    <span class="new-ad-label">NUEVA ENTRADA</span>
+                    {% else %}
+                        <span class="new-ad-label">{{ elemento.fecha.strftime("%d-%m-%Y") }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="aditem-detail-image-container">
+                <div class="aditem-detail">
 
-                        </div>
-                        <div class="">
-                            <img src="{{ elemento["foto"] }}">
-
-                        </div>
-
+                    <!-- modal ?? -->
+                    <a href="" class="aditem-detail-title ">
+                        <span class="glyphicon glyphicon-map-marker"></span>
+                        {{ elemento.calle }}<br>
+{#                        Numero: {{ elemento.numero }}#}
                     </a>
+                    <div class=" list-location-link tx">
+                        <svg class="icon16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" style="width: 16px; height: 16px;">
+                            <path d="M9.889 4c0 .4-.3.7-.7.7h-6.7c-.3 0-.6-.3-.6-.7 0-.4.3-.7.7-.7h6.6c.4 0 .7.3.7.7zm0 4c0 .4-.3.7-.7.7h-6.7c-.3 0-.6-.3-.6-.7 0-.4.3-.7.7-.7h6.6c.4 0 .7.3.7.7zm-7.3 3.3h6.6c.4 0 .7.3.7.7 0 .4-.3.7-.7.7h-6.7c-.4 0-.7-.3-.7-.7.1-.4.4-.7.8-.7zm11.1-7.8v.9c0 .4-.3.7-.7.7h-.9c-.4 0-.7-.3-.7-.7v-.9c0-.4.3-.7.7-.7h.9c.4 0 .7.3.7.7zm-1.1 7.2c.7 0 1.3.6 1.3 1.3s-.6 1.3-1.3 1.3-1.3-.6-1.3-1.3.5-1.3 1.3-1.3zm.3-3.9l1 1.8c.1.2 0 .3-.1.4h-2.1c-.2 0-.3-.1-.3-.3v-.1l1-1.8c.1-.1.2-.1.4-.1 0 .1.1.1.1.1z" fill="#30832f" data-darkreader-inline-fill="" style="--darkreader-inline-fill:#7baa7b;"></path></svg>
+                        Otros stocks en Palma De Mallorca
+                    </div>
+                    <div class="list-location-region tx">
+                        <svg class="icon16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" style="width: 16px; height: 16px;">
+                            <path d="M8 7.5c.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7 0-.6-.4-1-1-1-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7 0 .6.4 1 1 1zM6.4 4.9c.4-.4 1-.7 1.6-.7 1.3 0 2.3 1 2.3 2.3 0 .6-.2 1.2-.7 1.6s-1 .7-1.6.7c-1.3 0-2.3-1-2.3-2.3 0-.6.2-1.2.7-1.6zM2.7 6.5c0-2.9 2.4-5.3 5.3-5.3s5.3 2.4 5.3 5.3c0 2.4-1.5 5.2-4.3 8.5l-.1.1c-.6.6-1.4.5-1.9-.1-2.9-3.3-4.3-6.1-4.3-8.5zm1.3 0c0 2 1.3 4.6 4 7.7 2.7-3.1 4-5.7 4-7.7 0-2.2-1.8-4-4-4s-4 1.8-4 4z" fill="#171c1f" data-darkreader-inline-fill="" style="--darkreader-inline-fill:#adaaa7;"></path>
+                        </svg>
+                        baleares
+                    </div>
+                        <div class="tx"> aygr  . . .   Oferta Tabac picado ,  maquina ,  liar ,  picar ,  entubar ,  Tabac Natural ,  rubio ,  negro ,  suave ,  fuerte. . . .   suave   negro</div>
+                    <br>
+                    <div class="x11">
+                        <div class="adlist-tagsbox-inlineblockline">
+                            <div class="aditem-price">25<sup>€</sup></div>
+                            <div class="vefbox"><a href="/otros-stocks/yw4x-oferta-tabac-de-liar-el-kilo-331890994.htm#fotos" target="_blank"><div class="pillDiv vef">ver fotos</div></a></div>
+                            <div class="inmo-attributes"></div>
+                        </div>
+                    </div>
+                </div>
 
-                </li>
+            <div id="f331890994" class="aditem-image">
+                <a href="javascript:var urlFotos_331890994 = [];urlFotos_331890994['0'] = 'https://img.milanuncios.com/fg/3318/90/331890994_1.jpg?VersionId=g3q6d66z7tcg3tNBwLn23vrD_IXxYsv9';ImageStore.addImages(331890994, urlFotos_331890994);openImageDialog('331890994',1,'1','https://static.milanuncios.com/202001140900-master/','https://img.milanuncios.com/','urlFotos_331890994')"><img oncopy="return false" oncontextmenu="return false" onmousedown="return false" src="https://img.milanuncios.com/fp/3318/90/331890994_1.jpg?VersionId=TYioks085p0TCaT.JMMaS7h3GHPvs_qb" alt="YW4X OFERTA, TABAC DE LIAR, EL KILO - foto" class="ef"><br></a></div>
+            </div>
 
-                {% endfor %}
-            </ul>
+            <div class="aditem-footer" id="ph331890994">
+                <div class="aditem-buttons">
+                    <div>
+                        <a onclick="openContactByEmailPopup(331890994, 0, 'list');" class="def-btn">
+                        <i class=" icon icon-white-envelope"></i>
+                        <span class="byEmail">MENSAJE</span>
+                        </a>
+                    </div>
+
+                    <div>
+                        <a href="javascript:ventana('compartir/?id=','331890994')" class="simple-button"><i class="icon icon-share"></i> <span>Compartir<span></span></span></a>
+                    </div>
+
+                    <div>
+                        <a href="javascript:ox('331890994')" class="simple-button"><i class="icon icon-complaint"></i><span>Denunciar</span></a>
+                    </div>
+                </div>
+            </div>
         </div>
+         <br>
+    {% endfor %}
+
+{#        <div class="container">#}
+{#            <ul id="lista_menu">#}
+{#                {% for elemento in datos %}#}
+{#                <li>#}
+{#                    <a href="{{ url_for("alta_piso") }}">#}
+{#                        <div class="">#}
+{#                            Calle: {{ elemento["calle"] }} Numero: {{ elemento["numero"] }}#}
+{#                        </div>#}
+{#                        <div class="">#}
+{#                            {{elemento["precio"]}}#}
+{##}
+{#                        </div>#}
+{#                        <div class="">#}
+{#                            <img src="{{ elemento["foto"] }}">#}
+{##}
+{#                        </div>#}
+{##}
+{#                    </a>#}
+{##}
+{#                </li>#}
+{##}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        </div>#}
     {% endif %}
 {% endblock %}
 

@@ -5,6 +5,10 @@ class="fondo_menu_admin"
 {% endblock %}
 
 {% block content %}
+    <!-- preloader -->
+    <div id="preloader">
+		<div id="circulin"></div>
+	</div>
 
         <!-- menu arriba -->
 <div class="navbar navbar-fixed-top nav-bar_fixed_top container-fluid" >
@@ -112,7 +116,18 @@ class="fondo_menu_admin"
 {% block scripts %}
     {{ super() }}
     <script>
-        var div= $('#contenido_central');
+
+        //pequeño loader
+        $(window).on('load', function () {
+            $("#circulin").fadeOut();
+            $("#preloader").delay(350).fadeOut("slow");
+            $("body").delay(350).css({
+                "overflow": "visible"
+            });
+        })
+
+
+        var div= $("#contenido_central");
         // 10 de offset
         let offset = 10;
         var elemento_arriba = $("#arriba_1").height() + $("#arriba_2").height() + $("#arriba_3").height() + offset;
@@ -145,6 +160,8 @@ class="fondo_menu_admin"
 
 
         }
+
+
 
 
     </script>

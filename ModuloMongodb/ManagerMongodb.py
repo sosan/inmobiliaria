@@ -50,7 +50,6 @@ class ManagerMongoDb:
                      cp,
                      habitaciones,
                      localidad,
-                     numero,
                      numerobanos,
                      template,
                      tipocasa,
@@ -60,7 +59,7 @@ class ManagerMongoDb:
                      dueno,
                      precio,
                      totalmetros,
-                     usuario,
+                     nombre,
                      precision_txt
                      ):
 
@@ -68,6 +67,9 @@ class ManagerMongoDb:
             latitud = float(latitud_txt)
             longitud = float(longitud_txt)
             precision = float(precision_txt)
+
+            fecha = datetime.utcnow()
+            fechadelta = datetime.utcnow() + timedelta(hours=24)
 
             ok = self.cursorpisos.insert_one(
                 {
@@ -77,7 +79,7 @@ class ManagerMongoDb:
                     "habitaciones": habitaciones,
                     "precio": precio,
                     "localidad": localidad,
-                    "numero": numero,
+                    # "numero": numero,
                     "numerobanos": numerobanos,
                     "template": template,
                     "tipocasa": tipocasa,
@@ -85,11 +87,13 @@ class ManagerMongoDb:
                     "dueno": dueno,
                     "totalmetros": totalmetros,
                     "medicion": False,
-                    "usuario": usuario,
+                    "nombre": nombre,
+                    "fecha": fecha,
+                    "fechadelta": fechadelta,
                     "datosgps": {
                         "coordenadas": [latitud, longitud],
                         "precision": precision
-                        
+
                     }
                 }
             )
@@ -100,8 +104,9 @@ class ManagerMongoDb:
         except ValueError:
             raise Exception("Conversion no posible")
 
-    def comprobarexisteinmueble(self, calle, numero):
-        ok = list(self.cursorpisos.find({"calle": calle, "numero": numero}))
+    def comprobarexisteinmueble(self, calle, latitude, altitude):
+        patron = {"calle": calle, "datosgps": {"coordenadas": [latitude, altitude]}}
+        ok = list(self.cursorpisos.find(patron))
         if ok != None:
             if len(ok) <= 0:
                 return True
@@ -113,6 +118,12 @@ class ManagerMongoDb:
             return False
         return True, resultados["cantidadproductos"]
 
+    def primeracomprobacionadmin(self, usuario, password):
+        resultado = self.cursoradmin.find_one({"usuario": usuario, "password": password}, {"_id": False})
+        if resultado != None:
+            return True, resultado["nombre"]
+        return False
+
     def comprobaradmin(self, usuario, password):
         resultado = self.cursoradmin.find_one({"usuario": usuario, "password": password}, {"_id": False})
         if resultado != None:
@@ -122,12 +133,13 @@ class ManagerMongoDb:
     def getallproductos(self):
         resultados = list(self.cursorpisos.find({}))
         return resultados
-    
+
     def get_sin_mediciones(self):
         resultados = list(self.cursorpisos.find({"medicion": False}, {"_id": False}))
         return resultados
 
-    def updateproducto(self, fecha, idproducto, calle, alquiler, cp, habitaciones, precio, localidad, numero, numerobanos,
+    def updateproducto(self, fecha, idproducto, calle, alquiler, cp, habitaciones, precio, localidad, numero,
+                       numerobanos,
                        template, tipocasa, zonas, dueno, totalmetros, medicion, latitud, longitud
                        ):
 

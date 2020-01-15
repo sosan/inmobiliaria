@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Flask
 from flask import render_template
 from flask import redirect
@@ -71,10 +73,11 @@ def admin_login():
 @app.route("/admin", methods=["POST"])
 def recibir_login():
     if "usuario" and "password" in request.form:
-        ok = managermongo.comprobaradmin(request.form["usuario"], request.form["password"])
+        ok, nombre = managermongo.primeracomprobacionadmin(request.form["usuario"], request.form["password"])
         if ok == True:
             session["usuario"] = request.form["usuario"]
             session["password"] = request.form["password"]
+            session["nombre"] = nombre
             return redirect(url_for("menu_admin"))
 
         else:
@@ -96,7 +99,8 @@ def menu_admin():
             # else .......
             # listado = managermongo.get_con_mediciones()
             if len(listado) > 0:
-                return render_template("menu_admin.html", datos=listado)
+                fechadelta = datetime.utcnow()
+                return render_template("menu_admin.html", datos=listado, fechaahora=fechadelta)
             else:
                 return render_template("menu_admin.html", datos=None)
 
@@ -110,13 +114,13 @@ def menu_admin_post():
 
 @app.route("/profile/alta", methods=["GET"])
 def alta_piso():
-    if "anterior_calle" and "anterior_numero" in session:
+    if "anterior_calle" in session:
         anterior_calle = session.pop("anterior_calle")
-        anterior_numero = session.pop("anterior_numero")
+        # anterior_numero = session.pop("anterior_numero")
 
-        return render_template("alta_piso.html", anterior_calle=anterior_calle, anterior_numero=anterior_numero)
+        return render_template("alta_piso.html", anterior_calle=anterior_calle)
 
-    if "calle" and "alquiler" and "cp" and "habitaciones" and "localidad" and "numero" and "numerobanos" \
+    if "calle" and "alquiler" and "cp" and "habitaciones" and "localidad" and "numerobanos" \
             and "template" and "tipocasa" and "zonas" and "latitude_gps" and "longitude_gps" and "dueno" and "precio" and "totalmetros" \
             in session:
         calle = session.pop("calle")
@@ -124,7 +128,7 @@ def alta_piso():
         cp = session.pop("cp")
         habitaciones = session.pop("habitaciones")
         localidad = session.pop("localidad")
-        numero = session.pop("numero")
+        # numero = session.pop("numero")
         numerobanos = session.pop("numerobanos")
         template = session.pop("template")
         tipocasa = session.pop("tipocasa")
@@ -141,7 +145,7 @@ def alta_piso():
                                cp=cp,
                                habitaciones=habitaciones,
                                localidad=localidad,
-                               numero=numero,
+                               # numero=numero,
                                numerobanos=numerobanos,
                                template=template,
                                tipocasa=tipocasa,
@@ -165,13 +169,15 @@ def recibir_alta_piso():
     if "usuario" not in session or "password" not in session:
         return redirect(url_for("alta_piso"))
 
-    if "alquiler" and "calle" and "cp" and "habitaciones" and "localidad" and "numero" \
+    if "alquiler" and "calle" and "cp" and "habitaciones" and "localidad"\
             and "numerobanos" and "template" and "tipocasa" and "zonas" in request.form:
 
         # comprobacion de si ya existe el piso en la db
         ok = managermongo.comprobarexisteinmueble(
             request.form["calle"],
-            request.form["numero"]
+            request.form["latitude_gps"],
+            request.form["longitude_gps"]
+            # request.form["numero"]
         )
         if ok == True:
             ok = managermongo.altaproducto(
@@ -180,7 +186,7 @@ def recibir_alta_piso():
                 request.form["cp"],
                 request.form["habitaciones"],
                 request.form["localidad"],
-                request.form["numero"],
+                # request.form["numero"],
                 request.form["numerobanos"],
                 request.form["template"],
                 request.form["tipocasa"],
@@ -190,7 +196,7 @@ def recibir_alta_piso():
                 request.form["dueno"],
                 request.form["precio"],
                 request.form["totalmetros"],
-                session["usuario"],
+                request.form["nombre"],
                 request.form["precision"]
 
             )
@@ -198,7 +204,7 @@ def recibir_alta_piso():
             if ok == True:
                 session["mensajeerror"] = helper.errores.insertado_correctamente
                 session["anterior_calle"] = request.form["calle"]
-                session["anterior_numero"] = request.form["numero"]
+                # session["anterior_numero"] = request.form["numero"]
             else:
                 session["mensajeerror"] = helper.errores.no_insertado
         else:
@@ -209,7 +215,7 @@ def recibir_alta_piso():
             session["cp"] = request.form["cp"]
             session["habitaciones"] = request.form["habitaciones"]
             session["localidad"] = request.form["localidad"]
-            session["numero"] = request.form["numero"]
+            # session["numero"] = request.form["numero"]
             session["numerobanos"] = request.form["numerobanos"]
             session["template"] = request.form["template"]
             session["tipocasa"] = request.form["tipocasa"]

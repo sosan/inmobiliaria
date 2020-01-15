@@ -80,6 +80,18 @@ CMD ["flask", "run", "--host", "0.0.0.0"]
 # docker run -it -p 5100:5000 -v ruta_absoluta:carpeta_dentro_de_docker__/app/src -d nombre_docker
 
 
+# docker run -it mongo /b
+# ver un vistazo de como lo han implementado
+# 
+
+
+# heroku => plataform
+# doker => integracion y desarrollo
+# 
+
+# go live
+
+
 
 
 

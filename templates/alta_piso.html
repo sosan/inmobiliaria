@@ -19,17 +19,21 @@
         <div class="row ">
             <h1 class="titulo">RELLENAR DATOS VIVIENDA</h1>
         </div>
-        <input type="hidden" name="usuario" value="{{ session["usuario"] }}">
+        <input type="hidden" name="nombre" value="{{ session["nombre"] }}">
 
         {% if session["mensajeerror"] == 0%}
 
         {% elif session["mensajeerror"] == 2 %}
             <h1 class=" label-danger">YA EXISTE EL INMUEBLE</h1>
         {% elif session["mensajeerror"] == 1 %}
-            <h3 class="  label-success">DADO DE ALTA CORRECTAMNTE</h3>
+            <h3 class="  label-success">
+                DADO DE ALTA CORRECTAMENTE
+
             {% if anterior_calle and anterior_numero %}
                 <p>Calle: {{ anterior_calle }} Numero: {{ anterior_numero }}</p>
             {% endif %}
+            </h3>
+
 
         {% endif %}
         <div class="row center-block">
@@ -69,6 +73,8 @@
         </div>
 
 
+
+
         <div class="row center-block">
              <label >Zona de Palma:</label>
              <select name="zonas">
@@ -96,10 +102,10 @@
              <label>Calle</label>
              <input type="text" name="calle" value="{{ calle }}">
         </div>
-        <div class="row center-block">
-             <label>numero</label>
-             <input type="text" name="numero" value="{{ numero }}">
-        </div>
+{#        <div class="row center-block">#}
+{#             <label>numero</label>#}
+{#             <input type="text" name="numero" value="{{ numero }}">#}
+{#        </div>#}
         <div class="row center-block">
          <label>Codigo Postal</label>
          <input type="text" name="cp" value="{{ cp }}">
