@@ -12,7 +12,8 @@ class ManagerWeb:
 
     def getstreet(self, x, y):
         "https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?apiKey=k-EckgQuyQOTGQoMy54SsslKuX9oMP8PFj2SyV-_wJM&mode=retrieveAddresses&prox=39.6156533,2.7755254&maxresults=1"
-        uri = """https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?apiKey=k-EckgQuyQOTGQoMy54SsslKuX9oMP8PFj2SyV-_wJM&mode=retrieveAddresses&prox={0},{1}&maxresults=1""".format(x, y)
+        uri = """https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?apiKey=k-EckgQuyQOTGQoMy54SsslKuX9oMP8PFj2SyV-_wJM&mode=retrieveAddresses&prox={0},{1}&maxresults=1""".format(
+            x, y)
 
         resultado = self.web.get(uri)
         if resultado != None:
@@ -27,7 +28,9 @@ class ManagerWeb:
                 return "Ninguna", "Ninguna", separacion[0], separacion[1]  # calle= None, numero=None, cp, ciudad
             else:
                 #  _____ XXX XXXXXX, 5, 00000 XXXXXX (OOOO OOOOO), LLLLLLL
+                calle = splitdire[0].split(" ")[1:].join(" ")
                 separacion = splitdire[2].split(" ")
-                return splitdire[0].split(" ")[1:], splitdire[1], separacion[0], separacion[1]  # calle= None, numero=None, cp, ciudad
+
+                return calle, splitdire[1], separacion[0], separacion[1]  # calle= None, numero=None, cp, ciudad
 
         return None
