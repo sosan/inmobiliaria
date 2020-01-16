@@ -141,7 +141,7 @@ def menu_admin_post():
 def alta_piso():
     if "anterior_calle" in session:
         anterior_calle = session.pop("anterior_calle")
-        # anterior_numero = session.pop("anterior_numero")
+        anterior_numero = session.pop("anterior_numero")
 
         return render_template("alta_piso.html", anterior_calle=anterior_calle)
 

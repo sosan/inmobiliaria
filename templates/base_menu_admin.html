@@ -22,36 +22,26 @@ class="fondo_menu_admin"
           </div>
         </div>
         <div class="col-xs-12 paderecha fuente_listado_pisos">{% block titulo %}{% endblock %}</div>
-{#        <span class="col-xs-12 glyphicon glyphicon-screenshot pull-right glyphicon_font paderecha col-xs-12_fix_padding"></span>#}
+        <span class="col-xs-12 glyphicon glyphicon-screenshot pull-right glyphicon_font paderecha col-xs-12_fix_padding"></span>
     </div>
     <div class="row" id="arriba_2">
         <hr class=" linea_listado">
     </div>
 
     <div class="row text-center paderecha  " id="arriba_3">
-{% block menu_medicion %}
-{% endblock %}
+    {% block menu_medicion %}
+    {% endblock %}
     </div>
 
-<div class="row center-block centro_contenido" id="contenido_central">
-    {% block contenido_central %}
-    {% endblock %}
-</div>
-
-
-
-
+    <div class="row center-block centro_contenido" id="contenido_central">
+        {% block contenido_central %}
+        {% endblock %}
+    </div>
 </div>
 
 <!-- fin menu arriba -->
 
-
-
-
-
-
-
-{#    <!-- menu abajo -->#}
+    <!-- menu abajo -->
 <div class="navbar navbar-fixed-bottom nav-bar_fixed_height" id="abajo">
 <div class="container-fluid">
     <div class="row">
@@ -67,23 +57,23 @@ class="fondo_menu_admin"
                 </div>
         {% endblock %}
 
-            {% block footer_medidas_pro %}
+        {% block footer_medidas_pro %}
                 <div class="col-xs-5 text-center">
                     <a href="{{ url_for("tomar_medidas_pago") }}">
                     <span class="glyphicon glyphicon-euro glyphicon_font_footer"></span>
                     <div class="pageTitleC  ">PRO</div>
                          </a>
                 </div>
-            {% endblock %}
+        {% endblock %}
 
-{% block footer_alta_piso %}
+        {% block footer_alta_piso %}
                 <div class="col-xs-5 text-center">
                      <a href="{{ url_for("alta_piso") }}">
                     <span class="glyphicon glyphicon-plus glyphicon_font_footer"></span>
                     <div class="pageTitleC ">AÑADIR</div>
                          </a>
                 </div>
-{% endblock %}
+        {% endblock %}
 
         {% block footer_modificar_piso %}
                 <div class="col-xs-5 text-center">
@@ -101,15 +91,13 @@ class="fondo_menu_admin"
                     <div class="pageTitleC  " >BUSCAR</div>
                         </a>
                 </div>
-{% endblock %}
+        {% endblock %}
 
         </div>
     </div>
 </div>
 </div>
-{#<!-- fin menu abajo -->#}
-
-
+<!-- fin menu abajo -->
 {% endblock %}
 
 
@@ -121,10 +109,10 @@ class="fondo_menu_admin"
         $(window).on('load', function () {
             $("#circulin").fadeOut();
             $("#preloader").delay(350).fadeOut("slow");
-            $("body").delay(350).css({
-                "overflow": "visible"
-            });
-        })
+            {#$("body").delay(350).css({#}
+            {#    "overflow": "visible"#}
+            {# }) ;#}
+        });
 
 
         var div= $("#contenido_central");

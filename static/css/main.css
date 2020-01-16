@@ -1,10 +1,102 @@
-/*body {*/
-/*    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
-/*    font-size: 14px;*/
-/*    line-height: 1.42857143;*/
-/*    !*color: whitesmoke;*!*/
-/*    background-color: #fff;*/
-/*}*/
+ body {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  font-family: "Poppins", sans-serif;
+  color: #444;
+}
+
+body.style_1 {
+
+}
+
+
+/*circulo*/
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  /*background-color: #fff;*/
+  z-index: 999999;
+}
+
+#circulin {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 50%;
+  left: 50%;
+  margin-left: -25px;
+  margin-top: -25px;
+  -webkit-animation: circle infinite .95s linear;
+  -moz-animation: circle infinite .95s linear;
+  -o-animation: circle infinite .95s linear;
+  animation: circle infinite .95s linear;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-left-color: #333;
+    border-radius: 100%;
+}
+
+@-webkit-keyframes circle {
+  0% {
+    -webkit-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes circle {
+  0% {
+    -webkit-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes circle {
+  0% {
+    -webkit-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes circle {
+  0% {
+    -webkit-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
 
 
 .bgImage {
@@ -179,12 +271,13 @@
   z-index: 31;
   width: auto;
   height: auto;
-  /* Create the parallax scrolling effect */
   background: #414141 url("../images/full_bg.png") no-repeat fixed center;
   background-size: cover;
-  /*background: linear-gradient(213deg, #F3C7A1, #E87975);*/
-  /*background: rgba(255,255,255,0);*/
-  /*box-shadow: inset -1px -114px 72px rgba(0,0,0,0.19);*/
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+
+
 }
 
 
@@ -338,6 +431,7 @@ background-color: #6f6262;
     /*background-color: gray !important;*/
     color: orange;
   border-radius: 21px 4px 0 0;
+  font-size: 15px;
 }
 
 
@@ -460,6 +554,7 @@ label {
   overflow: hidden;
   float: left;
     color: #b4b2b0;
+  font-size: 15px;
 }
 .x6
 {
@@ -503,7 +598,8 @@ label {
 
 .list-location-link {
     margin: 9px 0px;
-    display: flex;
+  /*margin-left: 5px;*/
+  /*  display: flex;*/
 }
 
 .icon16 {
@@ -521,7 +617,12 @@ label {
 
 .x11 {
     clear: both;
-    margin-top: 12px;
+    margin-top: 24px;
+}
+
+.x12 {
+    clear: both;
+    margin-top: 8px;
 }
 
 .adlist-tagsbox-inlineblockline {
@@ -604,6 +705,7 @@ svg {
     width: 25%;
     float: left;
     text-align: right;
+  margin-top: 5px;
 }
 
 .aditem-footer {
@@ -625,7 +727,6 @@ svg {
    height: 26px;
     font-size: 13px;
     border-radius: 5px;
-    padding: 5px 10px;
 }
 
 .def-btn {
