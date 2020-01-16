@@ -15,7 +15,6 @@ from flask_bootstrap import Bootstrap
 from ModuloHelper.ManagerHelper import ManagerHelper
 from ModuloWeb.ManagerWeb import ManagerWeb
 
-
 app = Flask(__name__)
 app.secret_key = "holaa"
 # MUCHO CUIDADO EN NO PISAR LAS VARIABLES YA CREADAS
@@ -146,6 +145,18 @@ def alta_piso():
 
         return render_template("alta_piso.html", anterior_calle=anterior_calle)
 
+    if "obtener_calle" in session:
+        session.pop("obtener_calle")
+        calle = session.pop("calle")
+        numero = session.pop("numero")
+        cp = session.pop("cp")
+        localidad = session.pop("localidad")
+        return render_template("alta_piso.html",
+                               calle=calle,
+                               numero=numero,
+                               cp=cp,
+                               localidad=localidad)
+
     if "calle" and "alquiler" and "cp" and "habitaciones" and "localidad" and "numerobanos" \
             and "template" and "tipocasa" and "zonas" and "latitude_gps" and "longitude_gps" and "dueno" and "precio" and "totalmetros" \
             in session:
@@ -154,7 +165,7 @@ def alta_piso():
         cp = session.pop("cp")
         habitaciones = session.pop("habitaciones")
         localidad = session.pop("localidad")
-        # numero = session.pop("numero")
+        numero = session.pop("numero")
         numerobanos = session.pop("numerobanos")
         template = session.pop("template")
         tipocasa = session.pop("tipocasa")
@@ -171,7 +182,7 @@ def alta_piso():
                                cp=cp,
                                habitaciones=habitaciones,
                                localidad=localidad,
-                               # numero=numero,
+                               numero=numero,
                                numerobanos=numerobanos,
                                template=template,
                                tipocasa=tipocasa,
@@ -193,9 +204,14 @@ def alta_piso():
 @app.route("/profile/alta", methods=["POST"])
 def recibir_alta_piso():
     if "obtener_calle" in request.form:
-        print("obtnerecalle")
+        session["obtener_calle"] = True
+        calle, numero, cp, localidad = managerweb.getstreet(request.form["latitude_gps"], request.form["longitude_gps"])
+        session["calle"] = calle
+        session["numero"] = numero
+        session["cp"] = cp
+        session["localidad"] = localidad
 
-
+        return redirect(url_for("alta_piso"))
 
     if "usuario" not in session or "password" not in session:
         return redirect(url_for("alta_piso"))
@@ -207,8 +223,8 @@ def recibir_alta_piso():
         ok = managermongo.comprobarexisteinmueble(
             request.form["calle"],
             request.form["latitude_gps"],
-            request.form["longitude_gps"]
-            # request.form["numero"]
+            request.form["longitude_gps"],
+            request.form["numero"]
         )
         if ok == True:
             ok = managermongo.altaproducto(
@@ -217,7 +233,7 @@ def recibir_alta_piso():
                 request.form["cp"],
                 request.form["habitaciones"],
                 request.form["localidad"],
-                # request.form["numero"],
+                request.form["numero"],
                 request.form["numerobanos"],
                 request.form["template"],
                 request.form["tipocasa"],
@@ -235,7 +251,7 @@ def recibir_alta_piso():
             if ok == True:
                 session["mensajeerror"] = helper.errores.insertado_correctamente
                 session["anterior_calle"] = request.form["calle"]
-                # session["anterior_numero"] = request.form["numero"]
+                session["anterior_numero"] = request.form["numero"]
             else:
                 session["mensajeerror"] = helper.errores.no_insertado
         else:
@@ -246,7 +262,7 @@ def recibir_alta_piso():
             session["cp"] = request.form["cp"]
             session["habitaciones"] = request.form["habitaciones"]
             session["localidad"] = request.form["localidad"]
-            # session["numero"] = request.form["numero"]
+            session["numero"] = request.form["numero"]
             session["numerobanos"] = request.form["numerobanos"]
             session["template"] = request.form["template"]
             session["tipocasa"] = request.form["tipocasa"]
@@ -307,4 +323,4 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run("127.0.0.1", 5000, debug=True)
+    app.run("0.0.0.0", 5000, debug=True)
