@@ -31,6 +31,6 @@ class ManagerWeb:
                 calle = " ".join(splitdire[0].split(" ")[1:])
                 separacion = splitdire[2].split(" ")
 
-                return calle, splitdire[1], separacion[0], separacion[1]  # calle= None, numero=None, cp, ciudad
+                return calle, splitdire[1], separacion[1], separacion[2]  # calle= None, numero=None, cp, ciudad
 
         return None
