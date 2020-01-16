@@ -19,10 +19,9 @@ class ManagerWeb:
             fulldireccion = temp["Response"]["View"][0]["Result"][0]["Location"]["Address"]["Label"]
 
             splitdire = fulldireccion.split(" ")
-            if len(splitdire) == 3: # sin nombre de la calle
-                # 07001 Palma (Illes Balears), Espanya
-                # 0
-                return None, None, splitdire[0], splitdire[1]  # calle= None, numero=None, cp, ciudad
+            if len(splitdire) == 5:  # sin nombre de la calle
+                # ['07001', 'Palma', '(Illes', 'Balears),', 'Espanya']
+                return "Ninguna", "Ninguna", splitdire[0], splitdire[1]  # calle= None, numero=None, cp, ciudad
             else:
                 return None, None, splitdire[0], splitdire[1]  # calle= None, numero=None, cp, ciudad
 
