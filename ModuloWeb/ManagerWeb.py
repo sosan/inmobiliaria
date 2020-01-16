@@ -28,7 +28,7 @@ class ManagerWeb:
                 return "Ninguna", "Ninguna", separacion[0], separacion[1]  # calle= None, numero=None, cp, ciudad
             else:
                 #  _____ XXX XXXXXX, 5, 00000 XXXXXX (OOOO OOOOO), LLLLLLL
-                calle = splitdire[0].split(" ")[1:].join(" ")
+                calle = " ".join(splitdire[0].split(" ")[1:])
                 separacion = splitdire[2].split(" ")
 
                 return calle, splitdire[1], separacion[0], separacion[1]  # calle= None, numero=None, cp, ciudad
