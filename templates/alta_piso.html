@@ -150,7 +150,8 @@
                         <span class="btn btn-default btn-file">Seleccionar
                             <input type="file" name="files1" accept="image/*" multiple>
                         </span>
-                        <br />
+                        <br><br><br>
+
                         <ul class="fileList">
 
                         </ul>
@@ -317,27 +318,91 @@
 
         this.closest(".files").change(function (evt)
         {
-             var output = [];
-             for (var i = 0; i < evt.target.files.length; i++)
-             {
+
+            var output = [];
+            var promises = [];
+
+
+
+            for (var i = 0; i < evt.target.files.length; i++)
+            {
+
+                let filePromise = new Promise(resolve =>
+                {
+                    console.log("promise inside=>");
+                    let reader = new FileReader();
+                    reader.readAsDataURL(evt.target.files[i]);
+                    {#console.log("promise inside=>", reader.result);#}
+                    reader.onload = () => resolve(reader.result);
+                    {#reader.onload = function()#}
+                    {#{#}
+                    {#    console.log("inside onload=>", reader.result);#}
+                    {#    fileIdCounter++;#}
+                    {#    var file = evt.target.files[i];#}
+                    {#    console.log("inside onload=>", file.name);#}
+                    {#    var fileId = sectionIdentifier + fileIdCounter;#}
+                    {##}
+                    {#    filesToUpload.push({#}
+                    {#        id: fileId,#}
+                    {#        file: file#}
+                    {#    });#}
+                    {##}
+                    {#    var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + fileId + "\">Quitar</a>";#}
+                    {##}
+                    {#    output.push('<li class="tx"><strong>', escape(file.name), '</strong> - ', file.size, ' bytes. &nbsp; &nbsp; ', removeLink, '</li> ');#}
+                    {##}
+                    {# };#}
+                    {#reader.onload = () => resolve(reader.result);#}
+                });
+                promises.push(filePromise, evt.target.files[i].name, evt.target.files[i].size);
+
+
+
+            }
+
+
+            Promise.all(promises).then(fileContents =>
+            {
+                console.log("inside onload=>", fileContents[1]);
                 fileIdCounter++;
-                var file = evt.target.files[i];
+                console.log("inside onload=>", fileContents[1]);
                 var fileId = sectionIdentifier + fileIdCounter;
 
                 filesToUpload.push({
                     id: fileId,
-                    file: file
+                    file: fileContents[1]
                 });
 
                 var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + fileId + "\">Quitar</a>";
+                output.push('<li><img src="' + fileContents[0]  +  '" width="100px" height="100px"></li>');
 
-                output.push('<li class="tx"><strong>', escape(file.name), '</strong> - ', file.size, ' bytes. &nbsp; &nbsp; ', removeLink, '</li> ');
-             }
+                let size = "";
+                if (fileContents[2] === 0)
+                {
+                    size = "0 Bytes";
+                }
+                else
+                {
+                    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+                    const i = Math.floor(Math.log(fileContents[2]) / Math.log(1024));
+                    size = parseFloat((fileContents[2] / Math.pow(1024, i)).toFixed(2)) + ' ' + sizes[i];
 
-            $(this).children(".fileList")
-                .append(output.join(""));
+                }
 
-            evt.target.value = null;
+                output.push('<li class="tx"><strong>', escape(fileContents[1]), '</strong> - ', size , '. &nbsp; &nbsp; ', removeLink, '</li> ');
+
+
+                $(this).children(".fileList").append(output.join(""));
+                evt.target.value = null;
+
+
+
+             });
+
+
+
+
+
 
         });
 
@@ -347,9 +412,8 @@
 
             var fileId = $(this).parent().children("a").data("fileid");
 
-            // loop through the files array and check if the name of that file matches FileName
-            // and get the index of the match
-            for (var i = 0; i < filesToUpload.length; ++i) {
+            for (var i = 0; i < filesToUpload.length; ++i)
+            {
                 if (filesToUpload[i].id === fileId)
                     filesToUpload.splice(i, 1);
             }
@@ -374,8 +438,6 @@
         var filesToUpload = [];
 
         var files1Uploader = $("#files1").fileUploader(filesToUpload, "files1");
-        {#var files2Uploader = $("#files2").fileUploader(filesToUpload, "files2");#}
-        {#var files3Uploader = $("#files3").fileUploader(filesToUpload, "files3");#}
 
         $("#uploadBtn").click(function (e)
         {

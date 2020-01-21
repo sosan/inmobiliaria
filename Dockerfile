@@ -80,8 +80,8 @@ CMD ["flask", "run", "--host", "0.0.0.0"]
 
 # docker run --name=mongoserv -d -v /opt/mongodb:/data/db  mongo # -p 27017
 # docker exec -it mongoserv bash
-# mongo # si hemos cambiado puerto: localhost:27017
 
+# mongo # si hemos cambiado puerto: localhost:27017
 # use dbtest
 # for (var i = 0; i < 25; i++) { 
 # db.testing.insertOne( { "hola" : "mundo" } )
@@ -129,17 +129,4 @@ CMD ["flask", "run", "--host", "0.0.0.0"]
 
 
 # funciona como s
-
-
-
-
-
-
-
-
-
-
-
-
-
 
