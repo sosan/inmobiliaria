@@ -140,41 +140,58 @@
          <input type="text" id="banos" name="numerobanos" value="{{ numerobanos }}">
         </div>
         <div class="row center-block ">
-        {% if template %}
-            <label>Tipo de planta:</label>
-            <label>
-                <input type="radio" name="template" value="1" {% if template == "1" %} checked {% endif %}>
-                <img src="{{url_for("static", filename="images/template1.png")}}" width="100">
-            </label>
+{#        {% if template %}#}
 
-            <label>
-                <input type="radio" name="template" value="2" {% if template == "2" %} checked {% endif %}>
-                <img src="{{url_for("static", filename="images/template2.png")}}" width="100">
-            </label>
+            <!-- TEMPLATE -->
 
-            <label>
-                <input type="radio" name="template" value="3" {% if template == "3" %} checked {% endif %}>
-                <img src="{{url_for("static", filename="images/template3.png")}}" width="100">
-            </label>
-        {% else %}
-            <label>Tipo de planta:</label>
-            <label>
-                <input type="radio" name="template" value="1" checked>
-                <img src="{{url_for("static", filename="images/template1.png")}}" width="100">
-            </label>
+                <form id="fileupload" action="#" method="POST" enctype="multipart/form-data">
+                    <div class="row files" id="files1">
+                        <label>Fotos casa:</label>
+                        <span class="btn btn-default btn-file">Seleccionar
+                            <input type="file" name="files1" accept="image/*" multiple>
+                        </span>
+                        <br />
+                        <ul class="fileList">
 
-            <label>
-                <input type="radio" name="template" value="2" checked>
-                <img src="{{url_for("static", filename="images/template2.png")}}" width="100">
-            </label>
+                        </ul>
+                    </div>
 
-            <label>
-                <input type="radio" name="template" value="3" checked>
-                <img src="{{url_for("static", filename="images/template3.png")}}" width="100">
-            </label>
+{#                    <div class="row">#}
+{#                        <button type="x" id="uploadBtn" class="btn primary start">Start upload</button>#}
+{#                    </div>#}
+
+                    <br>
+                    <div class="row">
+                        <div class="span16">
+                            <table class="zebra-striped"><tbody class="files"></tbody></table>
+                        </div>
+                    </div>
+                </form>
 
 
-        {% endif %}
+            <!-- FIN TEMPALTE -->
+{#            <label>Tipo de planta:</label>#}
+{#            <input class="file-upload" type="file" accept="image/*"/>#}
+
+
+
+
+
+{#            <label>#}
+{#                <input type="radio" name="template" value="1" {% if template == "1" %} checked {% endif %}>#}
+{#                <img src="{{url_for("static", filename="images/template1.png")}}" width="100">#}
+{#            </label>#}
+{##}
+{#            <label>#}
+{#                <input type="radio" name="template" value="2" {% if template == "2" %} checked {% endif %}>#}
+{#                <img src="{{url_for("static", filename="images/template2.png")}}" width="100">#}
+{#            </label>#}
+{##}
+{#            <label>#}
+{#                <input type="radio" name="template" value="3" {% if template == "3" %} checked {% endif %}>#}
+{#                <img src="{{url_for("static", filename="images/template3.png")}}" width="100">#}
+{#            </label>#}
+
 
 
             </div>
@@ -293,6 +310,101 @@
             alert("Sorry, your browser does not support HTML5 geolocation.");
         }
     }
+
+    $.fn.fileUploader = function (filesToUpload, sectionIdentifier)
+    {
+        var fileIdCounter = 0;
+
+        this.closest(".files").change(function (evt)
+        {
+             var output = [];
+             for (var i = 0; i < evt.target.files.length; i++)
+             {
+                fileIdCounter++;
+                var file = evt.target.files[i];
+                var fileId = sectionIdentifier + fileIdCounter;
+
+                filesToUpload.push({
+                    id: fileId,
+                    file: file
+                });
+
+                var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + fileId + "\">Quitar</a>";
+
+                output.push('<li class="tx"><strong>', escape(file.name), '</strong> - ', file.size, ' bytes. &nbsp; &nbsp; ', removeLink, '</li> ');
+             }
+
+            $(this).children(".fileList")
+                .append(output.join(""));
+
+            evt.target.value = null;
+
+        });
+
+        $(this).on("click", ".removeFile", function (e)
+        {
+            e.preventDefault();
+
+            var fileId = $(this).parent().children("a").data("fileid");
+
+            // loop through the files array and check if the name of that file matches FileName
+            // and get the index of the match
+            for (var i = 0; i < filesToUpload.length; ++i) {
+                if (filesToUpload[i].id === fileId)
+                    filesToUpload.splice(i, 1);
+            }
+
+            $(this).parent().remove();
+        });
+
+        this.clear = function ()
+        {
+            for (var i = 0; i < filesToUpload.length; ++i) {
+                if (filesToUpload[i].id.indexOf(sectionIdentifier) >= 0)
+                    filesToUpload.splice(i, 1);
+            }
+
+            $(this).children(".fileList").empty();
+        };
+
+        return this;
+    };
+
+    (function () {
+        var filesToUpload = [];
+
+        var files1Uploader = $("#files1").fileUploader(filesToUpload, "files1");
+        {#var files2Uploader = $("#files2").fileUploader(filesToUpload, "files2");#}
+        {#var files3Uploader = $("#files3").fileUploader(filesToUpload, "files3");#}
+
+        $("#uploadBtn").click(function (e)
+        {
+            e.preventDefault();
+
+            var formData = new FormData();
+
+            for (var i = 0, len = filesToUpload.length; i < len; i++)
+            {
+                formData.append("files", filesToUpload[i].file);
+            }
+
+            $.ajax({
+                url: "",
+                data: formData,
+                processData: false,
+                contentType: false,
+                type: "POST",
+                success: function (data) {
+                    alert("DONE");
+
+                    files1Uploader.clear();
+                },
+                error: function (data) {
+                    alert("ERROR - " + data.responseText);
+                }
+            });
+        });
+    })()
 
 
     </script>

@@ -78,17 +78,57 @@ CMD ["flask", "run", "--host", "0.0.0.0"]
 # lo mas comane es hacer en caprta
 # docker run -it -p 5100:5000 -v ruta_absoluta:carpeta_dentro_de_docker__/app/src -d nombre_docker
 
+# docker run --name=mongoserv -d -v /opt/mongodb:/data/db  mongo # -p 27017
+# docker exec -it mongoserv bash
+# mongo # si hemos cambiado puerto: localhost:27017
 
-# docker run -it mongo /b
-# ver un vistazo de como lo han implementado
-# 
+# use dbtest
+# for (var i = 0; i < 25; i++) { 
+# db.testing.insertOne( { "hola" : "mundo" } )
+# }
+# db.testing.find()
+# exit
+# exit
+
 
 
 # heroku => plataform
 # doker => integracion y desarrollo
 # 
 
-# go live
+# Docker esta especiializada en la construccion de estructuras en servidores
+# Contendor es una agrupacion de procesos
+# limite estricto de maquina virutal (no hay posibilidad de consumir mas)
+# ejecutamos de forma nativa, delante del sistema operativo
+# los contendiso con el unico sistema operativo que no tienen que hacer un prosces de virutlaizaicon linux
+# carpetas /var/lib/docker/...
+
+# dentor del contenedor se genera un unviersor completamente hermetico
+# cada uno tiene un id compleemtne id unico y un nombre unico(hash)
+
+#
+
+
+
+
+# contenedor
+# docker ps -a => log
+
+# # imagen nos ayuda a crear el contenedor
+# docker images => visualizar las imagenes
+
+
+# # eleminar contendores
+# docker rmi  
+# docker rm cb173d505f04
+
+# docker rm $(docker ps -aq)
+# # comando -f forzar
+
+# docker run ubuntu tail -f /dev/null
+
+
+# funciona como s
 
 
 

@@ -11,16 +11,17 @@
 
 {% block contenido_central %}
  {% if datos %}
-     {% for elemento in datos %}
+     {% for i in range(0, totalelementos) %}
+{#     {% for elemento in datos %}#}
          <div class="aditem">
              <div class="aditem-header">
              <!-- quine lo ha introducido -->
-                <div class="x3">{{ elemento.localidad }} - {{ elemento.nombre }}</div>
+                <div class="x3">{{ datos[i].localidad }} - {{ datos[i].nombre }}</div>
                 <div class="x6" >
-                    {% if elemento.fechadelta >= fechaahora  %}
-                    <span class="new-ad-label">NUEVA ENTRADA</span>
+                    {% if datos[i].fechadelta >= fechaahora  %}
+                    <span class="entradanueva_label">NUEVA ENTRADA</span>
                     {% else %}
-                        <span class="new-ad-label">{{ elemento.fecha.strftime("%d-%m-%Y") }}</span>
+                        <span class="fecha_label">{{ datos[i].fecha.strftime("%d-%m-%Y") }}</span>
                     {% endif %}
                 </div>
             </div>
@@ -30,26 +31,40 @@
                     <!-- modal ?? -->
                     <a href="" class="aditem-detail-title ">
                         <span class="glyphicon glyphicon-map-marker"></span>
-                        {{ elemento.calle }}<br>
-{#                        Numero: {{ elemento.numero }}#}
+                        {{ datos[i].calle }}<br>
+{#                        Numero: {{ datos[i].numero }}#}
                     </a>
                     <div class=" list-location-link tx">
                         <span class="glyphicon glyphicon-info-sign"></span>
-                        Lorem Ipsum dolor sit
+                        {{datos[i].dueno}} / {{ datos[i].duenotelefono }}
 
                     </div>
                     <div class="tx">
-                        Lorem Ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                        Totalmetros: {{ datos[i].totalmetros }}<br>
+                        Habitaciones: {{ datos[i].habitaciones }}<br>
+                        Baños: {{ datos[i].numerobanos }}
                     </div>
                     <br>
+
                     <div class="x12">
                         <div class="adlist-tagsbox-inlineblockline">
-                            <div class="vefbox"><a href=""><div class="pillDiv vef">Ver fotos</div></a></div>
+                            <div class="vefbox">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mostrarimagenes{{ i }}">
+                                     {% if datos[i].fotos %}
+                                        {{ datos[i].fotos| length }} FOTOS
+                                    {% else %}
+                                    0 FOTOS
+                                    {% endif %}
+                                </button>
+                            </div>
+
+
+
                         </div>
                     </div>
                     <div class="x11">
                         <div class="adlist-tagsbox-inlineblockline">
-                            <div class="aditem-price">{{ elemento.precio }}<sup>€</sup></div>
+                            <div class="aditem-price">{{ datos[i].precio }}<sup>€</sup></div>
                         </div>
                     </div>
                 </div>
@@ -60,6 +75,7 @@
                     <br>
             </div>
             </div>
+
 
             <div class="aditem-footer">
                 <div class="aditem-buttons">
@@ -81,23 +97,77 @@
                 </div>
             </div>
         </div>
+
          <br>
+ <div class="modal fade " id="mostrarimagenes{{ i }}" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="mostrarimagenes{{ i }}" aria-hidden="true">
+  <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">FOTOS</h4>
+          </div>
+
+          <div class="modal-body">
+
+			<div id="carousel-id{{ i }}" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators">
+                {% if datos[i].fotos %}
+                    {% for i in range(0, datos[i].fotos| length) %}
+                    {% endfor %}
+                {% else %}
+
+                {% endif %}
+			<li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
+			<li data-target="#carousel-example-1z" data-slide-to="1"></li>
+			<li data-target="#carousel-example-1z" data-slide-to="2"></li>
+			</ol>
+			<div class="carousel-inner">
+                 {% if datos[i].fotos %}
+                    {% for o in range(0, datos[i].fotos| length) %}
+                        <div class="item">
+
+                            <img data-src="" src="datos[i].fotos[o]">
+{#                            <img data-src="" src="https://via.placeholder.com/800.png/09f/fff">#}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                     <h3>- Sin fotos - </h3>
+                {% endif %}
+
+			</div>
+            {% if datos[i].fotos %}
+                <a class="left carousel-control" href="#carousel-id{{ i }}" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                <a class="right carousel-control" href="#carousel-id{{ i }}" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            {% else %}
+            {% endif %}
+			</div>
+
+          </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+{#        <button type="submit" class="btn btn-primary">Crear Cuenta</button>#}
+      </div>
+
+    </div>
+  </div>
+</div>
+
     {% endfor %}
 
 {#        <div class="container">#}
 {#            <ul id="lista_menu">#}
-{#                {% for elemento in datos %}#}
+{#                {% for datos[i] in datos %}#}
 {#                <li>#}
 {#                    <a href="{{ url_for("alta_piso") }}">#}
 {#                        <div class="">#}
-{#                            Calle: {{ elemento["calle"] }} Numero: {{ elemento["numero"] }}#}
+{#                            Calle: {{ datos[i]["calle"] }} Numero: {{ datos[i]["numero"] }}#}
 {#                        </div>#}
 {#                        <div class="">#}
-{#                            {{elemento["precio"]}}#}
+{#                            {{datos[i]["precio"]}}#}
 {##}
 {#                        </div>#}
 {#                        <div class="">#}
-{#                            <img src="{{ elemento["foto"] }}">#}
+{#                            <img src="{{ datos[i]["foto"] }}">#}
 {##}
 {#                        </div>#}
 {##}
@@ -118,4 +188,27 @@
             <div class="pageTitleC">MEDIDAS</div>
                 </a>
         </div>
+{% endblock %}
+
+
+{% block scripts %}
+    {{ super() }}
+{#    <script>#}
+{#    $(".carousel").carousel();#}
+{##}
+{#    </script>#}
+
+{#    {% for i in range(0, totalelementos) %}#}
+{#            {% set id="exampleModal{0}".format(i) %}#}
+{#            <script>#}
+{#
+{#                $(document).ready(function()#}
+{#                {#}
+{#                    $("#{{ id }}").modal("toggle");#}
+{##}
+{##}
+{##}
+{#                });#}
+{#            </script>#}
+{#    {% endfor %}#}
 {% endblock %}

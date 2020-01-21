@@ -102,7 +102,8 @@ def menu_admin():
             # listado = managermongo.get_con_mediciones()
             if len(listado) > 0:
                 fechadelta = datetime.utcnow()
-                return render_template("menu_admin.html", datos=listado, fechaahora=fechadelta)
+                return render_template("menu_admin.html", datos=listado, fechaahora=fechadelta,
+                                       totalelementos=len(listado))
             else:
                 return render_template("menu_admin.html", datos=None)
 
@@ -319,7 +320,7 @@ def recibir_menu_medicion():
 
 @app.route("/")
 def home():
-    return render_template("geo.html")
+    return render_template("geo2.html")
 
 
 if __name__ == "__main__":
