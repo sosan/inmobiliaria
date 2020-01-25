@@ -17,6 +17,7 @@ from ModuloWeb.ManagerWeb import ManagerWeb
 
 app = Flask(__name__)
 app.secret_key = "holaa"
+
 # MUCHO CUIDADO EN NO PISAR LAS VARIABLES YA CREADAS
 # app.config["DEBUG"] = True
 managerweb = ManagerWeb()
@@ -27,7 +28,7 @@ import os
 CARPETA = os.path.abspath(".//archivos_subidos")
 app.config["CARPETA"] = CARPETA
 
-bootstrap = Bootstrap(app)
+Bootstrap(app)
 helper = ManagerHelper()
 
 

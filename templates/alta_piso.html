@@ -331,7 +331,7 @@
         </div>
         <div class="row center-block">
          <label for="banos">Baños:</label>
-         <input type="text" id="banos" name="numerobanos" value="{{ numerobanos }}">
+         <input type="text" id="banoss" name="numerobanos" value="{{ numerobanos }}">
         </div>
         <div class="row center-block ">
 {#        {% if template %}#}
@@ -401,6 +401,8 @@
                         {% else %}
                             <input type="text" id="precision" name="precision" value="">
                         {% endif %}
+
+
 
 {#                <div id="result"></div>#}
                 <button type="button" class="menu_enlinia" onclick="showPosition();">
@@ -500,33 +502,69 @@
 
             Promise.all(promises).then(fileContents =>
             {
-                fileIdCounter++;
-                var fileId = sectionIdentifier + fileIdCounter;
 
-                filesToUpload.push({
-                    id: fileId,
-                    file: fileContents[1]
-                });
-
-                var removeButton = '<button type="button" class="removeFile " data-fileid="' + fileId +  '">Quitar</button> ';
-                var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + fileId + "\">Quitar</a>";
-                let size = "";
-                if (fileContents[2] === 0)
+                for (var i = 0; i < fileContents.length; i=i+3)
                 {
-                    size = "0 Bytes";
+                    fileIdCounter++;
+                    var fileId = sectionIdentifier + fileIdCounter;
+
+                    filesToUpload.push({
+                        id: fileId,
+                        file: fileContents[i + 1]
+                    });
+
+                    var removeButton = '<button type="button" class="removeFile btn btn-danger" data-fileid="' + fileId + '"> Quitar </button><br><br>';
+                    {#var renameButton = '<br><br><button type="button" class="renameFile btn btn-warning" data-fileid="' + fileId + '">Renombrar</button>';#}
+                    var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + fileId + "\">Quitar</a>";
+                    let size = "";
+                    if (fileContents[i + 2] === 0)
+                    {
+                        size = "0 Bytes";
+                    }
+                    else
+                    {
+                        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+                        const lent = Math.floor(Math.log(fileContents[i + 2]) / Math.log(1024));
+                        size = parseFloat((fileContents[i + 2] / Math.pow(1024, lent)).toFixed(2)) + ' ' + sizes[lent];
+                    }
+
+                    output.push('<li class="tx"><img src="' + fileContents[0 + i]  +  '" width="100px" height="100px"><strong>',
+                     escape(fileContents[i+ 1]), '</strong> - ', size , '. &nbsp; &nbsp; ', removeButton, '</li> ');
+
+
                 }
-                else
-                {
-                    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-                    const i = Math.floor(Math.log(fileContents[2]) / Math.log(1024));
-                    size = parseFloat((fileContents[2] / Math.pow(1024, i)).toFixed(2)) + ' ' + sizes[i];
-                }
-
-                output.push('<li class="tx"><img src="' + fileContents[0]  +  '" width="100px" height="100px"><strong>', escape(fileContents[1]), '</strong> - ', size , '. &nbsp; &nbsp; ', removeLink, '</li> ');
-
-
                 $(this).children(".fileList").append(output.join(""));
-                evt.target.value = null;
+                    evt.target.value = null;
+
+
+                {#fileIdCounter++;#}
+                {#var fileId = sectionIdentifier + fileIdCounter;#}
+                {##}
+                {#filesToUpload.push({#}
+                {#    id: fileId,#}
+                {#    file: fileContents[1]#}
+                {# });#}
+                {##}
+                {#var removeButton = '<button type="button" class="removeFile btn btn-danger" data-fileid="' + fileId + '"> Quitar </button><br><br>';#}
+                {#var renameButton = '<br><br><button type="button" class="renameFile btn btn-warning" data-fileid="' + fileId + '">Renombrar</button>';#}
+                {#var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + fileId + "\">Quitar</a>";#}
+                {#let size = "";#}
+                {#if (fileContents[2] === 0)#}
+                {#{#}
+                {#    size = "0 Bytes";#}
+                {# }#}
+                {#else#}
+                {#{#}
+                {#    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];#}
+                {#    const i = Math.floor(Math.log(fileContents[2]) / Math.log(1024));#}
+                {#    size = parseFloat((fileContents[2] / Math.pow(1024, i)).toFixed(2)) + ' ' + sizes[i];#}
+                {# }#}
+                {##}
+                {#output.push('<li class="tx"><img src="' + fileContents[0]  +  '" width="100px" height="100px"><strong>',#}
+                {#    escape(fileContents[1]), '</strong> - ', size , '. &nbsp; &nbsp; ', removeButton, '</li> ');#}
+
+
+
 
 
 
@@ -554,6 +592,10 @@
 
             $(this).parent().remove();
         });
+
+
+
+
 
         this.clear = function ()
         {
@@ -606,15 +648,7 @@
     </script>
     <script src="{{ url_for("static", filename="js/common_scripts.min.js") }}"></script>
     <script src="{{ url_for("static", filename="js/functions.js") }}"></script>
-{#     <script src="{{ url_for("static", filename="js/jquery-3.2.1.min.js") }}"></script>#}
     <script src="{{ url_for("static", filename="js/survey_func.js") }}"></script>
-
-    <!-- funciona -->
-    {#    <script src="../static/js/common_scripts.min.js"></script>#}
-    {#	<script src="../static/js/functions.js"></script>#}
-    {#    <script src="../static/js/jquery-3.2.1.min.js"></script>#}
-{#	<script src="../static/js/survey_func.js"></script>#}
-
 
 
 {% endblock %}

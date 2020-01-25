@@ -1137,135 +1137,135 @@ span.error:after {
   margin-right: 0;
 }
 
-/*.review_block_smiles ul, .review_block_numbers ul {*/
-/*  padding: 0;*/
-/*  margin: 0 -3px;*/
-/*  list-style-type: none;*/
-/*  display: flex;*/
-/*  justify-content: center;*/
-/*}*/
-/*.review_block_smiles ul li, .review_block_numbers ul li {*/
-/*  display: list-item;*/
-/*  margin: 0 3px;*/
-/*  width: 100%;*/
-/*}*/
+.review_block_smiles ul, .review_block_numbers ul {
+  padding: 0;
+  margin: 0 -3px;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+}
+.review_block_smiles ul li, .review_block_numbers ul li {
+  display: list-item;
+  margin: 0 3px;
+  width: 100%;
+}
 
-/*.container_smile {*/
-/*  margin-bottom: 5px;*/
-/*  position: relative;*/
-/*}*/
-/*.container_smile input[type="radio"] {*/
-/*  display: none;*/
-/*}*/
-/*.container_smile label {*/
-/*  cursor: pointer;*/
-/*}*/
-/*.container_smile .radio {*/
-/*  position: relative;*/
-/*  background-color: black;*/
-/*  background-color: rgba(0, 0, 0, 0.4);*/
-/*  !* OPACITY AND COLOR *!*/
-/*  -webkit-border-radius: 3px;*/
-/*  -moz-border-radius: 3px;*/
-/*  -ms-border-radius: 3px;*/
-/*  border-radius: 3px;*/
-/*  padding: 15px;*/
-/*  display: block;*/
-/*  text-align: center;*/
-/*}*/
-/*@media (max-width: 575px) {*/
-/*  .container_smile .radio {*/
-/*    padding: 10px;*/
-/*  }*/
-/*}*/
-/*.container_smile .radio:after {*/
-/*  font-family: 'smiles';*/
-/*  font-size: 42px;*/
-/*  font-size: 2.625rem;*/
-/*}*/
-/*@media (max-width: 1199px) {*/
-/*  .container_smile .radio:after {*/
-/*    font-size: 36px;*/
-/*    font-size: 2.25rem;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 575px) {*/
-/*  .container_smile .radio:after {*/
-/*    font-size: 30px;*/
-/*    font-size: 1.875rem;*/
-/*  }*/
-/*}*/
-/*.container_smile .radio span {*/
-/*  display: none;*/
-/*}*/
-/*.container_smile .radio.smile_1:after {*/
-/*  content: '\0041';*/
-/*}*/
-/*.container_smile .radio.smile_2:after {*/
-/*  content: '\0042';*/
-/*}*/
-/*.container_smile .radio.smile_3:after {*/
-/*  content: '\0043';*/
-/*}*/
-/*.container_smile .radio.smile_4:after {*/
-/*  content: '\0044';*/
-/*}*/
-/*.container_smile .radio.smile_5:after {*/
-/*  content: '\0045';*/
-/*}*/
+.container_smile {
+  margin-bottom: 5px;
+  position: relative;
+}
+.container_smile input[type="radio"] {
+  display: none;
+}
+.container_smile label {
+  cursor: pointer;
+}
+.container_smile .radio {
+  position: relative;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+  /* OPACITY AND COLOR */
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  border-radius: 3px;
+  padding: 15px;
+  display: block;
+  text-align: center;
+}
+@media (max-width: 575px) {
+  .container_smile .radio {
+    padding: 10px;
+  }
+}
+.container_smile .radio:after {
+  font-family: 'smiles';
+  font-size: 42px;
+  font-size: 2.625rem;
+}
+@media (max-width: 1199px) {
+  .container_smile .radio:after {
+    font-size: 36px;
+    font-size: 2.25rem;
+  }
+}
+@media (max-width: 575px) {
+  .container_smile .radio:after {
+    font-size: 30px;
+    font-size: 1.875rem;
+  }
+}
+.container_smile .radio span {
+  display: none;
+}
+.container_smile .radio.smile_1:after {
+  content: '\0041';
+}
+.container_smile .radio.smile_2:after {
+  content: '\0042';
+}
+.container_smile .radio.smile_3:after {
+  content: '\0043';
+}
+.container_smile .radio.smile_4:after {
+  content: '\0044';
+}
+.container_smile .radio.smile_5:after {
+  content: '\0045';
+}
 
-/*.container_smile .radio {*/
-/*  transition: all 450ms;*/
-/*}*/
-/*.container_smile .radio.smile_1:hover {*/
-/*  background-color: #ff0033;*/
-/*  color: #fff;*/
-/*}*/
-/*.container_smile .radio.smile_2:hover {*/
-/*  background-color: #ff5f7f;*/
-/*  color: #fff;*/
-/*}*/
-/*.container_smile .radio.smile_3:hover {*/
-/*  background-color: #94b49b;*/
-/*  color: #fff;*/
-/*}*/
-/*.container_smile .radio.smile_4:hover {*/
-/*  background-color: #68cd7f;*/
-/*  color: #fff;*/
-/*}*/
-/*.container_smile .radio.smile_5:hover {*/
-/*  background-color: #4ccd6a;*/
-/*  color: #fff;*/
-/*}*/
+.container_smile .radio {
+  transition: all 450ms;
+}
+.container_smile .radio.smile_1:hover {
+  background-color: #ff0033;
+  color: #fff;
+}
+.container_smile .radio.smile_2:hover {
+  background-color: #ff5f7f;
+  color: #fff;
+}
+.container_smile .radio.smile_3:hover {
+  background-color: #94b49b;
+  color: #fff;
+}
+.container_smile .radio.smile_4:hover {
+  background-color: #68cd7f;
+  color: #fff;
+}
+.container_smile .radio.smile_5:hover {
+  background-color: #4ccd6a;
+  color: #fff;
+}
 
-/*.container_smile input[type="radio"]:checked ~ .radio {*/
-/*  transition: all 450ms;*/
-/*  color: #fff;*/
-/*}*/
-/*.container_smile input[type="radio"]:checked ~ .radio:after {*/
-/*  -moz-transition: all 0.6s ease;*/
-/*  -o-transition: all 0.6s ease;*/
-/*  -webkit-transition: all 0.6s ease;*/
-/*  -ms-transition: all 0.6s ease;*/
-/*  transition: all 0.6s ease;*/
-/*  display: block;*/
-/*  transform: rotateY(360deg);*/
-/*}*/
-/*.container_smile input[type="radio"]:checked ~ .radio.smile_1 {*/
-/*  background-color: #ff0033;*/
-/*}*/
-/*.container_smile input[type="radio"]:checked ~ .radio.smile_2 {*/
-/*  background-color: #ff5f7f;*/
-/*}*/
-/*.container_smile input[type="radio"]:checked ~ .radio.smile_3 {*/
-/*  background-color: #94b49b;*/
-/*}*/
-/*.container_smile input[type="radio"]:checked ~ .radio.smile_4 {*/
-/*  background-color: #68cd7f;*/
-/*}*/
-/*.container_smile input[type="radio"]:checked ~ .radio.smile_5 {*/
-/*  background-color: #4ccd6a;*/
-/*}*/
+.container_smile input[type="radio"]:checked ~ .radio {
+  transition: all 450ms;
+  color: #fff;
+}
+.container_smile input[type="radio"]:checked ~ .radio:after {
+  -moz-transition: all 0.6s ease;
+  -o-transition: all 0.6s ease;
+  -webkit-transition: all 0.6s ease;
+  -ms-transition: all 0.6s ease;
+  transition: all 0.6s ease;
+  display: block;
+  transform: rotateY(360deg);
+}
+.container_smile input[type="radio"]:checked ~ .radio.smile_1 {
+  background-color: #ff0033;
+}
+.container_smile input[type="radio"]:checked ~ .radio.smile_2 {
+  background-color: #ff5f7f;
+}
+.container_smile input[type="radio"]:checked ~ .radio.smile_3 {
+  background-color: #94b49b;
+}
+.container_smile input[type="radio"]:checked ~ .radio.smile_4 {
+  background-color: #68cd7f;
+}
+.container_smile input[type="radio"]:checked ~ .radio.smile_5 {
+  background-color: #4ccd6a;
+}
 
 .container_numbers {
   margin-bottom: 5px;
