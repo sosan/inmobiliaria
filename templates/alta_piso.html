@@ -13,7 +13,202 @@
 
 
 {% block contenido_central %}
-    <div class="container center-block">
+    <div class="container_centering">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-xl-5 col-lg-5">
+                    <div id="wizard_container">
+                            <form id="wrapped" method="POST" autocomplete="off">
+	                            <div id="middle-wizard">
+	                                <div class="step">
+                                        <h3 class="main_question">
+                                            <strong class="">1 de 5</strong>
+                                            <p class="titulo">TIPO DE VIVIENDA</p>
+                                        </h3>
+	                                    <div class="review_block">
+                                              <ul>
+                                                <li>
+                                                    <div class="checkbox_radio_container">
+                                                        <input type="radio" id="piso" name="question_1" class="required" value="piso" onchange="getVals(this, 'question_1');">
+                                                        <label class="radio" for="piso"></label>
+                                                        <label for="piso" class="wrapper">Piso</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="checkbox_radio_container">
+                                                        <input type="radio" id="chalet" name="question_1" class="required" value="chalet" onchange="getVals(this, 'question_1');">
+                                                        <label class="radio" for="chalet"></label>
+                                                        <label for="chalet" class="wrapper">Chalet</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="checkbox_radio_container">
+                                                        <input type="radio" id="casarural" name="question_1" class="required" value="casarural" onchange="getVals(this, 'question_1');">
+                                                        <label class="radio" for="casarural"></label>
+                                                        <label for="casarural" class="wrapper">Casa Rural</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="checkbox_radio_container">
+                                                        <input type="radio" id="oficina" name="question_1" class="required" value="oficina" onchange="getVals(this, 'question_1');">
+                                                        <label class="radio" for="oficina"></label>
+                                                        <label for="oficina" class="wrapper">Oficina</label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+	                                    </div>
+	                                </div>
+
+                                    <div class="step">
+                                         <h3 class="main_question">
+                                            <strong class="">2 de 5</strong>
+                                            <p class="titulo">LOCALIZACION VIVIENDA</p>
+                                        </h3>
+                                        <div class="form-group">
+	                                        <label for="calle">Calle</label>
+                                            <input type="text" name="calle" id="calle" value="{{ calle }}" class="form-control required">
+                                            <button type="submit" name="obtener_calle" value="1" onclick="showPosition()">OBTENER POSICION</button>
+{#	                                        <input type="text" name="firstname" id="firstname" class="form-control required">#}
+	                                    </div>
+                                        <div class="form-group">
+	                                        <label for="numero">Numero</label>
+                                            <input type="text" name="numero" id="numero" value="{{ numero }}" class="form-control required">
+{#	                                        <input type="text" name="firstname" id="firstname" class="form-control required">#}
+	                                    </div>
+
+                                        <div class="form-group">
+	                                        <label for="cp">Codigo Postal</label>
+                                            <input type="text" name="cp" id="cp" value="{{ cp }}" class="form-control required">
+	                                    </div>
+
+                                         <div class="form-group">
+	                                        <label for="localidad">Localidad</label>
+                                            <input type="text" name="localidad" id="localidad" value="{{ localidad }}" class="form-control required">
+	                                    </div>
+                                    </div>
+                                    <div class="step">
+                                        <h3 class="main_question">
+                                            <strong class="">3 de 5</strong>
+                                            <p class="titulo">DATOS DUEÑO</p>
+                                        </h3>
+                                        <div class="form-group">
+	                                        <label for="dueno">Dueño</label>
+                                            <input type="text" name="dueno" id="dueno" value="{{ dueno }}" class="form-control required">
+	                                    </div>
+
+                                        <div class="form-group">
+	                                        <label for="wasap">Whatsapp</label>
+                                            <input type="text" name="wasap" id="wasap" value="{{ wasap }}" class="form-control required">
+	                                    </div>
+
+                                        <div class="form-group">
+	                                        <label for="telefonodueno">Telefono</label>
+                                            <input type="text" name="telefonodueno" id="telefonodueno" value="{{ telefonodueno }}" class="form-control required">
+	                                    </div>
+
+
+                                        <div class="form-group">
+	                                        <label for="calledueno">Calle</label>
+                                            <input type="text" name="calledueno" id="calledueno" value="{{ calledueno }}" class="form-control required">
+	                                    </div>
+
+                                         <div class="form-group">
+	                                        <label for="numerodueno">Numero</label>
+                                            <input type="text" name="numerodueno" id="numerodueno" value="{{ numerodueno }}" class="form-control required">
+	                                    </div>
+                                    </div>
+
+                                    <div class="step">
+
+                                        <h3 class="main_question">
+                                            <strong class="">4 de 5</strong>
+                                            <p class="titulo">DATOS VIVIENDA</p>
+                                        </h3>
+
+                                        <div class="review_block">
+	                                        <ul>
+	                                            <li>
+	                                                <div class="checkbox_radio_container">
+	                                                    <input type="checkbox" id="question_3_opt_1" name="question_3[]" class="required" value="alquiler" onchange="getVals(this, 'question_3');">
+	                                                    <label class="checkbox" for="question_3_opt_1"></label>
+	                                                    <label for="question_3_opt_1" class="wrapper">Alquiler</label>
+	                                                </div>
+	                                            </li>
+	                                            <li>
+	                                                <div class="checkbox_radio_container">
+	                                                    <input type="checkbox" id="question_3_opt_2" name="question_3[]" class="required" value="venta" onchange="getVals(this, 'question_3');">
+	                                                    <label class="checkbox" for="question_3_opt_2"></label>
+	                                                    <label for="question_3_opt_2" class="wrapper">Venta</label>
+	                                                </div>
+	                                            </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="form-group">
+	                                        <label for="precioalquiler">Precio Alquiler</label>
+                                            <input type="text" name="precioalquiler" id="precioalquiler" value="{{ precioalquiler }}" class="form-control">
+	                                    </div>
+
+                                        <div class="form-group">
+	                                        <label for="precioventa">Precio Venta</label>
+                                            <input type="text" name="precioventa" id="precioventa" value="{{ precioventa }}" class="form-control">
+	                                    </div>
+
+                                         <div class="form-group">
+	                                        <label for="totalmetros">Total Metros</label>
+                                            <input type="text" name="totalmetros" id="totalmetros" value="{{ totalmetros }}" class="form-control required">
+	                                    </div>
+                                        <div class="form-group">
+	                                        <label for="habitaciones">Habitaciones</label>
+                                            <input type="text" name="habitaciones" id="habitaciones" value="{{ habitaciones }}" class="form-control required">
+	                                    </div>
+                                        <div class="form-group">
+	                                        <label for="banos">Baños</label>
+                                            <input type="text" name="banos" id="banos" value="{{ banos }}" class="form-control required">
+	                                    </div>
+
+
+                                    </div>
+
+	                                <div class="submit step">
+                                        <h3 class="main_question">
+                                            <strong class="">5 de 5</strong>
+                                            <p class="titulo">FOTOS VIVIENDA</p>
+                                        </h3>
+                                        <div class="form-group">
+
+{#                                            <form id="fileupload" action="#" method="POST" enctype="multipart/form-data">#}
+                                                <div class="row files" id="files1">
+                                                    <label>Fotos casa:</label>
+                                                    <span class="btn btn-default btn-file">Seleccionar
+                                                        <input type="file" name="files1" accept="image/*" multiple>
+                                                    </span>
+                                                    <br><br><br>
+                                                    <ul class="fileList">
+                                                    </ul>
+                                                </div>
+{#                                            </form>#}
+                                        </div>
+	                                </div>
+
+	                            </div>
+	                            <div id="bottom-wizard">
+	                                <button type="button" name="backward" class="backward">Anterior</button>
+	                                <button type="button" name="forward" class="forward">Siguiente</button>
+	                                <button type="submit" name="process" class="submit">Enviar</button>
+	                            </div>
+	                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="container center-block wizard_container">
 
     <form action="{{url_for("recibir_alta_piso") }}" method="POST">
         <div class="row ">
@@ -61,11 +256,10 @@
                          </div>
                      </li>
                      <li>
-<div class="fuente_anadir_viviendas menu_enlinia">
-                         <label for="casa1">Oficina: </label>
-                         <input type="radio" id="casa4" name="tipocasa" value="4">
-</div>
-
+                        <div class="fuente_anadir_viviendas menu_enlinia">
+                                                 <label for="casa1">Oficina: </label>
+                                                 <input type="radio" id="casa4" name="tipocasa" value="4">
+                        </div>
                      </li>
 
                  </ul>
@@ -157,44 +351,7 @@
                         </ul>
                     </div>
 
-{#                    <div class="row">#}
-{#                        <button type="x" id="uploadBtn" class="btn primary start">Start upload</button>#}
-{#                    </div>#}
-
-                    <br>
-                    <div class="row">
-                        <div class="span16">
-                            <table class="zebra-striped"><tbody class="files"></tbody></table>
-                        </div>
-                    </div>
                 </form>
-
-
-            <!-- FIN TEMPALTE -->
-{#            <label>Tipo de planta:</label>#}
-{#            <input class="file-upload" type="file" accept="image/*"/>#}
-
-
-
-
-
-{#            <label>#}
-{#                <input type="radio" name="template" value="1" {% if template == "1" %} checked {% endif %}>#}
-{#                <img src="{{url_for("static", filename="images/template1.png")}}" width="100">#}
-{#            </label>#}
-{##}
-{#            <label>#}
-{#                <input type="radio" name="template" value="2" {% if template == "2" %} checked {% endif %}>#}
-{#                <img src="{{url_for("static", filename="images/template2.png")}}" width="100">#}
-{#            </label>#}
-{##}
-{#            <label>#}
-{#                <input type="radio" name="template" value="3" {% if template == "3" %} checked {% endif %}>#}
-{#                <img src="{{url_for("static", filename="images/template3.png")}}" width="100">#}
-{#            </label>#}
-
-
-
             </div>
         <div class="row center-block">
 
@@ -259,7 +416,6 @@
         </div>
             <!-- imagen para subir-->
         <br>
-
     <div class="container-fluid  text-center">
         <button type="submit" class="btn btn-success btn-lg">ALTA PISO</button>
     </div>
@@ -312,6 +468,7 @@
         }
     }
 
+
     $.fn.fileUploader = function (filesToUpload, sectionIdentifier)
     {
         var fileIdCounter = 0;
@@ -332,40 +489,18 @@
                     console.log("promise inside=>");
                     let reader = new FileReader();
                     reader.readAsDataURL(evt.target.files[i]);
-                    {#console.log("promise inside=>", reader.result);#}
+                    
                     reader.onload = () => resolve(reader.result);
-                    {#reader.onload = function()#}
-                    {#{#}
-                    {#    console.log("inside onload=>", reader.result);#}
-                    {#    fileIdCounter++;#}
-                    {#    var file = evt.target.files[i];#}
-                    {#    console.log("inside onload=>", file.name);#}
-                    {#    var fileId = sectionIdentifier + fileIdCounter;#}
-                    {##}
-                    {#    filesToUpload.push({#}
-                    {#        id: fileId,#}
-                    {#        file: file#}
-                    {#    });#}
-                    {##}
-                    {#    var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + fileId + "\">Quitar</a>";#}
-                    {##}
-                    {#    output.push('<li class="tx"><strong>', escape(file.name), '</strong> - ', file.size, ' bytes. &nbsp; &nbsp; ', removeLink, '</li> ');#}
-                    {##}
-                    {# };#}
-                    {#reader.onload = () => resolve(reader.result);#}
+                    
                 });
                 promises.push(filePromise, evt.target.files[i].name, evt.target.files[i].size);
-
-
 
             }
 
 
             Promise.all(promises).then(fileContents =>
             {
-                console.log("inside onload=>", fileContents[1]);
                 fileIdCounter++;
-                console.log("inside onload=>", fileContents[1]);
                 var fileId = sectionIdentifier + fileIdCounter;
 
                 filesToUpload.push({
@@ -373,9 +508,8 @@
                     file: fileContents[1]
                 });
 
+                var removeButton = '<button type="button" class="removeFile " data-fileid="' + fileId +  '">Quitar</button> ';
                 var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + fileId + "\">Quitar</a>";
-                output.push('<li><img src="' + fileContents[0]  +  '" width="100px" height="100px"></li>');
-
                 let size = "";
                 if (fileContents[2] === 0)
                 {
@@ -386,10 +520,9 @@
                     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
                     const i = Math.floor(Math.log(fileContents[2]) / Math.log(1024));
                     size = parseFloat((fileContents[2] / Math.pow(1024, i)).toFixed(2)) + ' ' + sizes[i];
-
                 }
 
-                output.push('<li class="tx"><strong>', escape(fileContents[1]), '</strong> - ', size , '. &nbsp; &nbsp; ', removeLink, '</li> ');
+                output.push('<li class="tx"><img src="' + fileContents[0]  +  '" width="100px" height="100px"><strong>', escape(fileContents[1]), '</strong> - ', size , '. &nbsp; &nbsp; ', removeLink, '</li> ');
 
 
                 $(this).children(".fileList").append(output.join(""));
@@ -417,6 +550,7 @@
                 if (filesToUpload[i].id === fileId)
                     filesToUpload.splice(i, 1);
             }
+            
 
             $(this).parent().remove();
         });
@@ -470,4 +604,17 @@
 
 
     </script>
+    <script src="{{ url_for("static", filename="js/common_scripts.min.js") }}"></script>
+    <script src="{{ url_for("static", filename="js/functions.js") }}"></script>
+{#     <script src="{{ url_for("static", filename="js/jquery-3.2.1.min.js") }}"></script>#}
+    <script src="{{ url_for("static", filename="js/survey_func.js") }}"></script>
+
+    <!-- funciona -->
+    {#    <script src="../static/js/common_scripts.min.js"></script>#}
+    {#	<script src="../static/js/functions.js"></script>#}
+    {#    <script src="../static/js/jquery-3.2.1.min.js"></script>#}
+{#	<script src="../static/js/survey_func.js"></script>#}
+
+
+
 {% endblock %}

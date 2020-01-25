@@ -320,7 +320,7 @@ def recibir_menu_medicion():
 
 @app.route("/")
 def home():
-    return render_template("geo2.html")
+    return render_template("index.html")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,23 @@
+{
+    "empleados": [
+        {
+            "empleado": 
+            {
+                "nombre": "toni",
+                "empleado_id": 1,
+                "apellido": "ajsjdj"
+
+
+            },
+            "empleado": {
+                "nombre": "alicia",
+                "empleado_id": 1,
+                "apellido": "ajsjdj"
+            }
+
+        }
+    ]
+
+}
+
+

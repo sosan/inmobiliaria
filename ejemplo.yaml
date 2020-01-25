@@ -1,0 +1,10 @@
+- empleados:
+    - empleado:
+        empleado_id: 1
+        nombre: "pepe"
+        apellido: "flffjf"
+    - empleado:
+        empleado_id: 2
+        nombre: "alicia"
+        apellido: "fsdjsdf"
+        
