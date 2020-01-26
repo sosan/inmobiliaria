@@ -15,10 +15,15 @@ from flask_bootstrap import Bootstrap
 from ModuloHelper.ManagerHelper import ManagerHelper
 from ModuloWeb.ManagerWeb import ManagerWeb
 from flask_socketio import SocketIO
+from flask_socketio import emit
+import eventlet
+
+
 
 app = Flask(__name__)
 app.secret_key = "holaa"
 socketio = SocketIO(app)
+# eventlet.monkey_patch(thread=False)
 
 
 # MUCHO CUIDADO EN NO PISAR LAS VARIABLES YA CREADAS
