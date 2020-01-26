@@ -1,5 +1,5 @@
-	/*  Wizard */
-	jQuery(function ($) {
+	jQuery(function ($)
+	{
 		"use strict";
 		$('form#wrapped').attr('action', 'survey.php');
 		$("#wizard_container").wizard({
@@ -23,15 +23,16 @@
 				}
 			}
 		});
-		//  progress bar
-		// $("#progressbar").progressbar();
-		$("#wizard_container").wizard({
-			afterSelect: function (event, state) {
-				// $("#progressbar").progressbar("value", state.percentComplete);
-				$("#location").text("(" + state.stepsComplete + "/" + state.stepsPossible + ")");
-			}
-		});
-		// Validate select
+
+		// //  progress bar
+		// $("#wizard_container").wizard({
+		// 	afterSelect: function (event, state) {
+		// 		// $("#progressbar").progressbar("value", state.percentComplete);
+		// 		$("#location").text("(" + state.stepsComplete + "/" + state.stepsPossible + ")");
+		// 	}
+		// });
+
+
 		$('#wrapped').validate({
 			ignore: [],
 			rules: {
@@ -49,9 +50,13 @@
 		});
 	});
 
-// Summary 
-function getVals(formControl, controlType) {
-	switch (controlType) {
+
+
+
+function getVals(formControl, controlType)
+{
+	switch (controlType)
+	{
 
 		case 'question_1':
 			// Get the value for a radio

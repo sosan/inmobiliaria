@@ -18,8 +18,6 @@ from flask_socketio import SocketIO
 from flask_socketio import emit
 import eventlet
 
-
-
 app = Flask(__name__)
 app.secret_key = "holaa"
 socketio = SocketIO(app)
@@ -209,6 +207,22 @@ def alta_piso():
         session.pop("mensajeerror")
 
     return render_template("alta_piso.html")
+
+
+@socketio.on('obtenercalle')
+def obtenercalle(latitude, longitude):
+    print("lat {0} long; {1} tipo:{2}".format(latitude, longitude, type(longitude)))
+    calle, numero, cp, localidad = managerweb.getstreet(latitude, longitude)
+    emit("r_obtenercalle",
+         {
+             "calle": calle,
+             "numero": numero,
+             "cp": cp,
+             "localidad": localidad
+         })
+
+
+
 
 
 @app.route("/profile/alta", methods=["POST"])

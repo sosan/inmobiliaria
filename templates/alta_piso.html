@@ -19,6 +19,25 @@
                 <div class="col-xl-5 col-lg-5">
                     <div id="wizard_container">
                             <form id="wrapped" method="POST" autocomplete="off">
+                                <input type="hidden" name="nombre" value="{{ session["nombre"] }}">
+
+                                {% if session["mensajeerror"] == 0%}
+
+                                {% elif session["mensajeerror"] == 2 %}
+                                    <h3 class=" label-danger">YA EXISTE EL INMUEBLE</h3>
+                                {% elif session["mensajeerror"] == 1 %}
+                                    <h3 class="  label-success">
+                                        DADO DE ALTA CORRECTAMENTE
+
+                                        {% if anterior_calle and anterior_numero %}
+                                            <p>Calle: {{ anterior_calle }} Numero: {{ anterior_numero }}</p>
+                                        {% endif %}
+                                    </h3>
+
+
+                                {% endif %}
+
+
 	                            <div id="middle-wizard">
 	                                <div class="step">
                                         <h3 class="main_question">
@@ -67,7 +86,8 @@
                                         <div class="form-group">
 	                                        <label for="calle">Calle</label>
                                             <input type="text" name="calle" id="calle" value="{{ calle }}" class="form-control required">
-                                            <button type="button" name="obtener_calle" value="1" onclick="showPosition()">OBTENER POSICION</button>
+                                            <button type="button" name="obtener_calle" value="1" onclick="obtenercalle()">OBTENER POSICION</button>
+{#                                            <button type="button" name="obtener_calle" value="1" onclick="showPosition()">OBTENER POSICION</button>#}
 {#	                                        <input type="text" name="firstname" id="firstname" class="form-control required">#}
 	                                    </div>
                                         <div class="form-group">
@@ -85,6 +105,9 @@
 	                                        <label for="localidad">Localidad</label>
                                             <input type="text" name="localidad" id="localidad" value="{{ localidad }}" class="form-control required">
 	                                    </div>
+
+
+
                                     </div>
                                     <div class="step">
                                         <h3 class="main_question">
@@ -197,240 +220,44 @@
 	                                <button type="button" name="forward" class="forward">Siguiente</button>
 	                                <button type="submit" name="process" class="submit">Enviar</button>
 	                            </div>
+
+                            <br><br>
+                                {% if latitude_gps %}
+                                <input type="text" id="latitude_gps" name="latitude_gps" value="{{ latitude_gps }}" class="form-control">
+                                {% else %}
+                                    <input type="text" id="latitude_gps" name="latitude_gps" value="" class="form-control">
+                                {% endif %}
+
+                                {% if longitude_gps %}
+                                <input type="text" id="longitude_gps" name="longitude_gps" value="{{ longitude_gps }}" class="form-control">
+                                {% else %}
+                                    <input type="text" id="longitude_gps" name="longitude_gps" value="" class="form-control">
+                                {% endif %}
+
+                                {% if precision %}
+                                <input type="text" id="precision" name="precision" value="{{ precision }}" class="form-control">
+                                {% else %}
+                                    <input type="text" id="precision" name="precision" value="" class="form-control">
+                                {% endif %}
+
+
 	                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
-
-    <div class="container center-block wizard_container">
-
-    <form action="{{url_for("recibir_alta_piso") }}" method="POST">
-        <div class="row ">
-            <h1 class="titulo">CAMBIADO DATOS VIVIENDA</h1>
-        </div>
-        <input type="hidden" name="nombre" value="{{ session["nombre"] }}">
-
-        {% if session["mensajeerror"] == 0%}
-
-        {% elif session["mensajeerror"] == 2 %}
-            <h1 class=" label-danger">YA EXISTE EL INMUEBLE</h1>
-        {% elif session["mensajeerror"] == 1 %}
-            <h3 class="  label-success">
-                DADO DE ALTA CORRECTAMENTE
-
-            {% if anterior_calle and anterior_numero %}
-                <p>Calle: {{ anterior_calle }} Numero: {{ anterior_numero }}</p>
-            {% endif %}
-            </h3>
-
-
-        {% endif %}
-        <div class="row center-block">
-            <fieldset class="borde_fieldset">
-                <legend class="borde_fieldset">Tipo de Vivienda</legend>
-                 <ul>
-                     <li>
-                         <div class="fuente_anadir_viviendas menu_enlinia">
-                             <label for="casa1">Piso: </label>
-                             <input type="radio" id="casa1" name="tipocasa" value="1" checked>
-                         </div>
-                     </li>
-
-                     <li>
-                         <div class="fuente_anadir_viviendas menu_enlinia">
-                         <label for="casa1">Chalet: </label>
-                         <input type="radio" id="casa2" name="tipocasa" value="2">
-                         </div>
-                     </li>
-
-                     <li>
-                         <div class="fuente_anadir_viviendas menu_enlinia">
-                         <label for="casa1">Casa Rural: </label>
-                         <input type="radio" id="casa3" name="tipocasa" value="3">
-                         </div>
-                     </li>
-                     <li>
-                        <div class="fuente_anadir_viviendas menu_enlinia">
-                                                 <label for="casa1">Oficina: </label>
-                                                 <input type="radio" id="casa4" name="tipocasa" value="4">
-                        </div>
-                     </li>
-
-                 </ul>
-            </fieldset>
-        </div>
-
-
-
-
-        <div class="row center-block">
-             <label >Zona de Palma:</label>
-             <select name="zonas">
-                 <option value="1" {% if zonas == "1" %} selected {% endif %}>Jaume III</option>
-                 <option value="2"{% if zonas == "2" %} selected {% endif %} >Son Canals</option>
-                 <option value="3" {% if zonas == "3" %} selected {% endif %} >Santa Calatina</option>
-                 <option value="4" {% if zonas == "4" %} selected {% endif %} >Son Espanyolet</option>
-                 <option value="5" {% if zonas == "5" %} selected {% endif %}>Archiduc</option>
-                 <option value="6" {% if zonas == "6" %} selected {% endif %}>Es Forti</option>
-                 <option value="7" {% if zonas == "7" %} selected {% endif %}>Can Capes</option>
-                 <option value="8" {% if zonas == "8" %} selected {% endif %}>Sant Juame</option>
-                 <option value="9" {% if zonas == "9" %} selected {% endif %}>Montision</option>
-                 <option value="10" {% if zonas == "10" %} selected {% endif %}>Plaça Patins</option>
-                 <option value="11" {% if zonas == "11" %} selected {% endif %}>Bons Aires</option>
-                 <option value="12" {% if zonas == "12" %} selected {% endif %}>Calatrava</option>
-                 <option value="13" {% if zonas == "13" %} selected {% endif %}>Son Fortesa</option>
-                 <option value="14"{% if zonas == "14" %} selected {% endif %}>Cort</option>
-                 <option value="15"{% if zonas == "15" %} selected {% endif %}>Son Rullan</option>
-                 <option value="16"{% if zonas == "16" %} selected {% endif %}>San Nicolau</option>
-                 <option value="17"{% if zonas == "17" %} selected {% endif %}>Sindicat</option>
-                 <option value="18"{% if zonas == "18" %} selected {% endif %}>Fuera Palma</option>
-             </select>
-        </div>
-        <div class="row center-block">
-             <label>Calle</label>
-             <input type="text" name="calle" value="{{ calle }}">
-            <button type="submit" name="obtener_calle" value="1" onclick="showPosition()">OBTENER POSICION</button>
-        </div>
-        <div class="row center-block">
-             <label>numero</label>
-             <input type="text" name="numero" value="{{ numero }}">
-        </div>
-        <div class="row center-block">
-         <label>Codigo Postal</label>
-         <input type="text" name="cp" value="{{ cp }}">
-        </div>
-        <div class="row center-block">
-
-         <label>Localidad</label>
-         <input type="text" name="localidad" value="{{ localidad }}">
-        </div>
-        <div class="row center-block">
-
-          <label>Dueño:</label>
-          <input type="text" name="dueno" value="{{ dueno }}">
-        </div>
-        <div class="row center-block">
-            <label>Precio:</label>
-            <input type="text" name="precio" value="{{ precio }}">
-        </div>
-        <div class="row center-block">
-            <label>Total metros cuadrados:</label>
-            <input type="text" name="totalmetros" value="{{ totalmetros }}">
-        </div>
-        <div class="row center-block">
-         <label>Habitaciones</label>
-
-         <input type="text" name="habitaciones" value="{{ habitaciones }}">
-
-        </div>
-        <div class="row center-block">
-         <label for="banos">Baños:</label>
-         <input type="text" id="banoss" name="numerobanos" value="{{ numerobanos }}">
-        </div>
-        <div class="row center-block ">
-{#        {% if template %}#}
-
-            <!-- TEMPLATE -->
-
-                <form id="fileupload" action="#" method="POST" enctype="multipart/form-data">
-                    <div class="row files" id="files1">
-                        <label>Fotos casa:</label>
-                        <span class="btn btn-default btn-file">Seleccionar
-                            <input type="file" name="files1" accept="image/*" multiple>
-                        </span>
-                        <br><br><br>
-
-                        <ul class="fileList">
-
-                        </ul>
-                    </div>
-
-                </form>
-            </div>
-        <div class="row center-block">
-
-         <label>Negocio: </label>
-
-         {% if alquiler %}
-            <label for="alquiler1"> Venta:</label>
-            <input type="radio" id="alquiler1" name="alquiler" value="1"  {% if alquiler == "1" %} checked {% endif %}>
-
-            <label for="alquiler2">Alquiler:</label>
-            <input type="radio" id="alquiler2" name="alquiler" value="2" {% if alquiler == "2" %} checked {% endif %}>
-        {% else %}
-            <label for="alquiler1"> Venta:</label>
-            <input type="radio" id="alquiler1" name="alquiler" value="1" checked>
-
-            <label for="alquiler2">Alquiler:</label>
-            <input type="radio" id="alquiler2" name="alquiler" value="2">
-        {% endif %}
-
-
-
-        </div>
-        <div class="row center-block">
-            <fieldset class="borde_fieldset">
-                <legend class="borde_fieldset">Posicion GPS:</legend>
-                <div class="control-group">
-
-                        <label for="latitude_gps">Latitud: </label>
-                        {% if latitude_gps %}
-                            <input type="text" id="latitude_gps" name="latitude_gps" value="{{ latitude_gps }}">
-                        {% else %}
-                            <input type="text" id="latitude_gps" name="latitude_gps" value="">
-                        {% endif %}
-
-                        <label for="longitude_gps">Longitud: </label>
-                        {% if longitude_gps %}
-                            <input type="text" id="longitude_gps" name="longitude_gps" value="{{ longitude_gps }}">
-
-                        {% else %}
-                            <input type="text" id="longitude_gps" name="longitude_gps" value="">
-                        {% endif %}
-
-
-                         <label for="precision">Precision: </label>
-                        {% if precision %}
-                            <input type="text" id="precision" name="precision" value="{{ precision }}">
-                        {% else %}
-                            <input type="text" id="precision" name="precision" value="">
-                        {% endif %}
-
-
-
-{#                <div id="result"></div>#}
-                <button type="button" class="menu_enlinia" onclick="showPosition();">
-                    <div class="fuente_anadir_viviendas">Obtener posicion</div>
-                    <span class="col-xs-12 glyphicon glyphicon-screenshot pull-right glyphicon_font paderecha col-xs-12_fix_padding"></span>
-
-                </button>
-
-
-                </div>
-            </fieldset>
-
-        </div>
-            <!-- imagen para subir-->
-        <br>
-    <div class="container-fluid  text-center">
-        <button type="submit" class="btn btn-success btn-lg">ALTA PISO</button>
-    </div>
-    </form>
-</div>
     <br><br>
-    </div>
+
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
     <script>
     $(document).ready(showPosition());
+
+
+
 
     function showPosition()
     {
@@ -441,7 +268,7 @@
             {
                 document.getElementById("latitude_gps").value =  position.coords.latitude.toString();
                 document.getElementById("longitude_gps").value =  position.coords.longitude.toString() ;
-                document.getElementById("precision").value = position.coords.accuracy.toString();
+                document.getElementById("precision").value = position.coords.accuracy.toString() + " metros";;
 
 
             }, function(error)
@@ -650,5 +477,83 @@
     <script src="{{ url_for("static", filename="js/functions.js") }}"></script>
     <script src="{{ url_for("static", filename="js/survey_func.js") }}"></script>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script>
+
+        {#import io from "socket.io-client";#}
+
+        {#const io = require('socket.io-client');#}
+        {#const socket = io('http://localhost');#}
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        $(document).ready(function()
+        {
+
+            socket.on('r_obtenercalle', function(data)
+            {
+                console.log("recibido ");
+                document.getElementById("calle").value = data["calle"];
+                $("#calle").parent().addClass("fl-is-active fl-has-focus");
+                document.getElementById("numero").value = data["numero"];
+                $("#numero").parent().addClass("fl-is-active fl-has-focus");
+                document.getElementById("cp").value = data["cp"];
+                $("#cp").parent().addClass("fl-is-active fl-has-focus");
+                document.getElementById("localidad").value = data["localidad"];
+                $("#localidad").parent().addClass("fl-is-active fl-has-focus");
+
+            });
+
+
+
+
+        });
+
+        function obtenercalle()
+        {
+
+            if(navigator.geolocation)
+            {
+                navigator.geolocation.getCurrentPosition(function(position)
+                {
+                    console.log("dentroasasd!")
+                    document.getElementById("latitude_gps").value =  position.coords.latitude.toString();
+                    document.getElementById("longitude_gps").value =  position.coords.longitude.toString() ;
+                    document.getElementById("precision").value = position.coords.accuracy.toString() + " metros";
+                    socket.emit("obtenercalle", position.coords.latitude, position.coords.longitude );
+
+                }, function(error)
+                {
+
+                    switch(error.code)
+                    {
+                        case error.PERMISSION_DENIED:
+                             document.getElementById("latitude_gps").innerHTML = "User denied the request for Geolocation.";
+                        break;
+                        case error.POSITION_UNAVAILABLE:
+                             document.getElementById("latitude_gps").innerHTML = "Location information is unavailable.";
+                        break;
+                        case error.TIMEOUT:
+                             document.getElementById("latitude_gps").innerHTML = "The request to get user location timed out.";
+                        break;
+                        default:
+                             document.getElementById("latitude_gps").innerHTML = "An unknown error occurred.";
+                        break;
+                    }
+
+                }, {maximumAge:10000, timeout:5000, enableHighAccuracy: true});
+
+            } else {
+                alert("Sorry, your browser does not support HTML5 geolocation.");
+            }
+
+
+
+
+
+
+        }
+
+
+    </script>
 
 {% endblock %}
