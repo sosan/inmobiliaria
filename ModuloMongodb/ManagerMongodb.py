@@ -46,19 +46,22 @@ class ManagerMongoDb:
 
     def altaproducto(self,
                      calle,
-                     alquiler,
                      cp,
                      habitaciones,
                      localidad,
                      numero,
-                     numerobanos,
-                     template,
+                     banos,
+                     wasap,
                      tipocasa,
-                     zonas,
+                     telefonodueno,
+                     calledueno,
+                     numerodueno,
+                     tiponegocio,
                      latitud_txt,
                      longitud_txt,
                      dueno,
-                     precio,
+                     precioventa,
+                     precioalquiler,
                      totalmetros,
                      nombre,
                      precision_txt
@@ -67,7 +70,7 @@ class ManagerMongoDb:
         try:
             latitud = float(latitud_txt)
             longitud = float(longitud_txt)
-            precision = float(precision_txt)
+
 
             fecha = datetime.utcnow()
             fechadelta = datetime.utcnow() + timedelta(hours=24)
@@ -75,16 +78,19 @@ class ManagerMongoDb:
             ok = self.cursorpisos.insert_one(
                 {
                     "calle": calle,
-                    "alquiler": alquiler,
+                    "tiponegocio": tiponegocio,
                     "cp": cp,
                     "habitaciones": habitaciones,
-                    "precio": precio,
+                    "precioventa": precioventa,
+                    "precioalquiler": precioalquiler,
                     "localidad": localidad,
                     "numero": numero,
-                    "numerobanos": numerobanos,
-                    "template": template,
+                    "banos": banos,
+                    "wasap": wasap,
                     "tipocasa": tipocasa,
-                    "zonas": zonas,
+                    "telefonodueno": telefonodueno,
+                    "calledueno": calledueno,
+                    "numerodueno": numerodueno,
                     "dueno": dueno,
                     "totalmetros": totalmetros,
                     "medicion": False,
@@ -93,7 +99,7 @@ class ManagerMongoDb:
                     "fechadelta": fechadelta,
                     "datosgps": {
                         "coordenadas": [latitud, longitud],
-                        "precision": precision
+                        "precision": precision_txt
 
                     }
                 }
@@ -105,19 +111,19 @@ class ManagerMongoDb:
         except ValueError:
             raise Exception("Conversion no posible")
 
-    def comprobarexisteinmueble(self, calle, latitud_txt, longitud_txt):
+    def comprobarexisteinmueble(self, calle, numero):
 
         try:
-            latitud = float(latitud_txt)
-            longitud = float(longitud_txt)
-            patron = {"calle": calle, "datosgps": {"coordenadas": [latitud, longitud]}}
+            # latitud = float(latitud_txt)
+            # longitud = float(longitud_txt)
+            patron = {"calle": calle, "numero": numero}
             ok = list(self.cursorpisos.find(patron))
             if ok != None:
                 if len(ok) <= 0:
                     return True
             return False
         except ValueError:
-            raise Exception("no podidod conversion {0}".format(latitud_txt, longitud_txt))
+            raise Exception("no podidod conversion {0} {1}".format(calle, numero))
 
     def getcantidadproductos(self):
         resultados = self.cursoradmin.find_one({"_id": "contador"}, {"_id": False})

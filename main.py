@@ -151,7 +151,7 @@ def alta_piso():
         anterior_calle = session.pop("anterior_calle")
         anterior_numero = session.pop("anterior_numero")
 
-        return render_template("alta_piso.html", anterior_calle=anterior_calle)
+        return render_template("alta_piso.html", anterior_calle=anterior_calle, anterior_numero=anterior_numero)
 
     if "obtener_calle" in session:
         session.pop("obtener_calle")
@@ -222,50 +222,46 @@ def obtenercalle(latitude, longitude):
          })
 
 
-
-
-
 @app.route("/profile/alta", methods=["POST"])
 def recibir_alta_piso():
-    if "obtener_calle" in request.form:
-        session["obtener_calle"] = True
-        calle, numero, cp, localidad = managerweb.getstreet(request.form["latitude_gps"], request.form["longitude_gps"])
-        session["calle"] = calle
-        session["numero"] = numero
-        session["cp"] = cp
-        session["localidad"] = localidad
-
-        return redirect(url_for("alta_piso"))
+    # if "obtener_calle" in request.form: session["obtener_calle"] = True calle, numero, cp, localidad =
+    # managerweb.getstreet(request.form["latitude_gps"], request.form["longitude_gps"]) session["calle"] = calle
+    # session["numero"] = numero session["cp"] = cp session["localidad"] = localidad
+    #
+    #     return redirect(url_for("alta_piso"))
 
     if "usuario" not in session or "password" not in session:
         return redirect(url_for("alta_piso"))
 
-    if "alquiler" and "calle" and "cp" and "habitaciones" and "localidad" \
-            and "numerobanos" and "template" and "tipocasa" and "zonas" in request.form:
+    if "tiponegocio" and "calle" and "cp" and "habitaciones" and "localidad" \
+            and "banos" and "tipocasa" and "numero" and "dueno" and "telefonodueno" in request.form:
 
         # comprobacion de si ya existe el piso en la db
         ok = managermongo.comprobarexisteinmueble(
             request.form["calle"],
-            request.form["latitude_gps"],
-            request.form["longitude_gps"],
+            # request.form["latitude_gps"],
+            # request.form["longitude_gps"],
             request.form["numero"]
         )
         if ok == True:
             ok = managermongo.altaproducto(
                 request.form["calle"],
-                request.form["alquiler"],
                 request.form["cp"],
                 request.form["habitaciones"],
                 request.form["localidad"],
                 request.form["numero"],
-                request.form["numerobanos"],
-                request.form["template"],
+                request.form["banos"],
+                request.form["wasap"],
                 request.form["tipocasa"],
-                request.form["zonas"],
+                request.form["telefonodueno"],
+                request.form["calledueno"],
+                request.form["numerodueno"],
+                request.form["tiponegocio"],
                 request.form["latitude_gps"],
                 request.form["longitude_gps"],
                 request.form["dueno"],
-                request.form["precio"],
+                request.form["precioventa"],
+                request.form["precioalquiler"],
                 request.form["totalmetros"],
                 request.form["nombre"],
                 request.form["precision"]

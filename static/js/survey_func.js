@@ -1,7 +1,7 @@
 	jQuery(function ($)
 	{
 		"use strict";
-		$('form#wrapped').attr('action', 'survey.php');
+		// $('form#wrapped').attr('action', '{{ url_for("recibir_alta_piso") }}');
 		$("#wizard_container").wizard({
 			stepsWrapper: "#wrapped",
 			submit: ".submit",
@@ -58,17 +58,17 @@ function getVals(formControl, controlType)
 	switch (controlType)
 	{
 
-		case 'question_1':
+		case 'tipocasa':
 			// Get the value for a radio
 			var value = $(formControl).val();
-			$("#question_1").text(value);
+			$("#tipocasa").text(value);
 			break;
 
-		case 'additional_message':
-			// Get the value for a textarea
-			var value = $(formControl).val();
-			$("#additional_message").text(value);
-			break;
+		// case 'additional_message':
+		// 	// Get the value for a textarea
+		// 	var value = $(formControl).val();
+		// 	$("#additional_message").text(value);
+		// 	break;
 
 		case 'question_2':
 			// Get the value for a radio
@@ -76,13 +76,13 @@ function getVals(formControl, controlType)
 			$("#question_2").text(value);
 			break;
 
-		case 'additional_message_2':
-			// Get the value for a textarea
-			var value = $(formControl).val();
-			$("#additional_message_2").text(value);
-			break;
+		// case 'additional_message_2':
+		// 	// Get the value for a textarea
+		// 	var value = $(formControl).val();
+		// 	$("#additional_message_2").text(value);
+		// 	break;
 
-		case 'question_3':
+		case 'tiponegocio':
 			// Get name for set of checkboxes
 			var checkboxName = $(formControl).attr('name');
 
@@ -94,7 +94,7 @@ function getVals(formControl, controlType)
 					value.push($(this).val());
 				}
 			});
-			$("#question_3").text(value.join(", "));
+			$("#tiponegocio").text(value.join(", "));
 			break;
 	}
 }

@@ -18,7 +18,7 @@
             <div class="row justify-content-between">
                 <div class="col-xl-5 col-lg-5">
                     <div id="wizard_container">
-                            <form id="wrapped" method="POST" autocomplete="off">
+                            <form id="wrapped" method="POST" autocomplete="off" action="{{ url_for("recibir_alta_piso") }}">
                                 <input type="hidden" name="nombre" value="{{ session["nombre"] }}">
 
                                 {% if session["mensajeerror"] == 0%}
@@ -48,28 +48,28 @@
                                               <ul>
                                                 <li>
                                                     <div class="checkbox_radio_container">
-                                                        <input type="radio" id="piso" name="question_1" class="required" value="piso" onchange="getVals(this, 'question_1');">
-                                                        <label class="radio" for="piso"></label>
+                                                        <input type="radio" id="tipocasa" name="tipocasa" class="required" value="piso" onchange="getVals(this, 'tipocasa');">
+                                                        <label class="radio" for="tipocasa"></label>
                                                         <label for="piso" class="wrapper">Piso</label>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="checkbox_radio_container">
-                                                        <input type="radio" id="chalet" name="question_1" class="required" value="chalet" onchange="getVals(this, 'question_1');">
+                                                        <input type="radio" id="chalet" name="tipocasa" class="required" value="chalet" onchange="getVals(this, 'tipocasa');">
                                                         <label class="radio" for="chalet"></label>
                                                         <label for="chalet" class="wrapper">Chalet</label>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="checkbox_radio_container">
-                                                        <input type="radio" id="casarural" name="question_1" class="required" value="casarural" onchange="getVals(this, 'question_1');">
+                                                        <input type="radio" id="casarural" name="tipocasa" class="required" value="casarural" onchange="getVals(this, 'tipocasa');">
                                                         <label class="radio" for="casarural"></label>
                                                         <label for="casarural" class="wrapper">Casa Rural</label>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="checkbox_radio_container">
-                                                        <input type="radio" id="oficina" name="question_1" class="required" value="oficina" onchange="getVals(this, 'question_1');">
+                                                        <input type="radio" id="oficina" name="tipocasa" class="required" value="oficina" onchange="getVals(this, 'tipocasa');">
                                                         <label class="radio" for="oficina"></label>
                                                         <label for="oficina" class="wrapper">Oficina</label>
                                                     </div>
@@ -87,16 +87,12 @@
 	                                        <label for="calle">Calle</label>
                                             <input type="text" name="calle" id="calle" value="{{ calle }}" class="form-control required">
                                             <button type="button" name="obtener_calle" value="1" onclick="obtenercalle()">
-{#                                                <span class="glyphicon glyphicon-screenshot pull-right glyphicon_font paderecha col-xs-12_fix_padding"></span>#}
 
                                                 OBTENER POSICION</button>
-{#                                            <button type="button" name="obtener_calle" value="1" onclick="showPosition()">OBTENER POSICION</button>#}
-{#	                                        <input type="text" name="firstname" id="firstname" class="form-control required">#}
 	                                    </div>
                                         <div class="form-group">
 	                                        <label for="numero">Numero</label>
                                             <input type="text" name="numero" id="numero" value="{{ numero }}" class="form-control required">
-{#	                                        <input type="text" name="firstname" id="firstname" class="form-control required">#}
 	                                    </div>
 
                                         <div class="form-group">
@@ -108,9 +104,6 @@
 	                                        <label for="localidad">Localidad</label>
                                             <input type="text" name="localidad" id="localidad" value="{{ localidad }}" class="form-control required">
 	                                    </div>
-
-
-
                                     </div>
                                     <div class="step">
                                         <h3 class="main_question">
@@ -155,15 +148,15 @@
 	                                        <ul>
 	                                            <li>
 	                                                <div class="checkbox_radio_container">
-	                                                    <input type="checkbox" id="question_3_opt_1" name="question_3[]" class="required" value="alquiler" onchange="getVals(this, 'question_3');">
-	                                                    <label class="checkbox" for="question_3_opt_1"></label>
+	                                                    <input type="checkbox" id="alquiler" name="tiponegocio" class="required" value="alquiler" onchange="getVals(this, 'tiponegocio');">
+	                                                    <label class="checkbox" for="alquiler"></label>
 	                                                    <label for="question_3_opt_1" class="wrapper">Alquiler</label>
 	                                                </div>
 	                                            </li>
 	                                            <li>
 	                                                <div class="checkbox_radio_container">
-	                                                    <input type="checkbox" id="question_3_opt_2" name="question_3[]" class="required" value="venta" onchange="getVals(this, 'question_3');">
-	                                                    <label class="checkbox" for="question_3_opt_2"></label>
+	                                                    <input type="checkbox" id="venta" name="tiponegocio" class="required" value="venta" onchange="getVals(this, 'tiponegocio');">
+	                                                    <label class="checkbox" for="venta"></label>
 	                                                    <label for="question_3_opt_2" class="wrapper">Venta</label>
 	                                                </div>
 	                                            </li>
