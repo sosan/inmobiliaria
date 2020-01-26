@@ -14,9 +14,12 @@ from ModuloMongodb.ManagerMongodb import managermongo
 from flask_bootstrap import Bootstrap
 from ModuloHelper.ManagerHelper import ManagerHelper
 from ModuloWeb.ManagerWeb import ManagerWeb
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
 app.secret_key = "holaa"
+socketio = SocketIO(app)
+
 
 # MUCHO CUIDADO EN NO PISAR LAS VARIABLES YA CREADAS
 # app.config["DEBUG"] = True
@@ -28,7 +31,7 @@ import os
 CARPETA = os.path.abspath(".//archivos_subidos")
 app.config["CARPETA"] = CARPETA
 
-Bootstrap(app)
+bootstrap = Bootstrap(app)
 helper = ManagerHelper()
 
 
@@ -325,4 +328,5 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run("0.0.0.0", 5000, debug=True)
+    socketio.run(host="0.0.0.0", port=5000, app=app, debug=True)
+    # app.run("0.0.0.0", 5000, debug=True)
