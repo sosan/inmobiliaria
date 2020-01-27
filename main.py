@@ -153,54 +153,87 @@ def alta_piso():
 
         return render_template("alta_piso.html", anterior_calle=anterior_calle, anterior_numero=anterior_numero)
 
-    if "obtener_calle" in session:
-        session.pop("obtener_calle")
-        calle = session.pop("calle")
-        numero = session.pop("numero")
-        cp = session.pop("cp")
-        localidad = session.pop("localidad")
-        return render_template("alta_piso.html",
-                               calle=calle,
-                               numero=numero,
-                               cp=cp,
-                               localidad=localidad)
+    # if "obtener_calle" in session:
+    #     session.pop("obtener_calle")
+    #     calle = session.pop("calle")
+    #     numero = session.pop("numero")
+    #     cp = session.pop("cp")
+    #     localidad = session.pop("localidad")
+    #     return render_template("alta_piso.html",
+    #                            calle=calle,
+    #                            numero=numero,
+    #                            cp=cp,
+    #                            localidad=localidad)
 
     if "calle" and "alquiler" and "cp" and "habitaciones" and "localidad" and "numerobanos" \
             and "template" and "tipocasa" and "zonas" and "latitude_gps" and "longitude_gps" and "dueno" and "precio" and "totalmetros" \
             in session:
-        calle = session.pop("calle")
-        alquiler = session.pop("alquiler")
-        cp = session.pop("cp")
-        habitaciones = session.pop("habitaciones")
-        localidad = session.pop("localidad")
-        numero = session.pop("numero")
-        numerobanos = session.pop("numerobanos")
-        template = session.pop("template")
-        tipocasa = session.pop("tipocasa")
-        zonas = session.pop("zonas")
-        latitude_gps = session.pop("latitude_gps")
-        longitude_gps = session.pop("longitude_gps")
-        dueno = session.pop("dueno")
-        precio = session.pop("precio")
-        totalmetros = session.pop("totalmetros")
 
-        return render_template("alta_piso.html",
-                               calle=calle,
-                               aquiler=alquiler,
-                               cp=cp,
-                               habitaciones=habitaciones,
-                               localidad=localidad,
-                               numero=numero,
-                               numerobanos=numerobanos,
-                               template=template,
-                               tipocasa=tipocasa,
-                               zonas=zonas,
-                               latitude_gps=latitude_gps,
-                               longitude_gps=longitude_gps,
-                               dueno=dueno,
-                               precio=precio,
-                               totalmetros=totalmetros
+        variables = {
+            "calle": session.pop("calle"),
+            "cp": session.pop("cp"),
+            "habitaciones": session.pop("habitaciones"),
+            "localidad": session.pop("localidad"),
+            "numero": session.pop("numero"),
+            "banos": session.pop("banos"),
+            "wasap": session.pop("wasap"),
+            "tipocasa": session.pop("tipocasa"),
+            "telefonodueno": session.pop("telefonodueno"),
+            "calledueno": session.pop("calledueno"),
+            "numerodueno": session.pop("numerodueno"),
+            "tiponegocio": session.pop("tiponegocio"),
+            "latitude_gps": session.pop("latitude_gps"),
+            "longitude_gps": session.pop("longitude_gps"),
+            "dueno": session.pop("dueno"),
+            "precioventa": session.pop("precioventa"),
+            "precioalquiler": session.pop("precioalquiler"),
+            "totalmetros": session.pop("totalmetros"),
+            "nombre": session.pop("nombre"),
+            "precision": session.pop("precision")
+        }
 
+        # calle = session.pop("calle")
+        # cp = session.pop("cp")
+        # habitaciones = session.pop("habitaciones")
+        # localidad = session.pop("localidad")
+        # numero = session.pop("numero")
+        # banos = session.pop("banos")
+        # wasap = session.pop("wasap")
+        # tipocasa = session.pop("tipocasa")
+        # telefonodueno = session.pop("telefonodueno")
+        # calledueno = session.pop("calledueno")
+        # numerodueno = session.pop("numerodueno")
+        # tiponegocio = session.pop("tiponegocio")
+        # latitude_gps = session.pop("latitude_gps")
+        # longitude_gps = session.pop("longitude_gps")
+        # dueno = session.pop("dueno")
+        # precioventa = session.pop("precioventa")
+        # precioalquiler = session.pop("precioalquiler")
+        # totalmetros = session.pop("totalmetros")
+        # nombre = session.pop("nombre")
+        # precision = session.pop("precision")
+
+        return render_template("alta_piso.html", **variables
+                               # calle=calle,
+                               # cp=cp,
+                               # habitaciones=habitaciones,
+                               # localidad=localidad,
+                               # numero=numero,
+                               # banos=banos,
+                               # wasap=wasap,
+                               # tipocasa=tipocasa,
+                               # telefonodueno=telefonodueno,
+                               # calledueno=calledueno,
+                               # numerodueno=numerodueno,
+                               # tiponegocio=tiponegocio,
+                               # latitude_gps=latitude_gps,
+                               # longitude_gps=longitude_gps,
+                               # dueno=dueno,
+                               # precioventa=precioventa,
+                               # precioalquiler=precioalquiler,
+                               # totalmetros=totalmetros,
+                               # nombre=nombre,
+                               # precision=precision
                                )
 
     if "mensajeerror" in session:
@@ -278,20 +311,25 @@ def recibir_alta_piso():
             # ya existe mensaje de error
             session["mensajeerror"] = helper.errores.no_insertado
             session["calle"] = request.form["calle"]
-            session["alquiler"] = request.form["alquiler"]
             session["cp"] = request.form["cp"]
             session["habitaciones"] = request.form["habitaciones"]
             session["localidad"] = request.form["localidad"]
             session["numero"] = request.form["numero"]
-            session["numerobanos"] = request.form["numerobanos"]
-            session["template"] = request.form["template"]
+            session["banos"] = request.form["banos"]
+            session["wasap"] = request.form["wasap"]
             session["tipocasa"] = request.form["tipocasa"]
-            session["zonas"] = request.form["zonas"]
+            session["telefonodueno"] = request.form["telefonodueno"]
+            session["calledueno"] = request.form["calledueno"]
+            session["numerodueno"] = request.form["numerodueno"]
+            session["tiponegocio"] = request.form["tiponegocio"]
             session["latitude_gps"] = request.form["latitude_gps"]
             session["longitude_gps"] = request.form["longitude_gps"]
             session["dueno"] = request.form["dueno"]
-            session["precio"] = request.form["precio"]
+            session["precioventa"] = request.form["precioventa"]
+            session["precioalquiler"] = request.form["precioalquiler"]
             session["totalmetros"] = request.form["totalmetros"]
+            session["nombre"] = request.form["nombre"]
+            session["precision"] = request.form["precision"]
 
     return redirect(url_for("alta_piso"))
 

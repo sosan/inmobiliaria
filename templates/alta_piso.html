@@ -22,11 +22,13 @@
                                 <input type="hidden" name="nombre" value="{{ session["nombre"] }}">
 
                                 {% if session["mensajeerror"] == 0%}
-
+                                    <h3 class="alert alert-success quitadotop" id="success-alert" style="display: block; opacity: 0;">
+                                    &nbsp;
+                                    </h3>
                                 {% elif session["mensajeerror"] == 2 %}
-                                    <h3 class=" label-danger">YA EXISTE EL INMUEBLE</h3>
+                                    <h3 class=" label-danger quitadotop" id="success-alert">YA EXISTE EL INMUEBLE</h3>
                                 {% elif session["mensajeerror"] == 1 %}
-                                    <h3 class="  label-success">
+                                    <h3 class="  label-success quitadotop" id="success-alert">
                                         DADO DE ALTA CORRECTAMENTE
 
                                         {% if anterior_calle and anterior_numero %}
@@ -48,28 +50,48 @@
                                               <ul>
                                                 <li>
                                                     <div class="checkbox_radio_container">
-                                                        <input type="radio" id="tipocasa" name="tipocasa" class="required" value="piso" onchange="getVals(this, 'tipocasa');">
-                                                        <label class="radio" for="tipocasa"></label>
+
+                                                        {% if tipocasa == "piso" %}
+                                                            <input type="radio" id="piso" name="tipocasa" class="required valid" checked value="piso" >
+                                                        {% else %}
+                                                            <input type="radio" id="piso" name="tipocasa" class="required" value="piso" >
+                                                        {% endif %}
+
+                                                        <label class="radio" for="piso"></label>
                                                         <label for="piso" class="wrapper">Piso</label>
+
+
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="checkbox_radio_container">
-                                                        <input type="radio" id="chalet" name="tipocasa" class="required" value="chalet" onchange="getVals(this, 'tipocasa');">
+                                                        {% if tipocasa == "chalet" %}
+                                                            <input type="radio" id="chalet" name="tipocasa" class="required valid" checked value="chalet">
+                                                        {% else %}
+                                                            <input type="radio" id="chalet" name="tipocasa" class="required" value="chalet">
+                                                        {% endif %}
                                                         <label class="radio" for="chalet"></label>
                                                         <label for="chalet" class="wrapper">Chalet</label>
                                                     </div>
                                                 </li>
-                                                <li>
-                                                    <div class="checkbox_radio_container">
-                                                        <input type="radio" id="casarural" name="tipocasa" class="required" value="casarural" onchange="getVals(this, 'tipocasa');">
+                                                  <li>
+                                                      <div class="checkbox_radio_container">
+                                                          {% if tipocasa == "casarural" %}
+                                                              <input type="radio" id="casarural" name="tipocasa" class="required valid" checked value="casarural">
+                                                          {% else %}
+                                                              <input type="radio" id="casarural" name="tipocasa" class="required" value="casarural">
+                                                          {% endif %}
                                                         <label class="radio" for="casarural"></label>
                                                         <label for="casarural" class="wrapper">Casa Rural</label>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="checkbox_radio_container">
-                                                        <input type="radio" id="oficina" name="tipocasa" class="required" value="oficina" onchange="getVals(this, 'tipocasa');">
+                                                        {% if tipocasa == "oficina" %}
+                                                            <input type="radio" id="oficina" name="tipocasa" class="required valid" checked value="oficina" >
+                                                        {% else %}
+                                                            <input type="radio" id="oficina" name="tipocasa" class="required" value="oficina" >
+                                                        {% endif %}
                                                         <label class="radio" for="oficina"></label>
                                                         <label for="oficina" class="wrapper">Oficina</label>
                                                     </div>
@@ -150,14 +172,14 @@
 	                                                <div class="checkbox_radio_container">
 	                                                    <input type="checkbox" id="alquiler" name="tiponegocio" class="required" value="alquiler" onchange="getVals(this, 'tiponegocio');">
 	                                                    <label class="checkbox" for="alquiler"></label>
-	                                                    <label for="question_3_opt_1" class="wrapper">Alquiler</label>
+	                                                    <label for="alquiler" class="wrapper">Alquiler</label>
 	                                                </div>
 	                                            </li>
 	                                            <li>
 	                                                <div class="checkbox_radio_container">
 	                                                    <input type="checkbox" id="venta" name="tiponegocio" class="required" value="venta" onchange="getVals(this, 'tiponegocio');">
 	                                                    <label class="checkbox" for="venta"></label>
-	                                                    <label for="question_3_opt_2" class="wrapper">Venta</label>
+	                                                    <label for="venta" class="wrapper">Venta</label>
 	                                                </div>
 	                                            </li>
                                             </ul>
@@ -252,7 +274,19 @@
     <script>
     $(document).ready(showPosition());
 
+     var productoname = {% if session["mensajeerror"] != 0 %}true{% else %}false{% endif %};
 
+    $(document).ready(function()
+    {
+        if (productoname)
+        {
+
+            $("#success-alert").fadeTo(2000, 500).animate({opacity:0});
+
+        }
+
+
+    });
 
 
     function showPosition()

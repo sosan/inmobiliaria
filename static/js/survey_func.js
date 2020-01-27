@@ -1,14 +1,10 @@
 	jQuery(function ($)
 	{
 		"use strict";
-		// $('form#wrapped').attr('action', '{{ url_for("recibir_alta_piso") }}');
 		$("#wizard_container").wizard({
 			stepsWrapper: "#wrapped",
 			submit: ".submit",
 			beforeSelect: function (event, state) {
-				// if ($('input#website').val().length != 0) {
-				// 	return false;
-				// }
 				if (!state.isMovingForward)
 					return true;
 				var inputs = $(this).wizard('state').step.find(':input');
@@ -23,15 +19,6 @@
 				}
 			}
 		});
-
-		// //  progress bar
-		// $("#wizard_container").wizard({
-		// 	afterSelect: function (event, state) {
-		// 		// $("#progressbar").progressbar("value", state.percentComplete);
-		// 		$("#location").text("(" + state.stepsComplete + "/" + state.stepsPossible + ")");
-		// 	}
-		// });
-
 
 		$('#wrapped').validate({
 			ignore: [],
@@ -63,24 +50,6 @@ function getVals(formControl, controlType)
 			var value = $(formControl).val();
 			$("#tipocasa").text(value);
 			break;
-
-		// case 'additional_message':
-		// 	// Get the value for a textarea
-		// 	var value = $(formControl).val();
-		// 	$("#additional_message").text(value);
-		// 	break;
-
-		case 'question_2':
-			// Get the value for a radio
-			var value = $(formControl).val();
-			$("#question_2").text(value);
-			break;
-
-		// case 'additional_message_2':
-		// 	// Get the value for a textarea
-		// 	var value = $(formControl).val();
-		// 	$("#additional_message_2").text(value);
-		// 	break;
 
 		case 'tiponegocio':
 			// Get name for set of checkboxes
