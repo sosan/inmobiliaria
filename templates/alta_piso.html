@@ -170,14 +170,21 @@
 	                                        <ul>
 	                                            <li>
 	                                                <div class="checkbox_radio_container">
-	                                                    <input type="checkbox" id="alquiler" name="tiponegocio" class="required" value="alquiler" onchange="getVals(this, 'tiponegocio');">
+                                                    {% if tiponegocio_alquiler %}
+                                                            <input type="checkbox" id="alquiler" name="tiponegocio_alquiler" class="valid" checked value="alquiler">
+                                                    {% endif %}
+                                                    <input type="checkbox" id="alquiler" name="tiponegocio_alquiler" class="" value="alquiler">
+{#	                                                    <input type="checkbox" id="alquiler" name="tiponegocio" class="required" value="alquiler" onchange="getVals(this, 'tiponegocio');">#}
 	                                                    <label class="checkbox" for="alquiler"></label>
 	                                                    <label for="alquiler" class="wrapper">Alquiler</label>
 	                                                </div>
 	                                            </li>
 	                                            <li>
 	                                                <div class="checkbox_radio_container">
-	                                                    <input type="checkbox" id="venta" name="tiponegocio" class="required" value="venta" onchange="getVals(this, 'tiponegocio');">
+                                                    {% if tiponegocio_venta %}
+                                                            <input type="checkbox" id="venta" name="tiponegocio_venta" class=" valid" checked value="venta" >
+                                                    {% endif %}
+                                                        <input type="checkbox" id="venta" name="tiponegocio_venta" class="" value="venta" >
 	                                                    <label class="checkbox" for="venta"></label>
 	                                                    <label for="venta" class="wrapper">Venta</label>
 	                                                </div>

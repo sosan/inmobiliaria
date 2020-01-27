@@ -147,27 +147,30 @@ def menu_admin_post():
 
 @app.route("/profile/alta", methods=["GET"])
 def alta_piso():
+    if "usuario" not in session or "password" not in session:
+        return redirect(url_for("admin_login"))
+
+
     if "anterior_calle" in session:
         anterior_calle = session.pop("anterior_calle")
         anterior_numero = session.pop("anterior_numero")
 
         return render_template("alta_piso.html", anterior_calle=anterior_calle, anterior_numero=anterior_numero)
 
-    # if "obtener_calle" in session:
-    #     session.pop("obtener_calle")
-    #     calle = session.pop("calle")
-    #     numero = session.pop("numero")
-    #     cp = session.pop("cp")
-    #     localidad = session.pop("localidad")
-    #     return render_template("alta_piso.html",
-    #                            calle=calle,
-    #                            numero=numero,
-    #                            cp=cp,
-    #                            localidad=localidad)
-
-    if "calle" and "alquiler" and "cp" and "habitaciones" and "localidad" and "numerobanos" \
-            and "template" and "tipocasa" and "zonas" and "latitude_gps" and "longitude_gps" and "dueno" and "precio" and "totalmetros" \
+    if "calle" and "numero" and "cp" and "habitaciones" and "localidad" and "numerobanos" \
+            and "tipocasa" and "dueno" and "totalmetros" \
             in session:
+
+        tiponegocio_alquiler = False
+        tiponegocio_venta = False
+
+        if "tiponegocio_alquiler" in session:
+            session.pop("tiponegocio_alquiler")
+            tiponegocio_alquiler = True
+
+        if "tiponegocio_venta" in session:
+            session.pop("tiponegocio_venta")
+            tiponegocio_venta = True
 
         variables = {
             "calle": session.pop("calle"),
@@ -181,7 +184,10 @@ def alta_piso():
             "telefonodueno": session.pop("telefonodueno"),
             "calledueno": session.pop("calledueno"),
             "numerodueno": session.pop("numerodueno"),
-            "tiponegocio": session.pop("tiponegocio"),
+
+            "tiponegocio_alquiler": tiponegocio_alquiler,
+            "tiponegocio_venta": tiponegocio_venta,
+
             "latitude_gps": session.pop("latitude_gps"),
             "longitude_gps": session.pop("longitude_gps"),
             "dueno": session.pop("dueno"),
@@ -192,49 +198,7 @@ def alta_piso():
             "precision": session.pop("precision")
         }
 
-        # calle = session.pop("calle")
-        # cp = session.pop("cp")
-        # habitaciones = session.pop("habitaciones")
-        # localidad = session.pop("localidad")
-        # numero = session.pop("numero")
-        # banos = session.pop("banos")
-        # wasap = session.pop("wasap")
-        # tipocasa = session.pop("tipocasa")
-        # telefonodueno = session.pop("telefonodueno")
-        # calledueno = session.pop("calledueno")
-        # numerodueno = session.pop("numerodueno")
-        # tiponegocio = session.pop("tiponegocio")
-        # latitude_gps = session.pop("latitude_gps")
-        # longitude_gps = session.pop("longitude_gps")
-        # dueno = session.pop("dueno")
-        # precioventa = session.pop("precioventa")
-        # precioalquiler = session.pop("precioalquiler")
-        # totalmetros = session.pop("totalmetros")
-        # nombre = session.pop("nombre")
-        # precision = session.pop("precision")
-
-        return render_template("alta_piso.html", **variables
-                               # calle=calle,
-                               # cp=cp,
-                               # habitaciones=habitaciones,
-                               # localidad=localidad,
-                               # numero=numero,
-                               # banos=banos,
-                               # wasap=wasap,
-                               # tipocasa=tipocasa,
-                               # telefonodueno=telefonodueno,
-                               # calledueno=calledueno,
-                               # numerodueno=numerodueno,
-                               # tiponegocio=tiponegocio,
-                               # latitude_gps=latitude_gps,
-                               # longitude_gps=longitude_gps,
-                               # dueno=dueno,
-                               # precioventa=precioventa,
-                               # precioalquiler=precioalquiler,
-                               # totalmetros=totalmetros,
-                               # nombre=nombre,
-                               # precision=precision
-                               )
+        return render_template("alta_piso.html", **variables)
 
     if "mensajeerror" in session:
         session.pop("mensajeerror")
@@ -264,9 +228,9 @@ def recibir_alta_piso():
     #     return redirect(url_for("alta_piso"))
 
     if "usuario" not in session or "password" not in session:
-        return redirect(url_for("alta_piso"))
+        return redirect(url_for("admin_login"))
 
-    if "tiponegocio" and "calle" and "cp" and "habitaciones" and "localidad" \
+    if "calle" and "cp" and "habitaciones" and "localidad" \
             and "banos" and "tipocasa" and "numero" and "dueno" and "telefonodueno" in request.form:
 
         # comprobacion de si ya existe el piso en la db
@@ -277,6 +241,16 @@ def recibir_alta_piso():
             request.form["numero"]
         )
         if ok == True:
+
+            tiponegocio_alquiler = False
+            tiponegocio_venta = False
+            if "tiponegocio_alquiler" in request.form:
+                tiponegocio_alquiler = True
+
+            if "tiponegocio_venta" in request.form:
+                tiponegocio_venta = True
+
+
             ok = managermongo.altaproducto(
                 request.form["calle"],
                 request.form["cp"],
@@ -289,7 +263,8 @@ def recibir_alta_piso():
                 request.form["telefonodueno"],
                 request.form["calledueno"],
                 request.form["numerodueno"],
-                request.form["tiponegocio"],
+                tiponegocio_alquiler,
+                tiponegocio_venta,
                 request.form["latitude_gps"],
                 request.form["longitude_gps"],
                 request.form["dueno"],
@@ -321,7 +296,13 @@ def recibir_alta_piso():
             session["telefonodueno"] = request.form["telefonodueno"]
             session["calledueno"] = request.form["calledueno"]
             session["numerodueno"] = request.form["numerodueno"]
-            session["tiponegocio"] = request.form["tiponegocio"]
+
+            if "tiponegocio_alquiler" in request.form:
+                session["tiponegocio_alquiler"] = True
+
+            if "tiponegocio_venta" in request.form:
+                session["tiponegocio_venta"] = True
+
             session["latitude_gps"] = request.form["latitude_gps"]
             session["longitude_gps"] = request.form["longitude_gps"]
             session["dueno"] = request.form["dueno"]

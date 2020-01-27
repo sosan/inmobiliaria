@@ -56,7 +56,8 @@ class ManagerMongoDb:
                      telefonodueno,
                      calledueno,
                      numerodueno,
-                     tiponegocio,
+                     tiponegocio_alquiler,
+                     tiponegocio_venta,
                      latitud_txt,
                      longitud_txt,
                      dueno,
@@ -71,14 +72,14 @@ class ManagerMongoDb:
             latitud = float(latitud_txt)
             longitud = float(longitud_txt)
 
-
             fecha = datetime.utcnow()
             fechadelta = datetime.utcnow() + timedelta(hours=24)
 
             ok = self.cursorpisos.insert_one(
                 {
                     "calle": calle,
-                    "tiponegocio": tiponegocio,
+                    "tiponegocio_alquiler": tiponegocio_alquiler,
+                    "tiponegocio_venta": tiponegocio_venta,
                     "cp": cp,
                     "habitaciones": habitaciones,
                     "precioventa": precioventa,
