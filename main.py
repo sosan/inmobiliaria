@@ -1,3 +1,6 @@
+import base64
+import os
+
 from datetime import datetime
 
 from flask import Flask
@@ -6,7 +9,8 @@ from flask import redirect
 from flask import url_for
 from flask import session
 from flask import request
-
+from pip._vendor.six import BytesIO
+from werkzeug.utils import secure_filename
 # nos permite servir archivos de forma estatico o absoluta
 from flask import send_from_directory
 
@@ -16,26 +20,24 @@ from ModuloHelper.ManagerHelper import ManagerHelper
 from ModuloWeb.ManagerWeb import ManagerWeb
 from flask_socketio import SocketIO
 from flask_socketio import emit
+
 import eventlet
 
+# instanciaciones e inicializaciones
 app = Flask(__name__)
-app.secret_key = "holaa"
-socketio = SocketIO(app)
-# eventlet.monkey_patch(thread=False)
-
-
-# MUCHO CUIDADO EN NO PISAR LAS VARIABLES YA CREADAS
-# app.config["DEBUG"] = True
 managerweb = ManagerWeb()
-
-import os
-
-# recuperar una ruta absoluta
-CARPETA = os.path.abspath(".//archivos_subidos")
-app.config["CARPETA"] = CARPETA
-
+socketio = SocketIO(app)
 bootstrap = Bootstrap(app)
 helper = ManagerHelper()
+
+# configuracion
+app.secret_key = "holaa"
+# recuperar una ruta absoluta
+CARPETA_SUBIDAS = os.path.abspath(".//archivos_subidos")
+print(CARPETA_SUBIDAS)
+app.config["CARPETA_SUBIDAS"] = CARPETA_SUBIDAS
+# limite 16 megas
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 
 @app.route("/c", methods=["GET", "POST"])
@@ -52,9 +54,9 @@ def ruta_css():
         # recien subido y ademas que nos quede claro que os.path.join 
         # lo utilizamos para acceder a un directorio
         print("NOMBRE ARCHIVO => {0}".format(nombre_archivo))
-        print("APP CONFIG CARPETA {0}".format(app.config["CARPETA"]),
-              os.path.join(app.config["CARPETA"], nombre_archivo))
-        f.save(os.path.join(app.config["CARPETA"]), nombre_archivo)
+        print("APP CONFIG CARPETA {0}".format(app.config["CARPETA_SUBIDAS"]),
+              os.path.join(app.config["CARPETA_SUBIDAS"], nombre_archivo))
+        f.save(os.path.join(app.config["CARPETA_SUBIDAS"]), nombre_archivo)
         return redirect(url_for("recibir_nombre"))
 
     # return send_from_directory("css", path)
@@ -149,7 +151,10 @@ def menu_admin_post():
 def alta_piso():
     if "usuario" not in session or "password" not in session:
         return redirect(url_for("admin_login"))
-
+    else:
+        ok = managermongo.comprobaradmin(session["usuario"], session["password"])
+        if ok == False:
+            return redirect(url_for("admin_login"))
 
     if "anterior_calle" in session:
         anterior_calle = session.pop("anterior_calle")
@@ -221,12 +226,6 @@ def obtenercalle(latitude, longitude):
 
 @app.route("/profile/alta", methods=["POST"])
 def recibir_alta_piso():
-    # if "obtener_calle" in request.form: session["obtener_calle"] = True calle, numero, cp, localidad =
-    # managerweb.getstreet(request.form["latitude_gps"], request.form["longitude_gps"]) session["calle"] = calle
-    # session["numero"] = numero session["cp"] = cp session["localidad"] = localidad
-    #
-    #     return redirect(url_for("alta_piso"))
-
     if "usuario" not in session or "password" not in session:
         return redirect(url_for("admin_login"))
 
@@ -242,6 +241,28 @@ def recibir_alta_piso():
         )
         if ok == True:
 
+            try:
+                length = int(request.form["files_len"])
+            except ValueError:
+                raise Exception("no podido convertir")
+
+            for i in range(0, length):
+                if "files_{0}_datafile".format(i) in request.form:
+                    datafile_b64 = request.form["files_{0}_datafile".format(i)]
+                    nombrefile = request.form["files_{0}_filename".format(i)]
+
+                    if datafile_b64 == "" or nombrefile == "":
+                        raise Exception("campo vacio")
+
+                    nombrefile = datetime.utcnow().strftime("%d-%b-%Y-%H.%M.%S.%f)") + " " + nombrefile
+
+                    print(os.path.join(app.config["CARPETA_SUBIDAS"], nombrefile))
+                    with open(os.path.join(app.config["CARPETA_SUBIDAS"], nombrefile), "wb") as arch:
+                        cad_cero = datafile_b64.find(',')
+                        imagen_data64 = datafile_b64[cad_cero + 1:]
+                        arch.write(base64.decodebytes(imagen_data64.encode()))
+                        arch.close()
+
             tiponegocio_alquiler = False
             tiponegocio_venta = False
             if "tiponegocio_alquiler" in request.form:
@@ -249,7 +270,6 @@ def recibir_alta_piso():
 
             if "tiponegocio_venta" in request.form:
                 tiponegocio_venta = True
-
 
             ok = managermongo.altaproducto(
                 request.form["calle"],
@@ -272,7 +292,8 @@ def recibir_alta_piso():
                 request.form["precioalquiler"],
                 request.form["totalmetros"],
                 request.form["nombre"],
-                request.form["precision"]
+                request.form["precision"],
+                nombrefile
 
             )
 

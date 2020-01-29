@@ -18,7 +18,7 @@
             <div class="row justify-content-between">
                 <div class="col-xl-5 col-lg-5">
                     <div id="wizard_container">
-                            <form id="wrapped" method="POST" autocomplete="off" action="{{ url_for("recibir_alta_piso") }}">
+                            <form id="wrapped" method="POST" autocomplete="off" enctype="multipart/form-data">
                                 <input type="hidden" name="nombre" value="{{ session["nombre"] }}">
 
                                 {% if session["mensajeerror"] == 0%}
@@ -224,8 +224,6 @@
                                             <p class="titulo">FOTOS VIVIENDA</p>
                                         </h3>
                                         <div class="form-group">
-
-{#                                            <form id="fileupload" action="#" method="POST" enctype="multipart/form-data">#}
                                                 <div class="row files" id="files1">
                                                     <label>Fotos casa:</label>
                                                     <span class="btn btn-default btn-file">Seleccionar
@@ -235,7 +233,6 @@
                                                     <ul class="fileList">
                                                     </ul>
                                                 </div>
-{#                                            </form>#}
                                         </div>
 	                                </div>
 
@@ -243,7 +240,7 @@
 	                            <div id="bottom-wizard">
 	                                <button type="button" name="backward" class="backward">Anterior</button>
 	                                <button type="button" name="forward" class="forward">Siguiente</button>
-	                                <button type="submit" name="process" class="submit">Enviar</button>
+	                                <button type="button"  name="process" id="process" class="submit">Enviar</button>
 	                            </div>
 
                             <br><br>
@@ -279,21 +276,22 @@
 {% block scripts %}
     {{ super() }}
     <script>
-    $(document).ready(showPosition());
 
-     var productoname = {% if session["mensajeerror"] != 0 %}true{% else %}false{% endif %};
+        $(document).ajaxStop(function(){
+            window.location.reload();
+         });
 
-    $(document).ready(function()
-    {
-        if (productoname)
+        $(document).ready(showPosition());
+
+        var productoname = {% if session["mensajeerror"] != 0 %}true{% else %}false{% endif %};
+
+        $(document).ready(function()
         {
-
-            $("#success-alert").fadeTo(2000, 500).animate({opacity:0});
-
-        }
-
-
-    });
+            if (productoname)
+            {
+                $("#success-alert").fadeTo(2000, 500).animate({opacity:0});
+            }
+        });
 
 
     function showPosition()
@@ -305,7 +303,7 @@
             {
                 document.getElementById("latitude_gps").value =  position.coords.latitude.toString();
                 document.getElementById("longitude_gps").value =  position.coords.longitude.toString() ;
-                document.getElementById("precision").value = position.coords.accuracy.toString() + " metros";;
+                document.getElementById("precision").value = position.coords.accuracy.toString() + " metros";
 
 
             }, function(error)
@@ -345,8 +343,6 @@
             var output = [];
             var promises = [];
 
-
-
             for (var i = 0; i < evt.target.files.length; i++)
             {
 
@@ -374,12 +370,12 @@
 
                     filesToUpload.push({
                         id: fileId,
-                        file: fileContents[i + 1]
+                        filename: fileContents[i + 1],
+                        datafile: fileContents[i + 0]
                     });
 
                     var removeButton = '<button type="button" class="removeFile btn btn-danger" data-fileid="' + fileId + '"> Quitar </button><br><br>';
                     {#var renameButton = '<br><br><button type="button" class="renameFile btn btn-warning" data-fileid="' + fileId + '">Renombrar</button>';#}
-                    var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + fileId + "\">Quitar</a>";
                     let size = "";
                     if (fileContents[i + 2] === 0)
                     {
@@ -392,52 +388,15 @@
                         size = parseFloat((fileContents[i + 2] / Math.pow(1024, lent)).toFixed(2)) + ' ' + sizes[lent];
                     }
 
-                    output.push('<li class="tx"><img src="' + fileContents[0 + i]  +  '" width="100px" height="100px"><strong>',
-                     escape(fileContents[i+ 1]), '</strong> - ', size , '. &nbsp; &nbsp; ', removeButton, '</li> ');
+                    output.push('<li class="tx"><img src="' + fileContents[0 + i]  + '" width="100px" height="100px"><b>' +
+                     escape(fileContents[i+ 1]) + '</b> - ' + size + '. &nbsp; &nbsp; ' + removeButton + '</li>');
 
 
                 }
                 $(this).children(".fileList").append(output.join(""));
                     evt.target.value = null;
 
-
-                {#fileIdCounter++;#}
-                {#var fileId = sectionIdentifier + fileIdCounter;#}
-                {##}
-                {#filesToUpload.push({#}
-                {#    id: fileId,#}
-                {#    file: fileContents[1]#}
-                {# });#}
-                {##}
-                {#var removeButton = '<button type="button" class="removeFile btn btn-danger" data-fileid="' + fileId + '"> Quitar </button><br><br>';#}
-                {#var renameButton = '<br><br><button type="button" class="renameFile btn btn-warning" data-fileid="' + fileId + '">Renombrar</button>';#}
-                {#var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + fileId + "\">Quitar</a>";#}
-                {#let size = "";#}
-                {#if (fileContents[2] === 0)#}
-                {#{#}
-                {#    size = "0 Bytes";#}
-                {# }#}
-                {#else#}
-                {#{#}
-                {#    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];#}
-                {#    const i = Math.floor(Math.log(fileContents[2]) / Math.log(1024));#}
-                {#    size = parseFloat((fileContents[2] / Math.pow(1024, i)).toFixed(2)) + ' ' + sizes[i];#}
-                {# }#}
-                {##}
-                {#output.push('<li class="tx"><img src="' + fileContents[0]  +  '" width="100px" height="100px"><strong>',#}
-                {#    escape(fileContents[1]), '</strong> - ', size , '. &nbsp; &nbsp; ', removeButton, '</li> ');#}
-
-
-
-
-
-
              });
-
-
-
-
-
 
         });
 
@@ -457,13 +416,9 @@
             $(this).parent().remove();
         });
 
-
-
-
-
         this.clear = function ()
         {
-            for (var i = 0; i < filesToUpload.length; ++i) {
+            for (var i = 0; i < filesToUpload.length; i++) {
                 if (filesToUpload[i].id.indexOf(sectionIdentifier) >= 0)
                     filesToUpload.splice(i, 1);
             }
@@ -479,25 +434,34 @@
 
         var files1Uploader = $("#files1").fileUploader(filesToUpload, "files1");
 
-        $("#uploadBtn").click(function (e)
+
+        {#$("#uploadBtn").click(function (e)#}
+        $("#process").click(function (e)
         {
             e.preventDefault();
 
-            var formData = new FormData();
+            var formData = new FormData(document.getElementById("wrapped"));
 
-            for (var i = 0, len = filesToUpload.length; i < len; i++)
+            for (var i = 0; i < filesToUpload.length; i++)
             {
-                formData.append("files", filesToUpload[i].file);
+
+                formData.append("files_" + i + "_datafile", filesToUpload[i].datafile);
+                formData.append("files_" + i + "_filename", filesToUpload[i].filename);
+
             }
 
+            formData.append("files_len", filesToUpload.length.toString());
+            const uri = "{{ url_for("recibir_alta_piso") }}";
+
             $.ajax({
-                url: "",
+                url: uri,
                 data: formData,
                 processData: false,
                 contentType: false,
                 type: "POST",
-                success: function (data) {
-                    alert("DONE");
+                success: function (data)
+                {
+                    {#alert("DONE");#}
 
                     files1Uploader.clear();
                 },
@@ -517,10 +481,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script>
 
-        {#import io from "socket.io-client";#}
-
-        {#const io = require('socket.io-client');#}
-        {#const socket = io('http://localhost');#}
         var socket = io.connect('http://' + document.domain + ':' + location.port);
 
         $(document).ready(function()
@@ -552,7 +512,7 @@
             {
                 navigator.geolocation.getCurrentPosition(function(position)
                 {
-                    console.log("dentroasasd!")
+                    console.log("dentroasasd!");
                     document.getElementById("latitude_gps").value =  position.coords.latitude.toString();
                     document.getElementById("longitude_gps").value =  position.coords.longitude.toString() ;
                     document.getElementById("precision").value = position.coords.accuracy.toString() + " metros";
@@ -582,12 +542,6 @@
             } else {
                 alert("Sorry, your browser does not support HTML5 geolocation.");
             }
-
-
-
-
-
-
         }
 
 

@@ -65,7 +65,8 @@ class ManagerMongoDb:
                      precioalquiler,
                      totalmetros,
                      nombre,
-                     precision_txt
+                     precision_txt,
+                     nombrefile
                      ):
 
         try:
@@ -96,6 +97,7 @@ class ManagerMongoDb:
                     "totalmetros": totalmetros,
                     "medicion": False,
                     "nombre": nombre,
+                    "nombrefile": nombrefile,
                     "fecha": fecha,
                     "fechadelta": fechadelta,
                     "datosgps": {
@@ -141,7 +143,8 @@ class ManagerMongoDb:
     def comprobaradmin(self, usuario, password):
         resultado = self.cursoradmin.find_one({"usuario": usuario, "password": password}, {"_id": False})
         if resultado != None:
-            return True
+            if len(resultado) > 0:
+                return True
         return False
 
     def getallproductos(self):

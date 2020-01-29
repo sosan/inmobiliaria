@@ -40,30 +40,30 @@
 
 
 
-function getVals(formControl, controlType)
-{
-	switch (controlType)
-	{
-
-		case 'tipocasa':
-			// Get the value for a radio
-			var value = $(formControl).val();
-			$("#tipocasa").text(value);
-			break;
-
-		case 'tiponegocio':
-			// Get name for set of checkboxes
-			var checkboxName = $(formControl).attr('name');
-
-			// Get all checked checkboxes
-			var value = [];
-			$("input[name*='" + checkboxName + "']").each(function () {
-				// Get all checked checboxes in an array
-				if (jQuery(this).is(":checked")) {
-					value.push($(this).val());
-				}
-			});
-			$("#tiponegocio").text(value.join(", "));
-			break;
-	}
-}
+// function getVals(formControl, controlType)
+// {
+// 	switch (controlType)
+// 	{
+//
+// 		case 'tipocasa':
+// 			// Get the value for a radio
+// 			var value = $(formControl).val();
+// 			$("#tipocasa").text(value);
+// 			break;
+//
+// 		case 'tiponegocio':
+// 			// Get name for set of checkboxes
+// 			var checkboxName = $(formControl).attr('name');
+//
+// 			// Get all checked checkboxes
+// 			var value = [];
+// 			$("input[name*='" + checkboxName + "']").each(function () {
+// 				// Get all checked checboxes in an array
+// 				if (jQuery(this).is(":checked")) {
+// 					value.push($(this).val());
+// 				}
+// 			});
+// 			$("#tiponegocio").text(value.join(", "));
+// 			break;
+// 	}
+// }

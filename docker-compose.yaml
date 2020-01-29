@@ -23,23 +23,23 @@
 # docker-compose scale app=4
 
 
-# ------- CREAR IMAGEN ---------
-version: "3.7"
-services:
-  app: 
-    build: .
-    image: "sosan/horo_test"
-    # container_name: ""
-    depends_on: 
-      - db
-    ports: 
-      - "7000-7010:5000"
-    # networks: 
-    #   -   
-    volumes:
-      - .:/app
+# # ------- CREAR IMAGEN ---------
+# version: "3.7"
+# services:
+#   app: 
+#     build: .
+#     image: "sosan/horo_test"
+#     # container_name: ""
+#     depends_on: 
+#       - db
+#     ports: 
+#       - "7000-7010:5000"
+#     # networks: 
+#     #   -   
+#     volumes:
+#       - .:/app
       
-  db:
-    container_name: "mongodb"
-    image: mongo
+#   db:
+#     container_name: "mongodb"
+#     image: mongo
 
