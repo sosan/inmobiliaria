@@ -42,7 +42,7 @@
 
                                                         <label class="radio" for="piso"></label>
                                                         <label for="piso" class="wrapper">Piso</label>
-                                                        <span for="piso" class="error" style="display: none;" id="errorfase1">Required</span>
+                                                        <span for="piso" class="error" style="display: none;" id="errorfase1">Requerido</span>
 
                                                     </div>
                                                 </li>
@@ -94,24 +94,24 @@
 	                                        <label for="calle">Calle</label>
                                             <input type="text" name="calle" id="calle" value="{{ calle }}" class="form-control required" onchange="cambioinputs(this);">
                                             <button type="button" name="obtener_calle" value="1" onclick="obtenercalle()">OBTENER POSICION</button>
-                                            <span for="calle" class="error" style="display: none;">Required</span>
+                                            <span for="calle" class="error" style="display: none;">Requerido</span>
 	                                    </div>
                                         <div class="form-group">
 	                                        <label for="numero">Numero</label>
                                             <input type="text" name="numero" id="numero" value="{{ numero }}" class="form-control required" onchange="cambioinputs(this);">
-                                            <span for="numero" class="error" style="display: none;">Required</span>
+                                            <span for="numero" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                         <div class="form-group">
 	                                        <label for="cp">Codigo Postal</label>
-                                            <input type="number" name="cp" id="cp" value="{{ cp }}" class="form-control required" onchange="cambioinputs(this);">
-                                            <span for="cp" class="error" style="display: none;">Required</span>
+                                            <input type="text" name="cp" id="cp" value="{{ cp }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <span for="cp" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                          <div class="form-group">
 	                                        <label for="localidad">Localidad</label>
                                             <input type="text" name="localidad" id="localidad" value="{{ localidad }}" class="form-control required" onchange="cambioinputs(this);">
-                                             <span for="localidad" class="error" style="display: none;">Required</span>
+                                             <span for="localidad" class="error" style="display: none;">Requerido</span>
 	                                    </div>
                                     </div>
 
@@ -123,32 +123,32 @@
                                         <div class="form-group">
 	                                        <label for="dueno">Dueño</label>
                                             <input type="text" name="dueno" id="dueno" value="{{ dueno }}" class="form-control required" onchange="cambioinputs(this);">
-                                            <span for="dueno" class="error" style="display: none;">Required</span>
+                                            <span for="dueno" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                         <div class="form-group">
 	                                        <label for="wasap">Whatsapp</label>
                                             <input type="text" name="wasap" id="wasap" value="{{ wasap }}" class="form-control required" onchange="cambioinputs(this);">
-                                            <span for="wasap" class="error" style="display: none;">Required</span>
+                                            <span for="wasap" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                         <div class="form-group">
 	                                        <label for="telefonodueno">Telefono</label>
                                             <input type="text" name="telefonodueno" id="telefonodueno" value="{{ telefonodueno }}" class="form-control required" onchange="cambioinputs(this);">
-                                            <span for="telefonodueno" class="error" style="display: none;">Required</span>
+                                            <span for="telefonodueno" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
 
                                         <div class="form-group">
 	                                        <label for="calledueno">Calle</label>
                                             <input type="text" name="calledueno" id="calledueno" value="{{ calledueno }}" class="form-control required" onchange="cambioinputs(this);">
-                                            <span for="calledueno" class="error" style="display: none;">Required</span>
+                                            <span for="calledueno" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                          <div class="form-group">
 	                                        <label for="numerodueno">Numero</label>
                                             <input type="text" name="numerodueno" id="numerodueno" value="{{ numerodueno }}" class="form-control required" onchange="cambioinputs(this);">
-                                            <span for="numerodueno" class="error" style="display: none;">Required</span>
+                                            <span for="numerodueno" class="error" style="display: none;">Requerido</span>
 	                                    </div>
                                     </div>
 
@@ -170,7 +170,7 @@
 {#	                                                    <input type="checkbox" id="alquiler" name="tiponegocio" class="required" value="alquiler" onchange="getVals(this, 'tiponegocio');">#}
 	                                                    <label class="checkbox" for="alquiler"></label>
 	                                                    <label for="alquiler" class="wrapper">Alquiler</label>
-                                                        <span for="alquiler" class="error" style="display: none;">Required. Choose One</span>
+                                                        <span for="alquiler" class="error" style="display: none;">Requerido. Elige uno.</span>
 	                                                </div>
 	                                            </li>
 	                                            <li>
@@ -181,7 +181,7 @@
                                                         <input type="checkbox" id="venta" name="tiponegocio_venta" class="" value="venta" >
 	                                                    <label class="checkbox" for="venta"></label>
 	                                                    <label for="venta" class="wrapper">Venta</label>
-                                                        <span for="venta" class="error" style="display: none;">Required</span>
+                                                        <span for="venta" class="error" style="display: none;">Requerido</span>
 	                                                </div>
 	                                            </li>
                                             </ul>
@@ -190,33 +190,52 @@
                                         <div class="form-group">
 	                                        <label for="precioalquiler">Precio Alquiler</label>
                                             <input type="number" name="precioalquiler" id="precioalquiler" value="{{ precioalquiler }}" class="form-control">
-                                            <span for="precioalquiler" class="error" style="display: none;">Required</span>
+                                            <span for="precioalquiler" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                         <div class="form-group">
 	                                        <label for="precioventa">Precio Venta</label>
                                             <input type="number" name="precioventa" id="precioventa" value="{{ precioventa }}" class="form-control">
-                                            <span for="precioventa" class="error" style="display: none;">Required</span>
+                                            <span for="precioventa" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                          <div class="form-group">
 	                                        <label for="totalmetros">Total Metros</label>
                                             <input type="number" name="totalmetros" id="totalmetros" value="{{ totalmetros }}" class="form-control required">
-                                             <span for="totalmetros" class="error" style="display: none;">Required</span>
+                                             <span for="totalmetros" class="error" style="display: none;">Requerido</span>
 	                                    </div>
                                         <div class="form-group">
 	                                        <label for="habitaciones">Habitaciones</label>
                                             <input type="number" name="habitaciones" id="habitaciones" value="{{ habitaciones }}" class="form-control required">
-                                            <span for="habitaciones" class="error" style="display: none;">Required</span>
+                                            <span for="habitaciones" class="error" style="display: none;">Requerido</span>
 	                                    </div>
                                         <div class="form-group">
 	                                        <label for="banos">Baños</label>
                                             <input type="number" name="banos" id="banos" value="{{ banos }}" class="form-control required">
-                                            <span for="banos" class="error" style="display: none;">Required</span>
+                                            <span for="banos" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
 
                                     </div>
+
+                                     <div class="step wizard-step" style="display: none;">
+                                        <h3 class="main_question">
+                                            <strong class="">5 de 5</strong>
+                                            <p class="titulo">FOTOS VIVIENDA</p>
+                                        </h3>
+                                        <div class="form-group">
+                                                <div class="row files" id="files1">
+                                                    <label>Fotos casa:</label>
+                                                    <span class="btn btn-default btn-file">Seleccionar
+                                                        <input type="file" name="files1" accept="image/*" multiple>
+                                                    </span>
+                                                    <br><br><br>
+                                                    <ul class="fileList">
+                                                    </ul>
+                                                </div>
+                                        </div>
+	                                </div>
+
 
 	                            </div>
 
@@ -521,21 +540,23 @@ let current_fase = 0;
 
             break;
             case 1:
+            case 2:
+            case 3:
                 back[0].disabled = false;
                 pro[0].disabled = true;
                 frw[0].disabled = false;
+            break;
+            
+            case 4:
+                back[0].disabled = false;
+                pro[0].disabled = false;
+                frw[0].disabled = true;
             break;
 
 
         }
 
-        if (current_fase === 0)
-        {
 
-
-
-
-        }
 
 
 
