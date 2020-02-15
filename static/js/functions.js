@@ -1,9 +1,6 @@
 (function ($) {
 
 	"use strict";
-
-	
-	// Submit loader mask 
 	$('form#wrapped').on('submit', function () {
 		var form = $("form#wrapped");
 		form.validate();

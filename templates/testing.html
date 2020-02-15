@@ -18,60 +18,40 @@
             <div class="row justify-content-between">
                 <div class="col-xl-5 col-lg-5">
                     <div id="wizard_container">
-                            <form id="wrapped" method="POST" autocomplete="off" enctype="multipart/form-data">
+                            <form id="wrapped" method="POST" autocomplete="off" enctype="multipart/form-data" name="wrapped">
                                 <input type="hidden" name="nombre" value="{{ session["nombre"] }}">
                                 <div id="mostrar_resultado"></div>
-{#<h4 class="alert alert-success quitadotop" id="success-alert" style="display: block; opacity: 0;"></h4>#}
-
-{#                                {% if session["mensajeerror"] == 0%}#}
-{#                                {% if mensajeerror == 0 %}#}
-{#                                    <h3 class="alert alert-success quitadotop" id="success-alert" style="display: block; opacity: 0;">#}
-{#                                    &nbsp;#}
-{#                                    </h3>#}
-{#                                {% elif mensajeerror == 2 %}#}
-{#                                    <h3 class=" label-danger quitadotop" id="success-alert">YA EXISTE EL INMUEBLE</h3>#}
-{#                                {% elif mensajeerror == 1 %}#}
-{#                                    <h3 class="  label-success quitadotop" id="success-alert">#}
-{#                                        DADO DE ALTA CORRECTAMENTE#}
-{##}
-{#                                        {% if anterior_calle and anterior_numero %}#}
-{#                                            <p>Calle: {{ anterior_calle }} Numero: {{ anterior_numero }}</p>#}
-{#                                        {% endif %}#}
-{#                                    </h3>#}
-{##}
-{##}
-{#                                {% endif %}#}
-
-
 	                            <div id="middle-wizard">
-	                                <div class="step">
-                                        <h3 class="main_question">
-                                            <strong class="">1 de 5</strong>
-                                            <p class="titulo">TIPO DE VIVIENDA</p>
-                                        </h3>
-	                                    <div class="review_block">
+
+                                    <div class="step wizard-step current" style="display: block;" data-role="page" id="pageone">
+                                        <div data-role="main" class="ui-content">
+                                            <h3 class="main_question">
+                                                <strong class="">1 de 5</strong>
+                                                <p class="titulo">TIPO DE VIVIENDA</p>
+                                            </h3>
+                                            <div class="review_block">
                                               <ul>
                                                 <li>
                                                     <div class="checkbox_radio_container">
 
                                                         {% if tipocasa == "piso" %}
-                                                            <input type="radio" id="piso" name="tipocasa" class="required valid" checked value="piso" >
+                                                            <input type="radio" id="piso" name="tipocasa" class="required valid" checked value="piso" onchange="cambiotipocasa(this);">
                                                         {% else %}
-                                                            <input type="radio" id="piso" name="tipocasa" class="required" value="piso" >
+                                                            <input type="radio" id="piso" name="tipocasa" class="required" value="piso" onchange="cambiotipocasa(this);">
                                                         {% endif %}
 
                                                         <label class="radio" for="piso"></label>
                                                         <label for="piso" class="wrapper">Piso</label>
-
+                                                        <span for="piso" class="error" style="display: none;" id="errorfase1">Required</span>
 
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="checkbox_radio_container">
                                                         {% if tipocasa == "chalet" %}
-                                                            <input type="radio" id="chalet" name="tipocasa" class="required valid" checked value="chalet">
+                                                            <input type="radio" id="chalet" name="tipocasa" class="required valid" checked value="chalet" onchange="cambiotipocasa(this);">
                                                         {% else %}
-                                                            <input type="radio" id="chalet" name="tipocasa" class="required" value="chalet">
+                                                            <input type="radio" id="chalet" name="tipocasa" class="required" value="chalet" onchange="cambiotipocasa(this);">
                                                         {% endif %}
                                                         <label class="radio" for="chalet"></label>
                                                         <label for="chalet" class="wrapper">Chalet</label>
@@ -80,9 +60,9 @@
                                                   <li>
                                                       <div class="checkbox_radio_container">
                                                           {% if tipocasa == "casarural" %}
-                                                              <input type="radio" id="casarural" name="tipocasa" class="required valid" checked value="casarural">
+                                                              <input type="radio" id="casarural" name="tipocasa" class="required valid" checked value="casarural" onchange="cambiotipocasa(this);">
                                                           {% else %}
-                                                              <input type="radio" id="casarural" name="tipocasa" class="required" value="casarural">
+                                                              <input type="radio" id="casarural" name="tipocasa" class="required" value="casarural" onchange="cambiotipocasa(this);">
                                                           {% endif %}
                                                         <label class="radio" for="casarural"></label>
                                                         <label for="casarural" class="wrapper">Casa Rural</label>
@@ -91,9 +71,9 @@
                                                 <li>
                                                     <div class="checkbox_radio_container">
                                                         {% if tipocasa == "oficina" %}
-                                                            <input type="radio" id="oficina" name="tipocasa" class="required valid" checked value="oficina" >
+                                                            <input type="radio" id="oficina" name="tipocasa" class="required valid" checked value="oficina" onchange="cambiotipocasa(this);">
                                                         {% else %}
-                                                            <input type="radio" id="oficina" name="tipocasa" class="required" value="oficina" >
+                                                            <input type="radio" id="oficina" name="tipocasa" class="required" value="oficina" onchange="cambiotipocasa(this);">
                                                         {% endif %}
                                                         <label class="radio" for="oficina"></label>
                                                         <label for="oficina" class="wrapper">Oficina</label>
@@ -101,68 +81,78 @@
                                                 </li>
                                             </ul>
 	                                    </div>
+                                            <a href="#pagetwo" data-transition="slide">Slide to Page Two</a>
+                                        </div>
 	                                </div>
 
-                                    <div class="step">
+                                     <div class="step wizard-step" style="display: none;">
                                          <h3 class="main_question">
                                             <strong class="">2 de 5</strong>
                                             <p class="titulo">LOCALIZACION VIVIENDA</p>
                                         </h3>
                                         <div class="form-group">
 	                                        <label for="calle">Calle</label>
-                                            <input type="text" name="calle" id="calle" value="{{ calle }}" class="form-control required">
-                                            <button type="button" name="obtener_calle" value="1" onclick="obtenercalle()">
-
-                                                OBTENER POSICION</button>
+                                            <input type="text" name="calle" id="calle" value="{{ calle }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <button type="button" name="obtener_calle" value="1" onclick="obtenercalle()">OBTENER POSICION</button>
+                                            <span for="calle" class="error" style="display: none;">Required</span>
 	                                    </div>
                                         <div class="form-group">
 	                                        <label for="numero">Numero</label>
-                                            <input type="text" name="numero" id="numero" value="{{ numero }}" class="form-control required">
+                                            <input type="text" name="numero" id="numero" value="{{ numero }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <span for="numero" class="error" style="display: none;">Required</span>
 	                                    </div>
 
                                         <div class="form-group">
 	                                        <label for="cp">Codigo Postal</label>
-                                            <input type="number" name="cp" id="cp" value="{{ cp }}" class="form-control required">
+                                            <input type="number" name="cp" id="cp" value="{{ cp }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <span for="cp" class="error" style="display: none;">Required</span>
 	                                    </div>
 
                                          <div class="form-group">
 	                                        <label for="localidad">Localidad</label>
-                                            <input type="text" name="localidad" id="localidad" value="{{ localidad }}" class="form-control required">
+                                            <input type="text" name="localidad" id="localidad" value="{{ localidad }}" class="form-control required" onchange="cambioinputs(this);">
+                                             <span for="localidad" class="error" style="display: none;">Required</span>
 	                                    </div>
                                     </div>
-                                    <div class="step">
+
+                                    <div class="step wizard-step" style="display: none;">
                                         <h3 class="main_question">
                                             <strong class="">3 de 5</strong>
                                             <p class="titulo">DATOS DUEÑO</p>
                                         </h3>
                                         <div class="form-group">
 	                                        <label for="dueno">Dueño</label>
-                                            <input type="text" name="dueno" id="dueno" value="{{ dueno }}" class="form-control required">
+                                            <input type="text" name="dueno" id="dueno" value="{{ dueno }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <span for="dueno" class="error" style="display: none;">Required</span>
 	                                    </div>
 
                                         <div class="form-group">
 	                                        <label for="wasap">Whatsapp</label>
-                                            <input type="text" name="wasap" id="wasap" value="{{ wasap }}" class="form-control required">
+                                            <input type="text" name="wasap" id="wasap" value="{{ wasap }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <span for="wasap" class="error" style="display: none;">Required</span>
 	                                    </div>
 
                                         <div class="form-group">
 	                                        <label for="telefonodueno">Telefono</label>
-                                            <input type="text" name="telefonodueno" id="telefonodueno" value="{{ telefonodueno }}" class="form-control required">
+                                            <input type="text" name="telefonodueno" id="telefonodueno" value="{{ telefonodueno }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <span for="telefonodueno" class="error" style="display: none;">Required</span>
 	                                    </div>
 
 
                                         <div class="form-group">
 	                                        <label for="calledueno">Calle</label>
-                                            <input type="text" name="calledueno" id="calledueno" value="{{ calledueno }}" class="form-control required">
+                                            <input type="text" name="calledueno" id="calledueno" value="{{ calledueno }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <span for="calledueno" class="error" style="display: none;">Required</span>
 	                                    </div>
 
                                          <div class="form-group">
 	                                        <label for="numerodueno">Numero</label>
-                                            <input type="text" name="numerodueno" id="numerodueno" value="{{ numerodueno }}" class="form-control required">
+                                            <input type="text" name="numerodueno" id="numerodueno" value="{{ numerodueno }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <span for="numerodueno" class="error" style="display: none;">Required</span>
 	                                    </div>
                                     </div>
 
-                                    <div class="step">
+                                    <div class="step wizard-step" style="display: none;">
 
                                         <h3 class="main_question">
                                             <strong class="">4 de 5</strong>
@@ -176,10 +166,11 @@
                                                     {% if tiponegocio_alquiler %}
                                                             <input type="checkbox" id="alquiler" name="tiponegocio_alquiler" class="valid" checked value="alquiler">
                                                     {% endif %}
-                                                    <input type="checkbox" id="alquiler" name="tiponegocio_alquiler" class="" value="alquiler">
+                                                        <input type="checkbox" id="alquiler" name="tiponegocio_alquiler" class="" value="alquiler">
 {#	                                                    <input type="checkbox" id="alquiler" name="tiponegocio" class="required" value="alquiler" onchange="getVals(this, 'tiponegocio');">#}
 	                                                    <label class="checkbox" for="alquiler"></label>
 	                                                    <label for="alquiler" class="wrapper">Alquiler</label>
+                                                        <span for="alquiler" class="error" style="display: none;">Required</span>
 	                                                </div>
 	                                            </li>
 	                                            <li>
@@ -190,6 +181,7 @@
                                                         <input type="checkbox" id="venta" name="tiponegocio_venta" class="" value="venta" >
 	                                                    <label class="checkbox" for="venta"></label>
 	                                                    <label for="venta" class="wrapper">Venta</label>
+                                                        <span for="venta" class="error" style="display: none;">Required</span>
 	                                                </div>
 	                                            </li>
                                             </ul>
@@ -198,72 +190,62 @@
                                         <div class="form-group">
 	                                        <label for="precioalquiler">Precio Alquiler</label>
                                             <input type="number" name="precioalquiler" id="precioalquiler" value="{{ precioalquiler }}" class="form-control">
+                                            <span for="precioalquiler" class="error" style="display: none;">Required</span>
 	                                    </div>
 
                                         <div class="form-group">
 	                                        <label for="precioventa">Precio Venta</label>
                                             <input type="number" name="precioventa" id="precioventa" value="{{ precioventa }}" class="form-control">
+                                            <span for="precioventa" class="error" style="display: none;">Required</span>
 	                                    </div>
 
                                          <div class="form-group">
 	                                        <label for="totalmetros">Total Metros</label>
                                             <input type="number" name="totalmetros" id="totalmetros" value="{{ totalmetros }}" class="form-control required">
+                                             <span for="totalmetros" class="error" style="display: none;">Required</span>
 	                                    </div>
                                         <div class="form-group">
 	                                        <label for="habitaciones">Habitaciones</label>
                                             <input type="number" name="habitaciones" id="habitaciones" value="{{ habitaciones }}" class="form-control required">
+                                            <span for="habitaciones" class="error" style="display: none;">Required</span>
 	                                    </div>
                                         <div class="form-group">
 	                                        <label for="banos">Baños</label>
                                             <input type="number" name="banos" id="banos" value="{{ banos }}" class="form-control required">
+                                            <span for="banos" class="error" style="display: none;">Required</span>
 	                                    </div>
 
 
                                     </div>
 
-	                                <div class="submit step">
-                                        <h3 class="main_question">
-                                            <strong class="">5 de 5</strong>
-                                            <p class="titulo">FOTOS VIVIENDA</p>
-                                        </h3>
-                                        <div class="form-group">
-                                                <div class="row files" id="files1">
-                                                    <label>Fotos casa:</label>
-                                                    <span class="btn btn-default btn-file">Seleccionar
-                                                        <input type="file" name="files1" accept="image/*" multiple>
-                                                    </span>
-                                                    <br><br><br>
-                                                    <ul class="fileList">
-                                                    </ul>
-                                                </div>
-                                        </div>
-	                                </div>
-
 	                            </div>
-	                            <div id="bottom-wizard">
+
+                                <br><br>
+{#                                {% if latitude_gps %}#}
+{#                                <input type="text" id="latitude_gps" name="latitude_gps" value="{{ latitude_gps }}" class="form-control">#}
+{#                                {% else %}#}
+{#                                    <input type="text" id="latitude_gps" name="latitude_gps" value="" class="form-control">#}
+{#                                {% endif %}#}
+{##}
+{#                                {% if longitude_gps %}#}
+{#                                <input type="text" id="longitude_gps" name="longitude_gps" value="{{ longitude_gps }}" class="form-control">#}
+{#                                {% else %}#}
+{#                                    <input type="text" id="longitude_gps" name="longitude_gps" value="" class="form-control">#}
+{#                                {% endif %}#}
+{##}
+{#                                {% if precision %}#}
+{#                                <input type="text" id="precision" name="precision" value="{{ precision }}" class="form-control">#}
+{#                                {% else %}#}
+{#                                    <input type="text" id="precision" name="precision" value="" class="form-control">#}
+{#                                {% endif %}#}
+
+                                 <div id="bottom-wizard">
 	                                <button type="button" name="backward" class="backward">Anterior</button>
 	                                <button type="button" name="forward" id="forward" class="forward">Siguiente</button>
 	                                <button type="button"  name="process" id="process" class="submit">Enviar</button>
 	                            </div>
 
-                            <br><br>
-                                {% if latitude_gps %}
-                                <input type="text" id="latitude_gps" name="latitude_gps" value="{{ latitude_gps }}" class="form-control">
-                                {% else %}
-                                    <input type="text" id="latitude_gps" name="latitude_gps" value="" class="form-control">
-                                {% endif %}
 
-                                {% if longitude_gps %}
-                                <input type="text" id="longitude_gps" name="longitude_gps" value="{{ longitude_gps }}" class="form-control">
-                                {% else %}
-                                    <input type="text" id="longitude_gps" name="longitude_gps" value="" class="form-control">
-                                {% endif %}
-
-                                {% if precision %}
-                                <input type="text" id="precision" name="precision" value="{{ precision }}" class="form-control">
-                                {% else %}
-                                    <input type="text" id="precision" name="precision" value="" class="form-control">
-                                {% endif %}
 
 
 	                        </form>
@@ -278,7 +260,279 @@
 
 {% block scripts %}
     {{ super() }}
-    <script>
+{#    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>#}
+{#<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>#}
+     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+
+
+{#<script>#}
+{##}
+{##}
+{##}
+{##}
+{#$('#numero').on('input', function()#}
+{#{#}
+{#    var input= $(this);#}
+{#    var is_name = input.val();#}
+{#    if(is_name)#}
+{#    {#}
+{#         input.removeClass("valid").addClass("invalid");#}
+        {#input.removeClass("invalid").addClass("valid");#}
+{#    }#}
+{#    else#}
+{#    {#}
+{#        input.removeClass("invalid").addClass("valid");#}
+        {#input.removeClass("valid").addClass("invalid");#}
+{#    }#}
+{# });#}
+{##}
+{##}
+{#</script>#}
+
+
+<script>
+
+    function cambioinputs(param)
+    {
+        if (param.value !== "")
+        {
+            param.parentElement.lastElementChild.style.cssText = "display: none;";
+        }
+
+    }
+
+
+let current_fase = 0;
+
+    function cambiotipocasa(param)
+    {
+        var spans = $("span[class='error']");
+        for (var i = 0; i < spans.length; i++)
+        {
+            spans[i].style.cssText = "display: none;";
+
+        }
+
+    }
+
+    function show_siguientefase()
+    {
+        let current_step = $(".step")[current_fase];
+        current_step.style.cssText = "display: none;";
+        current_step.className = "step wizard-step";
+
+        current_fase++;
+        if (current_fase > 4) {
+            current_fase = 4;
+        }
+
+        let next_current_step = $(".step")[current_fase];
+        next_current_step.style.cssText = "display: block;";
+        next_current_step.className = "step wizard-step current";
+        showButtons();
+
+
+    }
+
+    function comprobar_fase1()
+    {
+        let radios_tipocasa = $("input[name='tipocasa']");
+        let siguientefase = false;
+        for (var i = 0; i < radios_tipocasa.length; i++)
+        {
+            if (radios_tipocasa[i].checked === true)
+            {
+                siguientefase = true;
+                break;
+            }
+        }
+
+
+        if (siguientefase === true)
+        {
+            show_siguientefase();
+
+        }
+        else
+        {
+            radios_tipocasa[0].classList.add("error");
+            $("#errorfase1")[0].style.cssText = "display: block;";
+
+        }
+
+    }
+
+
+    function comprobar_fase2()
+    {
+        let elementos = $(".current")[0].children;
+
+        let siguientefase = true;
+        for (var i = 1; i < elementos.length; i++)
+        {
+            if (elementos[i].children[1].type === "text")
+            {
+                if (elementos[i].children[1].value === "")
+                {
+                    elementos[i].children[1].classList.add("error");
+                    elementos[i].lastElementChild.style.cssText = "display: block;";
+                    siguientefase = false;
+                }
+            }
+            else if (elementos[i].children[1].type === "radio")
+            {
+
+            }
+            else if (elementos[i].children[1].type === "checkbox")
+            {
+
+            }
+
+
+
+        }
+
+        if (siguientefase === true)
+        {
+            show_siguientefase();
+        }
+
+    }
+
+    function comprobar_fase3()
+    {
+
+        let elementos = $(".current")[0].children;
+
+        let siguientefase = true;
+        for (var i = 1; i < elementos.length; i++)
+        {
+            if (elementos[i].children[1].value === "")
+            {
+                elementos[i].children[1].classList.add("error");
+                elementos[i].lastElementChild.style.cssText = "display: block;";
+                siguientefase = false;
+            }
+        }
+
+        if (siguientefase === true)
+        {
+            show_siguientefase();
+        }
+
+    }
+
+    function comprobar_fase4(min, max) {
+
+        {#let elementos = $(".current")[0].children;#}
+        let elementos = $("input");
+        {##[14].type#}
+
+        let siguientefase = true;
+        let checkbox_correcto = 0;
+        for (var i = min; i < max; i++)
+        {
+            if (elementos[i].type === "text" || elementos[i].type === "number")
+            {
+                if (elementos[i].value === "")
+                {
+                    elementos[i].classList.add("error");
+                    elementos[i].parentElement.lastElementChild.style.cssText = "display: block;";
+                    siguientefase = false;
+                }
+
+            }
+            else if (elementos[i].type === "radio")
+            {
+
+            }
+            else if (elementos[i].type === "checkbox")
+            {
+                if (elementos[i].checked === true)
+                {
+                    checkbox_correcto++;
+                }
+
+            }
+
+
+        }
+
+        if (checkbox_correcto > 0)
+        {
+
+
+        } else
+        {
+            elementos[i].children[1].classList.add("error");
+            elementos[i].lastElementChild.style.cssText = "display: block;";
+            siguientefase = false;
+
+        }
+
+        if (siguientefase === true)
+        {
+            show_siguientefase();
+        }
+
+
+    }
+
+    $('#forward').click(function()
+    {
+        switch(current_fase)
+        {
+            case 0: comprobar_fase1(); break;
+            case 1: comprobar_fase2(); break;
+            case 2: comprobar_fase3(); break;
+            case 3: comprobar_fase4(14, 21); break;
+            case 4: break;
+            case 5: break;
+
+
+        }
+
+
+    });
+    $(document).ready(showButtons());
+
+    function showButtons()
+    {
+
+        let back = document.getElementsByName("backward");
+        let frw = document.getElementsByName("forward");
+        let pro = document.getElementsByName("process");
+
+        switch(current_fase)
+        {
+            case 0:
+                back[0].disabled = true;
+                pro[0].disabled = true;
+                frw[0].disabled = false;
+
+            break;
+            case 1:
+                back[0].disabled = false;
+                pro[0].disabled = true;
+                frw[0].disabled = false;
+            break;
+
+
+        }
+
+        if (current_fase === 0)
+        {
+
+
+
+
+        }
+
+
+
+    }
+
 
     $(document).ready(showPosition());
 
@@ -321,19 +575,31 @@
         }
     }
 
-    let currentposition = 0
-    $("#forward").click(function (e)
-    {
-        e.preventDefault();
-        currentposition++;
-        if (currentposition >= 4)
-        {
-            currentposition = 4;
-        }
-
-        console.log("next"+ currentposition);
-
-    });
+    {#let currentposition = 0#}
+    {#$("#forward").click(function (e)#}
+    {#{#}
+    {#    e.preventDefault();#}
+    {##}
+    {#    if (currentposition == 0)#}
+    {#    {#}
+    {#        let inputs = $("#pageone").find(":input");#}
+    {#        inputs.valid();#}
+    {#        this.validate().form();#}
+    {##}
+    {##}
+    {#    }#}
+    {##}
+    {##}
+    {##}
+    {#    currentposition++;#}
+    {#    if (currentposition >= 4)#}
+    {#    {#}
+    {#        currentposition = 4;#}
+    {#    }#}
+    {##}
+    {#    console.log("next"+ currentposition);#}
+    {##}
+    {# });#}
 
     $.fn.fileUploader = function (filesToUpload, sectionIdentifier)
     {
@@ -353,9 +619,9 @@
                     console.log("promise inside=>");
                     let reader = new FileReader();
                     reader.readAsDataURL(evt.target.files[i]);
-                    
+
                     reader.onload = () => resolve(reader.result);
-                    
+
                 });
                 promises.push(filePromise, evt.target.files[i].name, evt.target.files[i].size);
 
@@ -413,7 +679,7 @@
                 if (filesToUpload[i].id === fileId)
                     filesToUpload.splice(i, 1);
             }
-            
+
 
             $(this).parent().remove();
         });
@@ -510,9 +776,9 @@
 
 
     </script>
-    <script src="{{ url_for("static", filename="js/common_scripts.min.js") }}"></script>
-    <script src="{{ url_for("static", filename="js/functions.js") }}"></script>
-    <script src="{{ url_for("static", filename="js/survey_func.js") }}"></script>
+{#    <script src="{{ url_for("static", filename="js/common_scripts.min.js") }}"></script>#}
+{#    <script src="{{ url_for("static", filename="js/functions.js") }}"></script>#}
+{#    <script src="{{ url_for("static", filename="js/survey_func.js") }}"></script>#}
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script>

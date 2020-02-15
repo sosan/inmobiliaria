@@ -3,7 +3,7 @@ import os
 
 from datetime import datetime
 
-from flask import Flask
+from flask import Flask, jsonify
 from flask import render_template
 from flask import redirect
 from flask import url_for
@@ -160,7 +160,26 @@ def alta_piso():
         anterior_calle = session.pop("anterior_calle")
         anterior_numero = session.pop("anterior_numero")
 
-        return render_template("alta_piso.html", anterior_calle=anterior_calle, anterior_numero=anterior_numero)
+        # return jsonify({"data": {
+        #     "mesanjeerror": session["mensajeerror"],
+        #     "anterior_calle": anterior_calle,
+        #     "anterior_numero": anterior_numero
+        # }
+        # })
+
+        outputhml = ""
+
+        if session["mensajeerror"] == 0:
+            outputhml = " "
+        elif session["mensajeerror"] == 2:
+            outputhml = "YA EXISTE EL INMUEBLE"
+        elif session["mensajeerror"] == 1:
+            outputhml = "DADO DE ALTA CORRECTAMENTE<p>Calle: {0}<br>Numero: {1}</p>".format(anterior_calle,
+                                                                                            anterior_numero)
+
+        return jsonify({"data": outputhml})
+
+        # return render_template("alta_piso.html", anterior_calle=anterior_calle, anterior_numero=anterior_numero)
 
     if "calle" and "numero" and "cp" and "habitaciones" and "localidad" and "numerobanos" \
             and "tipocasa" and "dueno" and "totalmetros" \
@@ -208,7 +227,8 @@ def alta_piso():
     if "mensajeerror" in session:
         session.pop("mensajeerror")
 
-    return render_template("alta_piso.html")
+    return render_template("testing.html")
+    # return render_template("alta_piso.html")
 
 
 @socketio.on('obtenercalle')
@@ -235,18 +255,23 @@ def recibir_alta_piso():
         # comprobacion de si ya existe el piso en la db
         ok = managermongo.comprobarexisteinmueble(
             request.form["calle"],
-            # request.form["latitude_gps"],
-            # request.form["longitude_gps"],
             request.form["numero"]
         )
         if ok == True:
 
             try:
-                length = int(request.form["files_len"])
+                length_files = int(request.form["files_len"])
+                habitaciones = int(request.form["habitaciones"])
+                banyos = int(request.form["banos"])
+                precioventa = int(request.form["precioventa"])
+                precioalquiler = int(request.form["precioalquiler"])
+                totalmetros = int(request.form["totalmetros"])
+
             except ValueError:
                 raise Exception("no podido convertir")
 
-            for i in range(0, length):
+            nombrearchivos = []
+            for i in range(0, length_files):
                 if "files_{0}_datafile".format(i) in request.form:
                     datafile_b64 = request.form["files_{0}_datafile".format(i)]
                     nombrefile = request.form["files_{0}_filename".format(i)]
@@ -254,7 +279,8 @@ def recibir_alta_piso():
                     if datafile_b64 == "" or nombrefile == "":
                         raise Exception("campo vacio")
 
-                    nombrefile = datetime.utcnow().strftime("%d-%b-%Y-%H.%M.%S.%f)") + " " + nombrefile
+                    nombrefile = datetime.utcnow().strftime("%d-%b-%Y-%H.%M.%S.%f_") + nombrefile
+                    nombrearchivos.append(nombrefile)
 
                     print(os.path.join(app.config["CARPETA_SUBIDAS"], nombrefile))
                     with open(os.path.join(app.config["CARPETA_SUBIDAS"], nombrefile), "wb") as arch:
@@ -274,10 +300,10 @@ def recibir_alta_piso():
             ok = managermongo.altaproducto(
                 request.form["calle"],
                 request.form["cp"],
-                request.form["habitaciones"],
+                habitaciones,
                 request.form["localidad"],
                 request.form["numero"],
-                request.form["banos"],
+                banyos,
                 request.form["wasap"],
                 request.form["tipocasa"],
                 request.form["telefonodueno"],
@@ -288,12 +314,12 @@ def recibir_alta_piso():
                 request.form["latitude_gps"],
                 request.form["longitude_gps"],
                 request.form["dueno"],
-                request.form["precioventa"],
-                request.form["precioalquiler"],
-                request.form["totalmetros"],
+                precioventa,
+                precioalquiler,
+                totalmetros,
                 request.form["nombre"],
                 request.form["precision"],
-                nombrefile
+                nombrearchivos
 
             )
 
@@ -333,6 +359,18 @@ def recibir_alta_piso():
             session["nombre"] = request.form["nombre"]
             session["precision"] = request.form["precision"]
 
+    # return jsonify({"data": render_template("external_resp.html",
+    #                                         mesanjeerror=session["mensajeerror"],
+    #                                         anterior_calle=session["anterior_calle"],
+    #                                         anterior_numero=session["anterior_numero"])
+    #                 })
+
+    # return jsonify({"data": {
+    #     "mesanjeerror": session["mensajeerror"],
+    #     "anterior_calle": session["anterior_calle"],
+    #     "anterior_numero": session["anterior_numero"]
+    # }
+    # })
     return redirect(url_for("alta_piso"))
 
 
@@ -383,5 +421,7 @@ def home():
 
 
 if __name__ == "__main__":
-    socketio.run(host="0.0.0.0", port=5000, app=app, debug=True)
-    # app.run("0.0.0.0", 5000, debug=True)
+    env_port = int(os.environ.get("PORT", 5000))
+    env_debug = os.environ.get("FLASK_DEBUG", 1)
+
+    socketio.run(host="0.0.0.0", port=env_port, app=app, debug=env_debug)

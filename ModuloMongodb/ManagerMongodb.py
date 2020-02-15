@@ -66,7 +66,7 @@ class ManagerMongoDb:
                      totalmetros,
                      nombre,
                      precision_txt,
-                     nombrefile
+                     nombrearchivos
                      ):
 
         try:
@@ -97,7 +97,7 @@ class ManagerMongoDb:
                     "totalmetros": totalmetros,
                     "medicion": False,
                     "nombre": nombre,
-                    "nombrefile": nombrefile,
+                    "nombrefile": nombrearchivos,  # list
                     "fecha": fecha,
                     "fechadelta": fechadelta,
                     "datosgps": {

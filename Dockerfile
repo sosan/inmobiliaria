@@ -80,7 +80,7 @@ CMD ["flask", "run", "--host", "0.0.0.0", "--port", "5100"]
 # dodcker run -it -p 5050:5000 -d nombreapp
 
 # volumenes dentro de docker
-# docker exec -i -t id:iamgend  /bin/sh
+# docker exec -it id:iamgend  /bin/sh
 # lo mas comane es hacer en caprta
 # docker run -it -p 5100:5000 -v ruta_absoluta:carpeta_dentro_de_docker__/app/src -d nombre_docker
 

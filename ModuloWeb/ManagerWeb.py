@@ -25,7 +25,7 @@ class ManagerWeb:
             if len(splitdire) == 2:  # sin nombre de la calle
                 # ['07001 Palma (Illes Balears)', 'Espanya']
                 separacion = splitdire[0].split(" ")
-                return "Ninguna", "Ninguna", separacion[0], separacion[1]  # calle= None, numero=None, cp, ciudad
+                return "Ninguna", "0", separacion[0], separacion[1]  # calle= None, numero=None, cp, ciudad
             else:
                 #  _____ XXX XXXXXX, 5, 00000 XXXXXX (OOOO OOOOO), LLLLLLL
                 calle = " ".join(splitdire[0].split(" ")[1:])
