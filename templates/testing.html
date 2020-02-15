@@ -170,7 +170,7 @@
 {#	                                                    <input type="checkbox" id="alquiler" name="tiponegocio" class="required" value="alquiler" onchange="getVals(this, 'tiponegocio');">#}
 	                                                    <label class="checkbox" for="alquiler"></label>
 	                                                    <label for="alquiler" class="wrapper">Alquiler</label>
-                                                        <span for="alquiler" class="error" style="display: none;">Required</span>
+                                                        <span for="alquiler" class="error" style="display: none;">Required. Choose One</span>
 	                                                </div>
 	                                            </li>
 	                                            <li>
@@ -423,7 +423,8 @@ let current_fase = 0;
 
     }
 
-    function comprobar_fase4(min, max) {
+    function comprobar_fase4(min, max)
+    {
 
         {#let elementos = $(".current")[0].children;#}
         let elementos = $("input");
@@ -440,6 +441,12 @@ let current_fase = 0;
                     elementos[i].classList.add("error");
                     elementos[i].parentElement.lastElementChild.style.cssText = "display: block;";
                     siguientefase = false;
+                }
+                else
+                {
+                    elementos[i].classList.remove("error");
+                    elementos[i].parentElement.lastElementChild.style.cssText = "display: none;";
+
                 }
 
             }
@@ -461,12 +468,13 @@ let current_fase = 0;
 
         if (checkbox_correcto > 0)
         {
-
+            elementos[min].classList.remove("error");
+            elementos[min].parentElement.lastElementChild.style.cssText = "display: none;";
 
         } else
         {
-            elementos[i].children[1].classList.add("error");
-            elementos[i].lastElementChild.style.cssText = "display: block;";
+            elementos[min].classList.add("error");
+            elementos[min].parentElement.lastElementChild.style.cssText = "display: block;";
             siguientefase = false;
 
         }
