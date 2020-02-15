@@ -238,34 +238,29 @@
 
 
 	                            </div>
-
-                                <br><br>
-{#                                {% if latitude_gps %}#}
-{#                                <input type="text" id="latitude_gps" name="latitude_gps" value="{{ latitude_gps }}" class="form-control">#}
-{#                                {% else %}#}
-{#                                    <input type="text" id="latitude_gps" name="latitude_gps" value="" class="form-control">#}
-{#                                {% endif %}#}
-{##}
-{#                                {% if longitude_gps %}#}
-{#                                <input type="text" id="longitude_gps" name="longitude_gps" value="{{ longitude_gps }}" class="form-control">#}
-{#                                {% else %}#}
-{#                                    <input type="text" id="longitude_gps" name="longitude_gps" value="" class="form-control">#}
-{#                                {% endif %}#}
-{##}
-{#                                {% if precision %}#}
-{#                                <input type="text" id="precision" name="precision" value="{{ precision }}" class="form-control">#}
-{#                                {% else %}#}
-{#                                    <input type="text" id="precision" name="precision" value="" class="form-control">#}
-{#                                {% endif %}#}
-
-                                 <div id="bottom-wizard">
+                                <div id="bottom-wizard">
 	                                <button type="button" name="backward" class="backward">Anterior</button>
 	                                <button type="button" name="forward" id="forward" class="forward">Siguiente</button>
 	                                <button type="button"  name="process" id="process" class="submit">Enviar</button>
 	                            </div>
+                                <br><br>
+                                {% if latitude_gps %}
+                                <input type="text" id="latitude_gps" name="latitude_gps" value="{{ latitude_gps }}" class="form-control">
+                                {% else %}
+                                    <input type="text" id="latitude_gps" name="latitude_gps" value="" class="form-control">
+                                {% endif %}
 
+                                {% if longitude_gps %}
+                                <input type="text" id="longitude_gps" name="longitude_gps" value="{{ longitude_gps }}" class="form-control">
+                                {% else %}
+                                    <input type="text" id="longitude_gps" name="longitude_gps" value="" class="form-control">
+                                {% endif %}
 
-
+                                {% if precision %}
+                                <input type="text" id="precision" name="precision" value="{{ precision }}" class="form-control">
+                                {% else %}
+                                    <input type="text" id="precision" name="precision" value="" class="form-control">
+                                {% endif %}
 
 	                        </form>
                     </div>
@@ -546,7 +541,7 @@ let current_fase = 0;
                 pro[0].disabled = true;
                 frw[0].disabled = false;
             break;
-            
+
             case 4:
                 back[0].disabled = false;
                 pro[0].disabled = false;
@@ -555,10 +550,6 @@ let current_fase = 0;
 
 
         }
-
-
-
-
 
     }
 
@@ -697,7 +688,8 @@ let current_fase = 0;
 
         });
 
-        $(this).on("click", ".removeFile", function (e)
+        {#$(this).on("click", ".removeFile", function (e)#}
+        $(".removefile").click( function (e)
         {
             e.preventDefault();
 
@@ -735,7 +727,35 @@ let current_fase = 0;
         {
             e.preventDefault();
 
-            var formData = new FormData(document.getElementById("wrapped"));
+            {#var formData = new FormData(document.getElementById("wrapped"));#}
+            let formulario = document.getElementById("wrapped").elements;
+            var formData = new FormData();
+            let tipocasa = "";
+            if (formulario[1].checked)
+            {
+                tipocasa = "piso";
+            }
+
+            if (formulario[2].checked)
+            {
+                tipocasa = "chalet";
+            }
+
+            if (formulario[3].checked)
+            {
+                tipocasa = "casarural";
+            }
+
+            if (formulario[4].checked)
+            {
+                tipocasa = "oficina";
+            }
+
+            formData.append("tipocasa", tipocasa);
+            formData.append(formulario[5].id, formulario[5].value);
+            formData.append(formulario[7].id, formulario[7].value);
+            formData.append(formulario[8].id, formulario[8].value);
+
 
             for (var i = 0; i < filesToUpload.length; i++)
             {
@@ -759,7 +779,7 @@ let current_fase = 0;
                 success: function (resp)
                 {
 
-
+                    current_fase = 0;
                     document.getElementById("wrapped").reset();
 
                     let middlewizard = document.getElementById("middle-wizard");
