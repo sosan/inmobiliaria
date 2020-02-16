@@ -18,7 +18,7 @@
             <div class="row justify-content-between">
                 <div class="col-xl-5 col-lg-5">
                     <div id="wizard_container">
-                            <form id="wrapped" method="POST" autocomplete="off" enctype="multipart/form-data" name="wrapped">
+                            <form id="wrapped" method="POST" autocomplete="off" enctype="multipart/form-data" >
                                 <input type="hidden" name="nombre" value="{{ session["nombre"] }}">
                                 <div id="mostrar_resultado"></div>
 	                            <div id="middle-wizard">
@@ -725,36 +725,36 @@ let current_fase = 0;
 
         $("#process").click(function (e)
         {
-            e.preventDefault();
+            e.preventDefault(e);
 
-            {#var formData = new FormData(document.getElementById("wrapped"));#}
-            let formulario = document.getElementById("wrapped").elements;
-            var formData = new FormData();
-            let tipocasa = "";
-            if (formulario[1].checked)
-            {
-                tipocasa = "piso";
-            }
-
-            if (formulario[2].checked)
-            {
-                tipocasa = "chalet";
-            }
-
-            if (formulario[3].checked)
-            {
-                tipocasa = "casarural";
-            }
-
-            if (formulario[4].checked)
-            {
-                tipocasa = "oficina";
-            }
-
-            formData.append("tipocasa", tipocasa);
-            formData.append(formulario[5].id, formulario[5].value);
-            formData.append(formulario[7].id, formulario[7].value);
-            formData.append(formulario[8].id, formulario[8].value);
+            var formData = new FormData(document.getElementById("wrapped"));
+            {#let formulario = document.getElementById("wrapped").elements;#}
+            {#var formData = new FormData();#}
+            {#let tipocasa = "";#}
+            {#if (formulario[1].checked)#}
+            {#{#}
+            {#    tipocasa = "piso";#}
+            {# }#}
+            {##}
+            {#if (formulario[2].checked)#}
+            {#{#}
+            {#    tipocasa = "chalet";#}
+            {# }#}
+            {##}
+            {#if (formulario[3].checked)#}
+            {#{#}
+            {#    tipocasa = "casarural";#}
+            {# }#}
+            {##}
+            {#if (formulario[4].checked)#}
+            {#{#}
+            {#    tipocasa = "oficina";#}
+            {# }#}
+            {##}
+            {#formData.append("tipocasa", tipocasa);#}
+            {#formData.append(formulario[5].id, formulario[5].value);#}
+            {#formData.append(formulario[7].id, formulario[7].value);#}
+            {#formData.append(formulario[8].id, formulario[8].value);#}
 
 
             for (var i = 0; i < filesToUpload.length; i++)
@@ -768,11 +768,15 @@ let current_fase = 0;
             formData.append("files_len", filesToUpload.length.toString());
             const uri = "{{ url_for("recibir_alta_piso") }}";
 
-
+            console.log("tipocasa:" + formData.get("tipocasa"));
+            formData.forEach((value, key) => {
+                console.log("key %s: value %s", key, value);
+            });
 
             $.ajax({
                 url: uri,
                 data: formData,
+                enctype: 'multipart/form-data',
                 processData: false,
                 contentType: false,
                 type: "POST",
