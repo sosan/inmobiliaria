@@ -276,8 +276,8 @@
     {{ super() }}
 {#    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>#}
 {#<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>#}
-     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.4.4.min.js"></script>
-    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+{#     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.4.4.min.js"></script>#}
+{#    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>#}
 
 
 {#<script>#}
@@ -378,19 +378,21 @@ let current_fase = 0;
     }
 
 
-    function comprobar_fase2()
+    function comprobar_fase2(min, max)
     {
-        let elementos = $(".current")[0].children;
+        let elementos = $("input");
 
         let siguientefase = true;
-        for (var i = 1; i < elementos.length; i++)
+        for (var i = min; i < max; i++)
         {
-            if (elementos[i].children[1].type === "text")
+            if (elementos[i].children[1].type === "text" || elementos[i].type === "number")
             {
                 if (elementos[i].children[1].value === "")
                 {
-                    elementos[i].children[1].classList.add("error");
-                    elementos[i].lastElementChild.style.cssText = "display: block;";
+                    elementos[i].classList.add("error");
+                    elementos[i].parentElement.lastElementChild.style.cssText = "display: block;";
+                    {#elementos[i].children[1].classList.add("error");#}
+                    {#elementos[i].lastElementChild.style.cssText = "display: block;";#}
                     siguientefase = false;
                 }
             }
@@ -414,18 +416,20 @@ let current_fase = 0;
 
     }
 
-    function comprobar_fase3()
+    function comprobar_fase3(min, max)
     {
-
-        let elementos = $(".current")[0].children;
-
+        let elementos = $("input");
         let siguientefase = true;
-        for (var i = 1; i < elementos.length; i++)
+
+        for (var i = min; i < max; i++)
         {
             if (elementos[i].children[1].value === "")
             {
-                elementos[i].children[1].classList.add("error");
-                elementos[i].lastElementChild.style.cssText = "display: block;";
+
+                elementos[i].classList.add("error");
+                elementos[i].parentElement.lastElementChild.style.cssText = "display: block;";
+                {#elementos[i].children[1].classList.add("error");#}
+                {#elementos[i].lastElementChild.style.cssText = "display: block;";#}
                 siguientefase = false;
             }
         }
@@ -440,9 +444,7 @@ let current_fase = 0;
     function comprobar_fase4(min, max)
     {
 
-        {#let elementos = $(".current")[0].children;#}
         let elementos = $("input");
-        {##[14].type#}
 
         let siguientefase = true;
         let checkbox_correcto = 0;
@@ -480,16 +482,21 @@ let current_fase = 0;
 
         }
 
-        if (checkbox_correcto > 0)
+        if (elementos[min].type === "checkbox")
         {
-            elementos[min].classList.remove("error");
-            elementos[min].parentElement.lastElementChild.style.cssText = "display: none;";
 
-        } else
-        {
-            elementos[min].classList.add("error");
-            elementos[min].parentElement.lastElementChild.style.cssText = "display: block;";
-            siguientefase = false;
+            if (checkbox_correcto > 0)
+            {
+                elementos[min].classList.remove("error");
+                elementos[min].parentElement.lastElementChild.style.cssText = "display: none;";
+
+            } else
+            {
+                elementos[min].classList.add("error");
+                elementos[min].parentElement.lastElementChild.style.cssText = "display: block;";
+                siguientefase = false;
+
+            }
 
         }
 
@@ -506,8 +513,8 @@ let current_fase = 0;
         switch(current_fase)
         {
             case 0: comprobar_fase1(); break;
-            case 1: comprobar_fase2(); break;
-            case 2: comprobar_fase3(); break;
+            case 1: comprobar_fase2(5, 9); break;
+            case 2: comprobar_fase3(9, 14); break;
             case 3: comprobar_fase4(14, 21); break;
             case 4: break;
             case 5: break;
@@ -725,37 +732,9 @@ let current_fase = 0;
 
         $("#process").click(function (e)
         {
-            e.preventDefault(e);
+            e.preventDefault();
 
             var formData = new FormData(document.getElementById("wrapped"));
-            {#let formulario = document.getElementById("wrapped").elements;#}
-            {#var formData = new FormData();#}
-            {#let tipocasa = "";#}
-            {#if (formulario[1].checked)#}
-            {#{#}
-            {#    tipocasa = "piso";#}
-            {# }#}
-            {##}
-            {#if (formulario[2].checked)#}
-            {#{#}
-            {#    tipocasa = "chalet";#}
-            {# }#}
-            {##}
-            {#if (formulario[3].checked)#}
-            {#{#}
-            {#    tipocasa = "casarural";#}
-            {# }#}
-            {##}
-            {#if (formulario[4].checked)#}
-            {#{#}
-            {#    tipocasa = "oficina";#}
-            {# }#}
-            {##}
-            {#formData.append("tipocasa", tipocasa);#}
-            {#formData.append(formulario[5].id, formulario[5].value);#}
-            {#formData.append(formulario[7].id, formulario[7].value);#}
-            {#formData.append(formulario[8].id, formulario[8].value);#}
-
 
             for (var i = 0; i < filesToUpload.length; i++)
             {
