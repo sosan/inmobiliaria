@@ -75,9 +75,11 @@ class ManagerMongoDb:
 
             fecha = datetime.utcnow()
             fechadelta = datetime.utcnow() + timedelta(hours=24)
+            iditem = str(uuid.uuid4())
 
             ok = self.cursorpisos.insert_one(
                 {
+                    "iditem": iditem,
                     "calle": calle,
                     "tiponegocio_alquiler": tiponegocio_alquiler,
                     "tiponegocio_venta": tiponegocio_venta,

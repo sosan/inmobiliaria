@@ -48,43 +48,43 @@
 
 
         {% block footer_medidas %}
-                <div class=" col-xs-5 text-center">
+                <div class=" col-xs-3 text-center">
                     <a href="{{ url_for("menu_admin") }}">
-                    <span class="glyphicon glyphicon-tag glyphicon_font_footer"></span>
-                    <div class="pageTitleC">MEDIDAS</div>
-                        </a>
+                        <span class="glyphicon glyphicon-tag glyphicon_font_footer"></span>
+                        <div class="pageTitleC">LISTADO</div>
+                    </a>
                 </div>
         {% endblock %}
 
-        {% block footer_medidas_pro %}
-                <div class="col-xs-5 text-center">
-                    <a href="{{ url_for("tomar_medidas_pago") }}">
-                    <span class="glyphicon glyphicon-euro glyphicon_font_footer"></span>
-                    <div class="pageTitleC  ">PRO</div>
-                         </a>
-                </div>
-        {% endblock %}
+{#        {% block footer_medidas_pro %}#}
+{#                <div class="col-xs-5 text-center">#}
+{#                    <a href="{{ url_for("tomar_medidas_pago") }}">#}
+{#                    <span class="glyphicon glyphicon-euro glyphicon_font_footer"></span>#}
+{#                    <div class="pageTitleC  ">PRO</div>#}
+{#                         </a>#}
+{#                </div>#}
+{#        {% endblock %}#}
 
         {% block footer_alta_piso %}
-                <div class="col-xs-5 text-center">
+                <div class="col-xs-3 text-center">
                      <a href="{{ url_for("alta_piso") }}">
                     <span class="glyphicon glyphicon-plus glyphicon_font_footer"></span>
                     <div class="pageTitleC ">AÑADIR</div>
                          </a>
                 </div>
         {% endblock %}
-
-        {% block footer_modificar_piso %}
-                <div class="col-xs-5 text-center">
-                    <a href="{{ url_for("modificar_piso") }}">
-                    <span class="glyphicon glyphicon-pencil glyphicon_font_footer"></span>
-                    <div class="pageTitleC">MODIFICAR</div>
-                        </a>
-                </div>
-            {% endblock %}
+{##}
+{#        {% block footer_modificar_piso %}#}
+{#                <div class="col-xs-5 text-center">#}
+{#                    <a href="{{ url_for("modificar_piso") }}">#}
+{#                    <span class="glyphicon glyphicon-pencil glyphicon_font_footer"></span>#}
+{#                    <div class="pageTitleC">MODIFICAR</div>#}
+{#                        </a>#}
+{#                </div>#}
+{#            {% endblock %}#}
 
         {% block footer_buscar %}
-                <div class="col-xs-5 text-center">
+                <div class="col-xs-3 text-center">
                     <a href="{{ url_for("buscar_piso") }}">
                     <span class="glyphicon glyphicon-search glyphicon_font_footer"></span>
                     <div class="pageTitleC  " >BUSCAR</div>

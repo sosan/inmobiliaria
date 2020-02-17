@@ -170,11 +170,9 @@ def alta_piso():
             outputhtml = "YA EXISTE EL INMUEBLE"
         elif session["mensajeerror"] == 1:
             outputhtml = "DADO DE ALTA CORRECTAMENTE<p>Calle: {0}<br>Numero: {1}</p>".format(anterior_calle,
-                                                                                            anterior_numero)
+                                                                                             anterior_numero)
 
         return jsonify({"data": outputhtml, "errores": session["mensajeerror"]})
-
-        # return render_template("alta_piso.html", anterior_calle=anterior_calle, anterior_numero=anterior_numero)
 
     if "calle" and "numero" and "cp" and "habitaciones" and "localidad" and "numerobanos" \
             and "tipocasa" and "dueno" and "totalmetros" \
@@ -217,13 +215,12 @@ def alta_piso():
             "precision": session.pop("precision")
         }
 
-        return render_template("alta_piso.html", **variables)
+        return render_template("alta_piso_borrar.html", **variables)
 
     if "mensajeerror" in session:
         session.pop("mensajeerror")
 
-    return render_template("testing.html")
-    # return render_template("alta_piso.html")
+    return render_template("alta_piso_admin.html")
 
 
 @socketio.on('obtenercalle')
@@ -388,7 +385,7 @@ def buscar_piso():
 
 @app.route("/profile/modificar", methods=["GET"])
 def modificar_piso():
-    return render_template("modificar_piso.html")
+    return render_template("modificar_piso_admin.html")
 
 
 @app.route("/profile/tomar_medidas_pago", methods=["GET"])

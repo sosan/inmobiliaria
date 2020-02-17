@@ -16,6 +16,7 @@
          <div class="aditem">
              <div class="aditem-header">
              <!-- quine lo ha introducido -->
+             <input type="hidden" name="iditem" value="{{ datos[i].iditem }}">
                 <div class="x3">{{ datos[i].localidad }} - {{ datos[i].nombre }}</div>
                 <div class="x6" >
                     {% if datos[i].fechadelta >= fechaahora  %}
@@ -92,7 +93,7 @@
                     </div>
 
                     <div>
-                        <a href="" class="simple-button"><i class="icon icon-complaint"></i><span>BORRAR</span></a>
+                        <a href="{{ url_for("modificar_piso") }}" class="simple-button"><i class="icon icon-complaint"></i><span>MODIFICAR</span></a>
                     </div>
                 </div>
             </div>
@@ -154,38 +155,14 @@
 
     {% endfor %}
 
-{#        <div class="container">#}
-{#            <ul id="lista_menu">#}
-{#                {% for datos[i] in datos %}#}
-{#                <li>#}
-{#                    <a href="{{ url_for("alta_piso") }}">#}
-{#                        <div class="">#}
-{#                            Calle: {{ datos[i]["calle"] }} Numero: {{ datos[i]["numero"] }}#}
-{#                        </div>#}
-{#                        <div class="">#}
-{#                            {{datos[i]["precio"]}}#}
-{##}
-{#                        </div>#}
-{#                        <div class="">#}
-{#                            <img src="{{ datos[i]["foto"] }}">#}
-{##}
-{#                        </div>#}
-{##}
-{#                    </a>#}
-{##}
-{#                </li>#}
-{##}
-{#                {% endfor %}#}
-{#            </ul>#}
-{#        </div>#}
     {% endif %}
 {% endblock %}
 
 {% block footer_medidas %}
-        <div class=" col-xs-5 show_clicked_abajo text-center">
+        <div class=" col-xs-3 show_clicked_abajo text-center">
             <a href="{{ url_for("menu_admin") }}">
             <span class="glyphicon glyphicon-tag glyphicon_font_footer"></span>
-            <div class="pageTitleC">MEDIDAS</div>
+            <div class="pageTitleC">LISTADO</div>
                 </a>
         </div>
 {% endblock %}
