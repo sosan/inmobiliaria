@@ -169,8 +169,20 @@
 
     }
 
+    // $(document).ready(function()
+    // {
+    //     $("#forward").click(function()
+    //     {
+    //         alert($("#contenido_central").scrollTop() + " px");
+    //         $("#contenido_central").scrollTop(0,0);
+    //     });
+    // });
+
+
     $('#forward').click(function()
     {
+       $("#contenido_central").scrollTop(0,0);
+
         switch(current_fase)
         {
             case 0: comprobar_fase(1, 5); break;
@@ -183,19 +195,12 @@
 
         }
 
-        $('.step').animate({scrollTop:$(this.hash).position().top+$('.step').scrollTop()}, 1500);
-
-        
-        // window.scroll({
-        //   top: 0,
-        //   left: 0,
-        //   behavior: 'smooth'
-        // });
 
     });
 
     $('#backward').click(function()
     {
+        $("#contenido_central").scrollTop(0,0);
         show_anteriorfase();
 
     });
