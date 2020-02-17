@@ -426,9 +426,21 @@
                 type: "POST",
                 success: function (resp)
                 {
+                    $("#contenido_central").scrollTop(0,0);
 
                     current_fase = 0;
-                    document.getElementById("wrapped").reset();
+                    let color_erroes = "alert-success";
+                    if (resp["errores"] === 1)
+                    {
+                        document.getElementById("wrapped").reset();
+                        files1Uploader.clear();
+                    }
+                    else
+                    {
+
+                        color_erroes = "alert-warning";
+                    }
+
 
                     let middlewizard = document.getElementById("middle-wizard");
                     middlewizard.children[4].className = "submit step wizard-step";
@@ -446,7 +458,7 @@
                     frw[0].disabled = false;
 
                     showPosition();
-                    const out = '<h4 class=\'alert alert-success quitadotop\' id=\'success-alert\' style=\'display: block; opacity: 100;\'></h4>';
+                    const out = '<h4 class=\'alert ' + color_erroes + ' quitadotop\' id=\'success-alert\' style=\'display: block; opacity: 100;\'></h4>';
                     $("#mostrar_resultado").append(out);
 
                     let elemento = document.getElementById("success-alert");
@@ -458,7 +470,7 @@
                         $("#success-alert").remove();
                     }, 4000);
 
-                    files1Uploader.clear();
+
                 },
                 error: function (data) {
                     alert("ERROR - " + data.responseText);

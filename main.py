@@ -162,24 +162,17 @@ def alta_piso():
         anterior_calle = session.pop("anterior_calle")
         anterior_numero = session.pop("anterior_numero")
 
-        # return jsonify({"data": {
-        #     "mesanjeerror": session["mensajeerror"],
-        #     "anterior_calle": anterior_calle,
-        #     "anterior_numero": anterior_numero
-        # }
-        # })
-
-        outputhml = ""
+        outputhtml = ""
 
         if session["mensajeerror"] == 0:
-            outputhml = " "
+            outputhtml = " "
         elif session["mensajeerror"] == 2:
-            outputhml = "YA EXISTE EL INMUEBLE"
+            outputhtml = "YA EXISTE EL INMUEBLE"
         elif session["mensajeerror"] == 1:
-            outputhml = "DADO DE ALTA CORRECTAMENTE<p>Calle: {0}<br>Numero: {1}</p>".format(anterior_calle,
+            outputhtml = "DADO DE ALTA CORRECTAMENTE<p>Calle: {0}<br>Numero: {1}</p>".format(anterior_calle,
                                                                                             anterior_numero)
 
-        return jsonify({"data": outputhml})
+        return jsonify({"data": outputhtml, "errores": session["mensajeerror"]})
 
         # return render_template("alta_piso.html", anterior_calle=anterior_calle, anterior_numero=anterior_numero)
 
@@ -338,6 +331,9 @@ def recibir_alta_piso():
         else:
             # ya existe mensaje de error
             session["mensajeerror"] = helper.errores.no_insertado
+            session["anterior_calle"] = request.form["calle"]
+            session["anterior_numero"] = request.form["numero"]
+
             session["calle"] = request.form["calle"]
             session["cp"] = request.form["cp"]
             session["habitaciones"] = request.form["habitaciones"]
