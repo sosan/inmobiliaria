@@ -9,9 +9,10 @@ from flask import redirect
 from flask import url_for
 from flask import session
 from flask import request
-from pip._vendor.six import BytesIO
 from werkzeug.utils import secure_filename
+
 # nos permite servir archivos de forma estatico o absoluta
+
 from flask import send_from_directory
 
 from ModuloMongodb.ManagerMongodb import managermongo
@@ -21,6 +22,7 @@ from ModuloWeb.ManagerWeb import ManagerWeb
 from flask_socketio import SocketIO
 from flask_socketio import emit
 
+import sys
 import eventlet
 
 # instanciaciones e inicializaciones
@@ -34,7 +36,7 @@ helper = ManagerHelper()
 app.secret_key = "holaa"
 # recuperar una ruta absoluta
 CARPETA_SUBIDAS = os.path.abspath(".//archivos_subidos")
-print(CARPETA_SUBIDAS)
+print("capr:" + CARPETA_SUBIDAS)
 app.config["CARPETA_SUBIDAS"] = CARPETA_SUBIDAS
 # limite 16 megas
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
@@ -274,6 +276,10 @@ def recibir_alta_piso():
             for i in range(0, length_files):
                 if "files_{0}_datafile".format(i) in request.form:
                     datafile_b64 = request.form["files_{0}_datafile".format(i)]
+
+                    if sys.getsizeof(datafile_b64) > app.config["MAX_CONTENT_LENGTH"]:
+                        continue
+
                     nombrefile = request.form["files_{0}_filename".format(i)]
 
                     if datafile_b64 == "" or nombrefile == "":
