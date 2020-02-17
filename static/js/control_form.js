@@ -183,6 +183,14 @@
 
         }
 
+        $('.step').animate({scrollTop:$(this.hash).position().top+$('.step').scrollTop()}, 1500);
+
+        
+        // window.scroll({
+        //   top: 0,
+        //   left: 0,
+        //   behavior: 'smooth'
+        // });
 
     });
 
