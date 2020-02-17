@@ -394,8 +394,9 @@ def modificar_piso_get():
 
     if "datos_vivienda" in session:
         datos_vivienda = session.pop("datos_vivienda")
+        return render_template("modificar_piso_admin.html", datos_vivienda=datos_vivienda)
 
-    return render_template("modificar_piso_admin.html", datos_vivienda=datos_vivienda)
+    return redirect(url_for("menu_admin"))
 
 
 @app.route("/profile/modificar", methods=["post"])

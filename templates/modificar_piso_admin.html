@@ -17,7 +17,7 @@
                 <div class="col-xl-5 col-lg-5">
                     <div id="wizard_container">
                             <form id="wrapped" method="POST" autocomplete="off" enctype="multipart/form-data" >
-                                <input type="hidden" name="nombre" value="{{ session["nombre"] }}">
+                                <input type="hidden" name="usuario_que_modifica" value="{{ session["nombre"] }}">
                                 <div id="mostrar_resultado"></div>
 	                            <div id="middle-wizard">
 
@@ -32,7 +32,7 @@
                                                 <li>
                                                     <div class="checkbox_radio_container">
 
-                                                        {% if tipocasa == "piso" %}
+                                                        {% if datos_vivienda.tipocasa == "piso" %}
                                                             <input type="radio" id="piso" name="tipocasa" class="required valid" checked value="piso" onchange="cambiotipocasa(this);">
                                                         {% else %}
                                                             <input type="radio" id="piso" name="tipocasa" class="required" value="piso" onchange="cambiotipocasa(this);">
@@ -46,7 +46,7 @@
                                                 </li>
                                                 <li>
                                                     <div class="checkbox_radio_container">
-                                                        {% if tipocasa == "chalet" %}
+                                                        {% if datos_vivienda.tipocasa == "chalet" %}
                                                             <input type="radio" id="chalet" name="tipocasa" class="required valid" checked value="chalet" onchange="cambiotipocasa(this);">
                                                         {% else %}
                                                             <input type="radio" id="chalet" name="tipocasa" class="required" value="chalet" onchange="cambiotipocasa(this);">
@@ -57,7 +57,7 @@
                                                 </li>
                                                   <li>
                                                       <div class="checkbox_radio_container">
-                                                          {% if tipocasa == "casarural" %}
+                                                          {% if datos_vivienda.tipocasa == "casarural" %}
                                                               <input type="radio" id="casarural" name="tipocasa" class="required valid" checked value="casarural" onchange="cambiotipocasa(this);">
                                                           {% else %}
                                                               <input type="radio" id="casarural" name="tipocasa" class="required" value="casarural" onchange="cambiotipocasa(this);">
@@ -68,7 +68,7 @@
                                                 </li>
                                                 <li>
                                                     <div class="checkbox_radio_container">
-                                                        {% if tipocasa == "oficina" %}
+                                                        {% if datos_vivienda.tipocasa == "oficina" %}
                                                             <input type="radio" id="oficina" name="tipocasa" class="required valid" checked value="oficina" onchange="cambiotipocasa(this);">
                                                         {% else %}
                                                             <input type="radio" id="oficina" name="tipocasa" class="required" value="oficina" onchange="cambiotipocasa(this);">
@@ -90,25 +90,25 @@
                                         </h3>
                                         <div class="form-group">
 	                                        <label for="calle">Calle</label>
-                                            <input type="text" name="calle" id="calle" value="{{ calle }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <input type="text" name="calle" id="calle" value="{{ datos_vivienda.calle }}" class="form-control required" onchange="cambioinputs(this);">
                                             <button type="button" name="obtener_calle" value="1" onclick="obtenercalle()">OBTENER POSICION</button>
                                             <span for="calle" class="error" style="display: none;">Requerido</span>
 	                                    </div>
                                         <div class="form-group">
 	                                        <label for="numero">Numero</label>
-                                            <input type="text" name="numero" id="numero" value="{{ numero }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <input type="text" name="numero" id="numero" value="{{ datos_vivienda.numero }}" class="form-control required" onchange="cambioinputs(this);">
                                             <span for="numero" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                         <div class="form-group">
 	                                        <label for="cp">Codigo Postal</label>
-                                            <input type="text" name="cp" id="cp" value="{{ cp }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <input type="text" name="cp" id="cp" value="{{ datos_vivienda.cp }}" class="form-control required" onchange="cambioinputs(this);">
                                             <span for="cp" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                          <div class="form-group">
 	                                        <label for="localidad">Localidad</label>
-                                            <input type="text" name="localidad" id="localidad" value="{{ localidad }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <input type="text" name="localidad" id="localidad" value="{{ datos_vivienda.localidad }}" class="form-control required" onchange="cambioinputs(this);">
                                              <span for="localidad" class="error" style="display: none;">Requerido</span>
 	                                    </div>
                                     </div>
@@ -120,32 +120,32 @@
                                         </h3>
                                         <div class="form-group">
 	                                        <label for="dueno">Dueño</label>
-                                            <input type="text" name="dueno" id="dueno" value="{{ dueno }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <input type="text" name="dueno" id="dueno" value="{{ datos_vivienda.dueno }}" class="form-control required" onchange="cambioinputs(this);">
                                             <span for="dueno" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                         <div class="form-group">
 	                                        <label for="wasap">Whatsapp</label>
-                                            <input type="text" name="wasap" id="wasap" value="{{ wasap }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <input type="text" name="wasap" id="wasap" value="{{ datos_vivienda.wasap }}" class="form-control required" onchange="cambioinputs(this);">
                                             <span for="wasap" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                         <div class="form-group">
 	                                        <label for="telefonodueno">Telefono</label>
-                                            <input type="text" name="telefonodueno" id="telefonodueno" value="{{ telefonodueno }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <input type="text" name="telefonodueno" id="telefonodueno" value="{{ datos_vivienda.telefonodueno }}" class="form-control required" onchange="cambioinputs(this);">
                                             <span for="telefonodueno" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
 
                                         <div class="form-group">
 	                                        <label for="calledueno">Calle</label>
-                                            <input type="text" name="calledueno" id="calledueno" value="{{ calledueno }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <input type="text" name="calledueno" id="calledueno" value="{{ datos_vivienda.calledueno }}" class="form-control required" onchange="cambioinputs(this);">
                                             <span for="calledueno" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                          <div class="form-group">
 	                                        <label for="numerodueno">Numero</label>
-                                            <input type="text" name="numerodueno" id="numerodueno" value="{{ numerodueno }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <input type="text" name="numerodueno" id="numerodueno" value="{{ datos_vivienda.numerodueno }}" class="form-control required" onchange="cambioinputs(this);">
                                             <span for="numerodueno" class="error" style="display: none;">Requerido</span>
 	                                    </div>
                                     </div>
@@ -161,11 +161,10 @@
 	                                        <ul>
 	                                            <li>
 	                                                <div class="checkbox_radio_container">
-                                                    {% if tiponegocio_alquiler %}
+                                                    {% if datos_vivienda.tiponegocio_alquiler %}
                                                             <input type="checkbox" id="alquiler" name="tiponegocio_alquiler" class="valid" checked value="alquiler">
                                                     {% endif %}
                                                         <input type="checkbox" id="alquiler" name="tiponegocio_alquiler" class="" value="alquiler">
-{#	                                                    <input type="checkbox" id="alquiler" name="tiponegocio" class="required" value="alquiler" onchange="getVals(this, 'tiponegocio');">#}
 	                                                    <label class="checkbox" for="alquiler"></label>
 	                                                    <label for="alquiler" class="wrapper">Alquiler</label>
                                                         <span for="alquiler" class="error" style="display: none;">Requerido. Elige uno.</span>
@@ -173,7 +172,7 @@
 	                                            </li>
 	                                            <li>
 	                                                <div class="checkbox_radio_container">
-                                                    {% if tiponegocio_venta %}
+                                                    {% if datos_vivienda.tiponegocio_venta %}
                                                             <input type="checkbox" id="venta" name="tiponegocio_venta" class=" valid" checked value="venta" >
                                                     {% endif %}
                                                         <input type="checkbox" id="venta" name="tiponegocio_venta" class="" value="venta" >
@@ -187,29 +186,29 @@
 
                                         <div class="form-group">
 	                                        <label for="precioalquiler">Precio Alquiler</label>
-                                            <input type="number" name="precioalquiler" id="precioalquiler" value="{{ precioalquiler }}" class="form-control" onchange="cambioinputs(this);">
+                                            <input type="number" name="precioalquiler" id="precioalquiler" value="{{ datos_vivienda.precioalquiler }}" class="form-control" onchange="cambioinputs(this);">
                                             <span for="precioalquiler" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                         <div class="form-group">
 	                                        <label for="precioventa">Precio Venta</label>
-                                            <input type="number" name="precioventa" id="precioventa" value="{{ precioventa }}" class="form-control" onchange="cambioinputs(this);">
+                                            <input type="number" name="precioventa" id="precioventa" value="{{ datos_vivienda.precioventa }}" class="form-control" onchange="cambioinputs(this);">
                                             <span for="precioventa" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
                                          <div class="form-group">
 	                                        <label for="totalmetros">Total Metros</label>
-                                            <input type="number" name="totalmetros" id="totalmetros" value="{{ totalmetros }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <input type="number" name="totalmetros" id="totalmetros" value="{{ datos_vivienda.totalmetros }}" class="form-control required" onchange="cambioinputs(this);">
                                              <span for="totalmetros" class="error" style="display: none;">Requerido</span>
 	                                    </div>
                                         <div class="form-group">
 	                                        <label for="habitaciones">Habitaciones</label>
-                                            <input type="number" name="habitaciones" id="habitaciones" value="{{ habitaciones }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <input type="number" name="habitaciones" id="habitaciones" value="{{ datos_vivienda.habitaciones }}" class="form-control required" onchange="cambioinputs(this);">
                                             <span for="habitaciones" class="error" style="display: none;">Requerido</span>
 	                                    </div>
                                         <div class="form-group">
 	                                        <label for="banos">Baños</label>
-                                            <input type="number" name="banos" id="banos" value="{{ banos }}" class="form-control required" onchange="cambioinputs(this);">
+                                            <input type="number" name="banos" id="banos" value="{{ datos_vivienda.banos }}" class="form-control required" onchange="cambioinputs(this);">
                                             <span for="banos" class="error" style="display: none;">Requerido</span>
 	                                    </div>
 
@@ -242,20 +241,20 @@
 	                                <button type="button"  name="process" id="process" class="submit">Enviar</button>
 	                            </div>
                                 <br><br>
-                                {% if latitude_gps %}
-                                <input type="text" id="latitude_gps" name="latitude_gps" value="{{ latitude_gps }}" class="form-control">
+                                {% if datos_vivienda.latitude_gps %}
+                                <input type="text" id="latitude_gps" name="latitude_gps" value="{{ datos_vivienda.latitude_gps }}" class="form-control">
                                 {% else %}
                                     <input type="text" id="latitude_gps" name="latitude_gps" value="" class="form-control">
                                 {% endif %}
 
-                                {% if longitude_gps %}
-                                <input type="text" id="longitude_gps" name="longitude_gps" value="{{ longitude_gps }}" class="form-control">
+                                {% if datos_vivienda.longitude_gps %}
+                                <input type="text" id="longitude_gps" name="longitude_gps" value="{{ datos_vivienda.longitude_gps }}" class="form-control">
                                 {% else %}
                                     <input type="text" id="longitude_gps" name="longitude_gps" value="" class="form-control">
                                 {% endif %}
 
-                                {% if precision %}
-                                <input type="text" id="precision" name="precision" value="{{ precision }}" class="form-control">
+                                {% if datos_vivienda.precision %}
+                                <input type="text" id="precision" name="precision" value="{{ datos_vivienda.precision }}" class="form-control">
                                 {% else %}
                                     <input type="text" id="precision" name="precision" value="" class="form-control">
                                 {% endif %}
