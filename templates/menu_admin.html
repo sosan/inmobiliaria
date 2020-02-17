@@ -12,6 +12,9 @@
 {% block contenido_central %}
  {% if datos %}
      {% for i in range(0, totalelementos) %}
+         <form action="{{ url_for("modificar_piso") }}" method="post">
+
+
 {#     {% for elemento in datos %}#}
          <div class="aditem">
              <div class="aditem-header">
@@ -93,7 +96,8 @@
                     </div>
 
                     <div>
-                        <a href="{{ url_for("modificar_piso") }}" class="simple-button"><i class="icon icon-complaint"></i><span>MODIFICAR</span></a>
+                        <button type="submit" class="simple-button"><i class="icon icon-complaint"></i><span>MODIFICAR</span></button>
+{#                        <a href="{{ url_for("modificar_piso") }}" class="simple-button"><i class="icon icon-complaint"></i><span>MODIFICAR</span></a>#}
                     </div>
                 </div>
             </div>
@@ -152,7 +156,7 @@
     </div>
   </div>
 </div>
-
+</form>
     {% endfor %}
 
     {% endif %}

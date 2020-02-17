@@ -200,6 +200,14 @@ class ManagerMongoDb:
                 return True
         return False
 
+    def get_vivienda_porid(self, idvivienda):
+        datos = self.cursorpisos.find_one({"iditem": idvivienda}, {"_id": False})
+        if len(datos) > 0:
+            return datos
+        else:
+            return None
+
+
 
 managermongo = ManagerMongoDb()
 managermongo.conectDB("pepito", "pepito", "cluster0-6oq5a.gcp.mongodb.net/test?retryWrites=true&w=majority",

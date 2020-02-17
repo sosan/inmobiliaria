@@ -383,9 +383,35 @@ def buscar_piso():
     return render_template("buscar_piso.html")
 
 
-@app.route("/profile/modificar", methods=["GET"])
+@app.route("/profile/modificar", methods=["get"])
+def modificar_piso_get():
+    if "usuario" not in session or "password" not in session:
+        return redirect(url_for("admin_login"))
+    else:
+        ok = managermongo.comprobaradmin(session["usuario"], session["password"])
+        if ok == False:
+            return redirect(url_for("admin_login"))
+
+    if "datos_vivienda" in session:
+        datos_vivienda = session.pop("datos_vivienda")
+
+    return render_template("modificar_piso_admin.html", datos_vivienda=datos_vivienda)
+
+
+@app.route("/profile/modificar", methods=["post"])
 def modificar_piso():
-    return render_template("modificar_piso_admin.html")
+    if "usuario" not in session or "password" not in session:
+        return redirect(url_for("admin_login"))
+    else:
+        ok = managermongo.comprobaradmin(session["usuario"], session["password"])
+        if ok == False:
+            return redirect(url_for("admin_login"))
+
+    if "iditem" in request.form:
+        datos = managermongo.get_vivienda_porid(request.form["iditem"])
+        session["datos_vivienda"] = datos
+
+    return redirect(url_for("modificar_piso_get"))
 
 
 @app.route("/profile/tomar_medidas_pago", methods=["GET"])
