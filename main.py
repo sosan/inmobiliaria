@@ -35,7 +35,7 @@ helper = ManagerHelper()
 # configuracion
 app.secret_key = "holaa"
 # recuperar una ruta absoluta
-CARPETA_SUBIDAS = os.path.abspath(".//archivos_subidos")
+CARPETA_SUBIDAS = os.path.abspath("static/images/archivos_subidos")
 print("capr:" + CARPETA_SUBIDAS)
 app.config["CARPETA_SUBIDAS"] = CARPETA_SUBIDAS
 # limite 16 megas
@@ -215,7 +215,7 @@ def alta_piso():
             "precision": session.pop("precision")
         }
 
-        return render_template("alta_piso_borrar.html", **variables)
+        return render_template("alta_piso_borrar.txt", **variables)
 
     if "mensajeerror" in session:
         session.pop("mensajeerror")
@@ -270,12 +270,12 @@ def recibir_alta_piso():
                     if sys.getsizeof(datafile_b64) > app.config["MAX_CONTENT_LENGTH"]:
                         continue
 
-                    nombrefile = request.form["files_{0}_filename".format(i)]
+                    nombrefile_from_form = secure_filename(request.form["files_{0}_filename".format(i)])
 
-                    if datafile_b64 == "" or nombrefile == "":
-                        raise Exception("campo vacio")
+                    if datafile_b64 == "" or nombrefile_from_form == "":
+                        raise Exception("campo vacio {0}".format(nombrefile_from_form))
 
-                    nombrefile = datetime.utcnow().strftime("%d-%b-%Y-%H.%M.%S.%f_") + nombrefile
+                    nombrefile = datetime.utcnow().strftime("%d-%b-%Y-%H.%M.%S.%f_") + nombrefile_from_form
                     nombrearchivos.append(nombrefile)
 
                     print(os.path.join(app.config["CARPETA_SUBIDAS"], nombrefile))
@@ -383,8 +383,8 @@ def buscar_piso():
     return render_template("buscar_piso.html")
 
 
-@app.route("/profile/modificar", methods=["get"])
-def modificar_piso_get():
+@app.route("/profile/item", methods=["get"])
+def ver_piso_para_modificar_get():
     if "usuario" not in session or "password" not in session:
         return redirect(url_for("admin_login"))
     else:
@@ -399,8 +399,8 @@ def modificar_piso_get():
     return redirect(url_for("menu_admin"))
 
 
-@app.route("/profile/modificar", methods=["post"])
-def modificar_piso():
+@app.route("/profile/item", methods=["post"])
+def ver_piso_para_modificar():
     if "usuario" not in session or "password" not in session:
         return redirect(url_for("admin_login"))
     else:
@@ -412,7 +412,20 @@ def modificar_piso():
         datos = managermongo.get_vivienda_porid(request.form["iditem"])
         session["datos_vivienda"] = datos
 
-    return redirect(url_for("modificar_piso_get"))
+    return redirect(url_for("ver_piso_para_modificar_get"))
+
+
+
+
+# quizas hacer con websockets?
+@app.route("/profile/item_modificado", methods=["post"])
+def modificar_vivienda():
+
+    if "" in request.form:
+        pass
+
+    return redirect(url_for("menu_admin"))
+
 
 
 @app.route("/profile/tomar_medidas_pago", methods=["GET"])
