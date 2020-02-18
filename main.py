@@ -263,7 +263,7 @@ def recibir_alta_piso():
             except ValueError:
                 raise Exception("no podido convertir")
 
-            nombrearchivos = []
+            datosarchivos = []
             for i in range(0, length_files):
                 if "files_{0}_datafile".format(i) in request.form:
                     datafile_b64 = request.form["files_{0}_datafile".format(i)]
@@ -282,9 +282,9 @@ def recibir_alta_piso():
 
                     sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
                     lent = math.floor(math.log(tamanoarchivo_bytes) / math.log(1024))
-                    tamano_str = "{0} {1}".format((tamanoarchivo_bytes / math.pow(1024, lent)), sizes[lent])
+                    tamano_str = "{0} {1}".format(round(tamanoarchivo_bytes / math.pow(1024, lent), 2), sizes[lent])
 
-                    nombrearchivos.append(
+                    datosarchivos.append(
                         {
                             "nombrefile": nombrefile,
                             "nombrefile_fromform": nombrefile_from_form,
@@ -328,8 +328,7 @@ def recibir_alta_piso():
                 totalmetros,
                 request.form["nombre"],
                 request.form["precision"],
-                nombrearchivos,
-                nombrefile_from_form,
+                datosarchivos
 
             )
 

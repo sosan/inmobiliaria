@@ -228,11 +228,13 @@
                                                     </span>
                                                     <br><br><br>
                                                     <ul class="fileList">
-                                                        {% for o in range(0, datos_vivienda.nombrefile|length) %}
+                                                        {% for o in range(0, datos_vivienda["nombrefile"]|length) %}
                                                             <li class="tx">
-                                                                {% set uri = url_for("static", filename="images/archivos_subidos/{0}".format(datos_vivienda["nombrefile"][0])) %}
+                                                                {% set uri = url_for("static", filename="images/archivos_subidos/{0}".format(datos_vivienda["nombrefile"][o]["nombrefile"])) %}
                                                                 <img src="{{ uri }}" width="100" height="100">
-                                                                <button type="button" class="removeFile btn btn-danger" data-fileid="{{ datos_vivienda.nombrefile[o] }}"> Quitar </button>
+                                                                <b>{{ datos_vivienda["nombrefile"][o]["nombrefile_fromform"] }}</b>
+                                                                - {{ datos_vivienda["nombrefile"][o]["tamano"] }} &nbsp;&nbsp;
+                                                                <button type="button" id="removeImageModificado" class="removeFile btn btn-danger" data-fileid="{{ datos_vivienda["nombrefile"][o]["nombrefile"] }}"> Quitar </button>
                                                             </li>
                                                         {% endfor %}
                                                     </ul>
@@ -268,6 +270,12 @@
 
                             <input type="hidden" name="usuario_que_modifica" value="{{ session["nombre"] }}">
                             <input type="hidden" name="iditem" value="{{ datos_vivienda.iditem }}">
+
+                             {% for o in range(0, datos_vivienda["nombrefile"]|length) %}
+                                <input type="hidden" name="file_ya_existe_{{ o }}" value="{{ datos_vivienda["nombrefile"][o]["nombrefile"] }}">
+                                <input type="hidden" name="file_ya_existe_{{ o }}" value="{{ datos_vivienda["nombrefile"][o]["nombrefile_fromform"] }}">
+                                <input type="hidden" name="file_ya_existe_{{ o }}" value="{{ datos_vivienda["nombrefile"][o]["tamano"] }}">
+                            {% endfor %}
 	                        </form>
                     </div>
                 </div>
@@ -654,7 +662,7 @@
 
             var fileId = $(this).parent().children("a").data("fileid");
 
-            for (var i = 0; i < filesToUpload.length; ++i)
+            for (var i = 0; i < filesToUpload.length; i++)
             {
                 if (filesToUpload[i].id === fileId)
                     filesToUpload.splice(i, 1);
@@ -771,6 +779,11 @@
 
     })();
 
+    $('#removeImageModificado').click(function()
+    {
+
+
+    });
 
 
     </script>
