@@ -396,12 +396,21 @@
 
         $("#process").click(function (e)
         {
+            // e.preventDefault();
+            procesarFormulario("/profile/alta", e);
+        });
+
+        $("#process_modificado").click(function (e)
+        {
+            procesarFormulario("/profile/item_modificado", e);
+        });
+
+        function procesarFormulario(uri, e)
+        {
             e.preventDefault();
+             var formData = new FormData(document.getElementById("wrapped"));
 
-            var formData = new FormData(document.getElementById("wrapped"));
-
-            for (var i = 0; i < filesToUpload.length; i++)
-            {
+            for (var i = 0; i < filesToUpload.length; i++) {
 
                 formData.append("files_" + i + "_datafile", filesToUpload[i].datafile);
                 formData.append("files_" + i + "_filename", filesToUpload[i].filename);
@@ -410,7 +419,7 @@
 
             formData.append("files_len", filesToUpload.length.toString());
 
-            const uri = "/profile/alta";
+
 
             // console.log("tipocasa:" + formData.get("tipocasa"));
             // formData.forEach((value, key) => {
@@ -424,19 +433,15 @@
                 processData: false,
                 contentType: false,
                 type: "POST",
-                success: function (resp)
-                {
-                    $("#contenido_central").scrollTop(0,0);
+                success: function (resp) {
+                    $("#contenido_central").scrollTop(0, 0);
 
                     current_fase = 0;
                     let color_erroes = "alert-success";
-                    if (resp["errores"] === 1)
-                    {
+                    if (resp["errores"] === 1) {
                         document.getElementById("wrapped").reset();
                         files1Uploader.clear();
-                    }
-                    else
-                    {
+                    } else {
 
                         color_erroes = "alert-warning";
                     }
@@ -466,7 +471,7 @@
                     elemento.innerHTML += resp.data;
 
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $("#success-alert").remove();
                     }, 4000);
 
@@ -476,9 +481,7 @@
                     alert("ERROR - " + data.responseText);
                 }
             });
-        });
 
-
-
+        }
 
     })();
