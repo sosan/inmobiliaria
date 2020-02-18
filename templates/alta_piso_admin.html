@@ -19,7 +19,7 @@
                 <div class="col-xl-5 col-lg-5">
                     <div id="wizard_container">
                             <form id="wrapped" method="POST" autocomplete="off" enctype="multipart/form-data" >
-                                <input type="hidden" name="nombre" value="{{ session["nombre"] }}">
+
                                 <div id="mostrar_resultado"></div>
 	                            <div id="middle-wizard">
 
@@ -261,7 +261,7 @@
                                 {% else %}
                                     <input type="text" id="precision" name="precision" value="" class="form-control">
                                 {% endif %}
-
+ <input type="hidden" name="nombre" value="{{ session["nombre"] }}">
 	                        </form>
                     </div>
                 </div>

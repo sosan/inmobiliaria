@@ -17,8 +17,7 @@
                 <div class="col-xl-5 col-lg-5">
                     <div id="wizard_container">
                             <form id="wrapped" method="POST" autocomplete="off" enctype="multipart/form-data" >
-                                <input type="hidden" name="usuario_que_modifica" value="{{ session["nombre"] }}">
-                                <input type="hidden" name="iditem" value="{{ datos_vivienda.iditem }}">
+
                                 <div id="mostrar_resultado"></div>
 	                            <div id="middle-wizard">
 
@@ -267,6 +266,8 @@
                                     <input type="text" id="precision" name="precision" value="" class="form-control">
                                 {% endif %}
 
+                            <input type="hidden" name="usuario_que_modifica" value="{{ session["nombre"] }}">
+                            <input type="hidden" name="iditem" value="{{ datos_vivienda.iditem }}">
 	                        </form>
                     </div>
                 </div>
@@ -285,7 +286,7 @@
     <script src="{{ url_for("static", filename="js/websockets.js") }}"></script>
 
     <script>
-      function cambioinputs(param)
+    function cambioinputs(param)
     {
         if (param.value !== "")
         {
@@ -472,10 +473,10 @@
 
         switch(current_fase)
         {
-            case 0: comprobar_fase(2, 6); break;
-            case 1: comprobar_fase(6, 10); break;
-            case 2: comprobar_fase(10, 15); break;
-            case 3: comprobar_fase(15, 22); break;
+            case 0: comprobar_fase(0, 4); break;
+            case 1: comprobar_fase(4, 8); break;
+            case 2: comprobar_fase(8, 13); break;
+            case 3: comprobar_fase(13, 20); break;
             case 4: break;
             case 5: break;
 

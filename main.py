@@ -1,5 +1,6 @@
 import base64
 import os
+import math
 
 from datetime import datetime
 
@@ -276,7 +277,19 @@ def recibir_alta_piso():
                         raise Exception("campo vacio {0}".format(nombrefile_from_form))
 
                     nombrefile = datetime.utcnow().strftime("%d-%b-%Y-%H.%M.%S.%f_") + nombrefile_from_form
-                    nombrearchivos.append(nombrefile)
+
+                    tamanoarchivo_bytes = sys.getsizeof(datafile_b64)
+
+                    sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+                    lent = math.floor(math.log(tamanoarchivo_bytes) / math.log(1024))
+                    tamano_str = "{0} {1}".format((tamanoarchivo_bytes / math.pow(1024, lent)), sizes[lent])
+
+                    nombrearchivos.append(
+                        {
+                            "nombrefile": nombrefile,
+                            "nombrefile_fromform": nombrefile_from_form,
+                            "tamano": tamano_str
+                        })
 
                     print(os.path.join(app.config["CARPETA_SUBIDAS"], nombrefile))
                     with open(os.path.join(app.config["CARPETA_SUBIDAS"], nombrefile), "wb") as arch:
@@ -315,7 +328,8 @@ def recibir_alta_piso():
                 totalmetros,
                 request.form["nombre"],
                 request.form["precision"],
-                nombrearchivos
+                nombrearchivos,
+                nombrefile_from_form,
 
             )
 
@@ -415,17 +429,13 @@ def ver_piso_para_modificar():
     return redirect(url_for("ver_piso_para_modificar_get"))
 
 
-
-
 # quizas hacer con websockets?
 @app.route("/profile/item_modificado", methods=["post"])
 def modificar_vivienda():
-
     if "" in request.form:
         pass
 
     return redirect(url_for("menu_admin"))
-
 
 
 @app.route("/profile/tomar_medidas_pago", methods=["GET"])
