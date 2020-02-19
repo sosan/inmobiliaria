@@ -5,7 +5,7 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 import math
 
-from ModuloMongodb import managermongo
+from ModuloMongodb.ManagerMongodb import managermongo
 from ModuloHelper.ManagerHelper import Errores
 
 
