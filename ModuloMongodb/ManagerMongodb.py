@@ -9,6 +9,7 @@ from datetime import timedelta
 from pymongo.collection import Collection, ReturnDocument
 from pymongo.database import Database
 from pymongo.errors import ConnectionFailure
+from ModuloHelper.ManagerHelper import Errores
 
 
 class ManagerMongoDb:
@@ -19,6 +20,7 @@ class ManagerMongoDb:
         self.db: Database = None
         self.cursorpisos: Collection = None
         self.cursoradmin: Collection = None
+        self.errores = Errores()
 
     def conectDB(self, usuario, password, host, db, coleccion):
         try:
@@ -157,36 +159,36 @@ class ManagerMongoDb:
         resultados = list(self.cursorpisos.find({"medicion": False}, {"_id": False}))
         return resultados
 
-    def updateproducto(self, fecha, idproducto, calle, alquiler, cp, habitaciones, precio, localidad, numero,
-                       numerobanos,
-                       template, tipocasa, zonas, dueno, totalmetros, medicion, latitud, longitud
-                       ):
-
-        ok = self.cursorpisos.update_one({"_id": ObjectId(idproducto)}, {"$set":
-            {
-                "calle": calle,
-                "alquiler": alquiler,
-                "cp": cp,
-                "habitaciones": habitaciones,
-                "precio": precio,
-                "localidad": localidad,
-                "numero": numero,
-                "numerobanos": numerobanos,
-                "template": template,
-                "tipocasa": tipocasa,
-                "zonas": zonas,
-                "dueno": dueno,
-                "totalmetros": totalmetros,
-                "medicion": medicion,
-                "datosgps": {
-                    "coordenadas": [latitud, longitud]
-
-                }
-
-            }})
-        if ok.modified_count == 1:
-            return True
-        return False
+    # def updateproducto(self, fecha, idproducto, calle, alquiler, cp, habitaciones, precio, localidad, numero,
+    #                    numerobanos,
+    #                    template, tipocasa, zonas, dueno, totalmetros, medicion, latitud, longitud
+    #                    ):
+    #
+    #     ok = self.cursorpisos.update_one({"_id": ObjectId(idproducto)}, {"$set":
+    #         {
+    #             "calle": calle,
+    #             "alquiler": alquiler,
+    #             "cp": cp,
+    #             "habitaciones": habitaciones,
+    #             "precio": precio,
+    #             "localidad": localidad,
+    #             "numero": numero,
+    #             "numerobanos": numerobanos,
+    #             "template": template,
+    #             "tipocasa": tipocasa,
+    #             "zonas": zonas,
+    #             "dueno": dueno,
+    #             "totalmetros": totalmetros,
+    #             "medicion": medicion,
+    #             "datosgps": {
+    #                 "coordenadas": [latitud, longitud]
+    #
+    #             }
+    #
+    #         }})
+    #     if ok.modified_count == 1:
+    #         return True
+    #     return False
 
     def deleteproducto(self, idproducto):
         ok = self.cursorpisos.delete_one({"_id": ObjectId(idproducto)})
@@ -207,6 +209,70 @@ class ManagerMongoDb:
         else:
             return None
 
+    def comprobarexiste_iditem(self, iditem):
+        resultado = self.cursorpisos.count_documents({"iditem": iditem})
+        if resultado == 1:
+            return True
+        elif resultado > 1:
+            raise Exception("id item con mas de 2 documentos {0} ".format(iditem))
+        elif resultado <= 0:
+            return False
+
+    # todo: medicion todavia falta por hacer
+    def actualizacion_producto(self, calle, cp, habitaciones, localidad, numero, banos, wasap, tipocasa,
+                               telefonodueno, calledueno, numerodueno, tiponegocio_alquiler, tiponegocio_venta,
+                               latitude_gps, longitude_gps, dueno, precioventa, precioalquiler, totalmetros,
+                               usuario_que_modificada, precision, datosarchivos, iditem
+                               ):
+
+        try:
+            latitud = float(latitude_gps)
+            longitud = float(longitude_gps)
+            fecha = datetime.utcnow()
+            ok = self.cursorpisos.find_one_and_update(filter={"iditem": iditem},
+                                                      update={"$set":
+                                                          {
+                                                              {
+                                                                  "calle": calle,
+                                                                  "tiponegocio_alquiler": tiponegocio_alquiler,
+                                                                  "tiponegocio_venta": tiponegocio_venta,
+                                                                  "cp": cp,
+                                                                  "habitaciones": habitaciones,
+                                                                  "precioventa": precioventa,
+                                                                  "precioalquiler": precioalquiler,
+                                                                  "localidad": localidad,
+                                                                  "numero": numero,
+                                                                  "banos": banos,
+                                                                  "wasap": wasap,
+                                                                  "tipocasa": tipocasa,
+                                                                  "telefonodueno": telefonodueno,
+                                                                  "calledueno": calledueno,
+                                                                  "numerodueno": numerodueno,
+                                                                  "dueno": dueno,
+                                                                  "totalmetros": totalmetros,
+                                                                  "usuario_que_modificada": usuario_que_modificada,
+                                                                  "nombrefile": datosarchivos,  # list objects
+                                                                  "fecha_modificado": fecha,
+                                                                  "datosgps": {
+                                                                      "coordenadas": [latitud, longitud],
+                                                                      "precision": precision
+
+                                                                  }
+                                                              }
+
+                                                          }
+                                                      }, return_document=False
+                                                      )
+
+            if ok.modified_count == 1:
+                return self.errores.actualizado_correctamente
+            elif ok.modified_count > 1:
+                return self.errores.duplicado
+            else:
+                return self.errores.no_actualizado
+
+        except ValueError:
+            raise Exception("no posible conversion")
 
 
 managermongo = ManagerMongoDb()

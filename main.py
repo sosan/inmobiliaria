@@ -23,7 +23,7 @@ from flask import send_from_directory
 from ModuloMongodb.ManagerMongodb import managermongo
 from ModuloLogica.ManagerLogica import ManagerLogica
 
-from ModuloHelper.ManagerHelper import ManagerHelper
+from ModuloHelper.ManagerHelper import Errores
 from ModuloWeb.ManagerWeb import ManagerWeb
 from flask_socketio import SocketIO
 from flask_socketio import emit
@@ -36,7 +36,7 @@ app = Flask(__name__)
 managerweb = ManagerWeb()
 socketio = SocketIO(app)
 bootstrap = Bootstrap(app)
-helper = ManagerHelper()
+errores = Errores()
 managerlogica = ManagerLogica()
 
 # configuracion
@@ -339,14 +339,14 @@ def recibir_alta_piso():
             )
 
             if ok == True:
-                session["mensajeerror"] = helper.errores.insertado_correctamente
+                session["mensajeerror"] = errores.insertado_correctamente
                 session["anterior_calle"] = request.form["calle"]
                 session["anterior_numero"] = request.form["numero"]
             else:
-                session["mensajeerror"] = helper.errores.no_insertado
+                session["mensajeerror"] = errores.no_insertado
         else:
             # ya existe mensaje de error
-            session["mensajeerror"] = helper.errores.no_insertado
+            session["mensajeerror"] = errores.no_insertado
             session["anterior_calle"] = request.form["calle"]
             session["anterior_numero"] = request.form["numero"]
 
@@ -411,6 +411,11 @@ def ver_piso_para_modificar_get():
         if ok == False:
             return redirect(url_for("admin_login"))
 
+    if "mensajeerror" in session:
+        outputhtml = managerlogica.generarmensajeerror(session["mensajeerror"])
+
+        return jsonify({"data": outputhtml, "errores": session["mensajeerror"]})
+
     if "datos_vivienda" in session:
         datos_vivienda = session.pop("datos_vivienda")
         return render_template("modificar_piso_admin.html", datos_vivienda=datos_vivienda)
@@ -448,20 +453,18 @@ def modificar_vivienda():
             and "banos" and "tipocasa" and "numero" and "dueno" and "telefonodueno" in request.form:
 
         # comprobacion de si el iditem existe en la db
-        ok = managermongo.comprobarexiste_iditem(
-            request.form["iditem"]
-        )
-        if ok == True:
-            ok = managermongo.actualizar_vivienda(request.form, app.config["CARPETA_SUBIDAS"],
-                                                  app.config["MAX_CONTENT_LENGTH"]
+        ok, datosmongo = managerlogica.comprobarexiste_iditem(request.form["iditem"])
+        if ok == errores.existe:
 
-                                                  )
-
-
+            actualizado = managerlogica.actualizar_vivienda(request.form, app.config["CARPETA_SUBIDAS"],
+                                                            app.config["MAX_CONTENT_LENGTH"], datosmongo["nombrefile"])
+            session["mensajeerror"] = actualizado
         else:
             # alerta
-            session.clear()
-            return redirect(url_for("home"))
+            # todo: mostrar mensaje de error
+            session["mensajeerror"] = ok
+        return redirect(url_for("ver_piso_para_modificar_get"))
+
 
     return redirect(url_for("menu_admin"))
 

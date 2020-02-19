@@ -2,21 +2,36 @@ import base64
 import os
 import math
 import sys
-
-from ModuloMongodb.ManagerMongodb import managermongo
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import math
 
+from ModuloMongodb.ManagerMongodb import managermongo
+from ModuloHelper.ManagerHelper import Errores
+
 
 class ManagerLogica:
+    def __init__(self):
+        self.errores = Errores()
 
     def manejodatosvivienda(self):
         pass
 
-    def actualizarvivienda(self, formulario, carpeta_subidas, max_content_length):
+    def comprobarexiste_iditem(self, iditem):
+        resultado = managermongo.comprobarexiste_iditem(iditem)
+        if resultado == 1:
+            datos = managermongo.get_vivienda_porid(iditem)
+            return self.errores.existe, datos
+        elif resultado > 1:
+            return self.errores.duplicado, None
+            # raise Exception("id item con mas de 2 documentos {0} ".format(iditem))
+        elif resultado <= 0:
+            return self.errores.noexiste, None
+
+    def actualizar_vivienda(self, formulario: dict, carpeta_subidas, max_content_length, datosmongo: list):
         try:
             length_files = int(formulario["files_len"])
+            longitud_file_ya_existe = int(formulario["longitud_file_ya_existe"])
             habitaciones = int(formulario["habitaciones"])
             banyos = int(formulario["banos"])
             precioventa = int(formulario["precioventa"])
@@ -27,6 +42,21 @@ class ManagerLogica:
             raise Exception("no podido convertir")
 
         datosarchivos = []
+        # procesar los archivos antiguos
+        for i in range(0, longitud_file_ya_existe):
+            if "file_ya_existe_{0}_nombrefile".format(i) in formulario:
+                for o in range(0, length_files):
+                    if (formulario["file_ya_existe_{0}_nombrefile".format(i)] == datosmongo[o]["nombrefile"]) and \
+                            (formulario["file_ya_existe_{0}_nombrefile_fromform".format(i)] == datosmongo[o][
+                                "nombrefile_from_form"]) and \
+                            (formulario["file_ya_existe_{0}_tamano".format(i)] == datosmongo[o]["tamano_str"]):
+                        datosarchivos.append(
+                            {
+                                "nombrefile": datosmongo[o]["nombrefile"],
+                                "nombrefile_fromform": datosmongo[o]["nombrefile_from_form"],
+                                "tamano": datosmongo[o]["tamano_str"]
+                            })
+
         for i in range(0, length_files):
             if "files_{0}_datafile".format(i) in formulario:
                 datafile_b64 = formulario["files_{0}_datafile".format(i)]
@@ -89,13 +119,21 @@ class ManagerLogica:
             precioventa,
             precioalquiler,
             totalmetros,
-            formulario["nombre"],
+            formulario["usuario_que_modifica"],
             formulario["precision"],
-            datosarchivos
+            datosarchivos,
+            formulario["iditem"]
 
         )
 
-        if ok == True:
-            pass
+        return ok
+
+    def generarmensajeerror(self, mensajeerror):
+        if mensajeerror == self.errores.no_actualizado:
+            return "NO ACTUALIZADO"
+        elif mensajeerror == self.errores.duplicado:
+            return "EXISTENCIA DE DOS VIVIENDAS IGUALES"
+        elif mensajeerror == self.errores.actualizado_correctamente:
+            return "ACTUALIZADO CORRECTAMENTE"
         else:
-            pass
+            return "PROBLEMA GENERAL"

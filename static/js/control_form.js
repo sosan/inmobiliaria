@@ -396,7 +396,6 @@
 
         $("#process").click(function (e)
         {
-            // e.preventDefault();
             procesarFormulario("/profile/alta", e);
         });
 
@@ -419,13 +418,6 @@
 
             formData.append("files_len", filesToUpload.length.toString());
 
-
-
-            // console.log("tipocasa:" + formData.get("tipocasa"));
-            // formData.forEach((value, key) => {
-            //     console.log("key %s: value %s", key, value);
-            // });
-
             $.ajax({
                 url: uri,
                 data: formData,
@@ -437,15 +429,22 @@
                     $("#contenido_central").scrollTop(0, 0);
 
                     current_fase = 0;
-                    let color_erroes = "alert-success";
-                    if (resp["errores"] === 1) {
-                        document.getElementById("wrapped").reset();
-                        files1Uploader.clear();
-                    } else {
-
-                        color_erroes = "alert-warning";
+                    let color_errores = "alert-success";
+                    switch (resp["errores"])
+                    {
+                        case 1:
+                            document.getElementById("wrapped").reset();
+                            files1Uploader.clear();
+                        break;
+                        case 2: //no_insertado
+                        case 4: //no_actualizado
+                        case 5: //duplicado
+                            color_errores = "alert-warning";
+                            break;
+                        default:
+                            color_errores = "alert-warning";
+                            break;
                     }
-
 
                     let middlewizard = document.getElementById("middle-wizard");
                     middlewizard.children[4].className = "submit step wizard-step";
@@ -463,7 +462,7 @@
                     frw[0].disabled = false;
 
                     showPosition();
-                    const out = '<h4 class=\'alert ' + color_erroes + ' quitadotop\' id=\'success-alert\' style=\'display: block; opacity: 100;\'></h4>';
+                    const out = '<h4 class=\'alert ' + color_errores + ' quitadotop\' id=\'success-alert\' style=\'display: block; opacity: 100;\'></h4>';
                     $("#mostrar_resultado").append(out);
 
                     let elemento = document.getElementById("success-alert");

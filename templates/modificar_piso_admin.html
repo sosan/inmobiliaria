@@ -270,11 +270,11 @@
 
                             <input type="hidden" name="usuario_que_modifica" value="{{ session["nombre"] }}">
                             <input type="hidden" name="iditem" value="{{ datos_vivienda.iditem }}">
-
+                            <input type="hidden" name="longitud_file_ya_existe" value="{{ datos_vivienda["nombrefile"]|length }}">
                              {% for o in range(0, datos_vivienda["nombrefile"]|length) %}
-                                <input type="hidden" name="file_ya_existe_{{ o }}" value="{{ datos_vivienda["nombrefile"][o]["nombrefile"] }}">
-                                <input type="hidden" name="file_ya_existe_{{ o }}" value="{{ datos_vivienda["nombrefile"][o]["nombrefile_fromform"] }}">
-                                <input type="hidden" name="file_ya_existe_{{ o }}" value="{{ datos_vivienda["nombrefile"][o]["tamano"] }}">
+                                <input type="hidden" name="file_ya_existe_{{ o }}_nombrefile" value="{{ datos_vivienda["nombrefile"][o]["nombrefile"] }}">
+                                <input type="hidden" name="file_ya_existe_{{ o }}_nombrefile_fromform" value="{{ datos_vivienda["nombrefile"][o]["nombrefile_fromform"] }}">
+                                <input type="hidden" name="file_ya_existe_{{ o }}_tamano" value="{{ datos_vivienda["nombrefile"][o]["tamano"] }}">
                             {% endfor %}
 	                        </form>
                     </div>
