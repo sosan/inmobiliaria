@@ -1,13 +1,12 @@
 import base64
 import os
-import math
 import sys
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import math
 
-from ModuloMongodb.ManagerMongodb import managermongo
-from ModuloHelper.ManagerHelper import Errores
+from src.ModuloMongodb import managermongo
+from src.ModuloHelper.ManagerHelper import Errores
 
 
 class ManagerLogica:

@@ -20,16 +20,15 @@ from flask_bootstrap import Bootstrap
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
 
-from ModuloMongodb.ManagerMongodb import managermongo
-from ModuloLogica.ManagerLogica import ManagerLogica
+from src.ModuloMongodb import managermongo
+from src.ModuloLogica.ManagerLogica import ManagerLogica
 
-from ModuloHelper.ManagerHelper import Errores
-from ModuloWeb.ManagerWeb import ManagerWeb
+from src.ModuloHelper.ManagerHelper import Errores
+from src.ModuloWeb.ManagerWeb import ManagerWeb
 from flask_socketio import SocketIO
 from flask_socketio import emit
 
 import sys
-import eventlet
 
 # instanciaciones e inicializaciones
 app = Flask(__name__)

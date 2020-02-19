@@ -1,4 +1,3 @@
-import locale
 import uuid
 
 from pymongo import MongoClient
@@ -9,7 +8,7 @@ from datetime import timedelta
 from pymongo.collection import Collection, ReturnDocument
 from pymongo.database import Database
 from pymongo.errors import ConnectionFailure
-from ModuloHelper.ManagerHelper import Errores
+from src.ModuloHelper.ManagerHelper import Errores
 
 
 class ManagerMongoDb:
