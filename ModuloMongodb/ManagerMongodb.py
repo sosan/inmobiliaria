@@ -8,7 +8,7 @@ from datetime import timedelta
 from pymongo.collection import Collection, ReturnDocument
 from pymongo.database import Database
 from pymongo.errors import ConnectionFailure
-from src.ModuloHelper.ManagerHelper import Errores
+from ModuloHelper.ManagerHelper import Errores
 
 
 class ManagerMongoDb:

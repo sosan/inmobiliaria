@@ -20,11 +20,11 @@ from flask_bootstrap import Bootstrap
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
 
-from src.ModuloMongodb import managermongo
-from src.ModuloLogica.ManagerLogica import ManagerLogica
+from ModuloMongodb import managermongo
+from ModuloLogica.ManagerLogica import ManagerLogica
 
-from src.ModuloHelper.ManagerHelper import Errores
-from src.ModuloWeb.ManagerWeb import ManagerWeb
+from ModuloHelper.ManagerHelper import Errores
+from ModuloWeb.ManagerWeb import ManagerWeb
 from flask_socketio import SocketIO
 from flask_socketio import emit
 

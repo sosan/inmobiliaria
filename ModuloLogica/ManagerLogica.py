@@ -5,8 +5,8 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 import math
 
-from src.ModuloMongodb import managermongo
-from src.ModuloHelper.ManagerHelper import Errores
+from ModuloMongodb import managermongo
+from ModuloHelper.ManagerHelper import Errores
 
 
 class ManagerLogica:
