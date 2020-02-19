@@ -20,7 +20,7 @@ from flask_bootstrap import Bootstrap
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
 
-from ModuloMongodb import managermongo
+from ModuloMongodb.ManagerMongodb import managermongo
 from ModuloLogica.ManagerLogica import ManagerLogica
 
 from ModuloHelper.ManagerHelper import Errores
