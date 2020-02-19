@@ -1,3 +1,9 @@
+# -*- coding:utf-8 -*-
+"""
+APLICACION BACKEND INMOBILIARIA
+
+"""
+
 import base64
 import os
 import math
@@ -10,14 +16,13 @@ from flask import redirect
 from flask import url_for
 from flask import session
 from flask import request
+from flask_bootstrap import Bootstrap
 from werkzeug.utils import secure_filename
-
-# nos permite servir archivos de forma estatico o absoluta
-
 from flask import send_from_directory
 
 from ModuloMongodb.ManagerMongodb import managermongo
-from flask_bootstrap import Bootstrap
+from ModuloLogica.ManagerLogica import ManagerLogica
+
 from ModuloHelper.ManagerHelper import ManagerHelper
 from ModuloWeb.ManagerWeb import ManagerWeb
 from flask_socketio import SocketIO
@@ -32,6 +37,7 @@ managerweb = ManagerWeb()
 socketio = SocketIO(app)
 bootstrap = Bootstrap(app)
 helper = ManagerHelper()
+managerlogica = ManagerLogica()
 
 # configuracion
 app.secret_key = "holaa"
@@ -431,8 +437,31 @@ def ver_piso_para_modificar():
 # quizas hacer con websockets?
 @app.route("/profile/item_modificado", methods=["post"])
 def modificar_vivienda():
-    if "" in request.form:
-        pass
+    if "usuario" not in session or "password" not in session:
+        return redirect(url_for("admin_login"))
+    else:
+        ok = managermongo.comprobaradmin(session["usuario"], session["password"])
+        if ok == False:
+            return redirect(url_for("admin_login"))
+
+    if "iditem" and "calle" and "cp" and "habitaciones" and "localidad" \
+            and "banos" and "tipocasa" and "numero" and "dueno" and "telefonodueno" in request.form:
+
+        # comprobacion de si el iditem existe en la db
+        ok = managermongo.comprobarexiste_iditem(
+            request.form["iditem"]
+        )
+        if ok == True:
+            ok = managermongo.actualizar_vivienda(request.form, app.config["CARPETA_SUBIDAS"],
+                                                  app.config["MAX_CONTENT_LENGTH"]
+
+                                                  )
+
+
+        else:
+            # alerta
+            session.clear()
+            return redirect(url_for("home"))
 
     return redirect(url_for("menu_admin"))
 
