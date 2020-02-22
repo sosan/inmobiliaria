@@ -120,8 +120,6 @@ class ManagerMongoDb:
     def comprobarexisteinmueble(self, calle, numero):
 
         try:
-            # latitud = float(latitud_txt)
-            # longitud = float(longitud_txt)
             patron = {"calle": calle, "numero": numero}
             ok = list(self.cursorpisos.find(patron))
             if ok != None:
@@ -143,7 +141,7 @@ class ManagerMongoDb:
             return True, resultado["nombre"]
         return False
 
-    def comprobaradmin(self, usuario, password):
+    def comprobar_existencia_usuario(self, usuario, password):
         resultado = self.cursoradmin.find_one({"usuario": usuario, "password": password}, {"_id": False})
         if resultado != None:
             if len(resultado) > 0:

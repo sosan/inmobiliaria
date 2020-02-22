@@ -108,7 +108,7 @@ def recibir_login():
 @app.route("/profile", methods=["GET"])
 def menu_admin():
     if "usuario" and "password" in session:
-        ok = managermongo.comprobaradmin(session["usuario"], session["password"])
+        ok = managermongo.comprobar_existencia_usuario(session["usuario"], session["password"])
         if ok == True:
 
             # listado = managermongo.getallproductos()
@@ -160,68 +160,23 @@ def alta_piso():
     if "usuario" not in session or "password" not in session:
         return redirect(url_for("admin_login"))
     else:
-        ok = managermongo.comprobaradmin(session["usuario"], session["password"])
-        if ok == False:
+        posibleexistencia = managermongo.comprobar_existencia_usuario(session["usuario"], session["password"])
+        if posibleexistencia == False:
             return redirect(url_for("admin_login"))
 
     if "anterior_calle" in session:
         anterior_calle = session.pop("anterior_calle")
         anterior_numero = session.pop("anterior_numero")
 
-        outputhtml = ""
-
-        if session["mensajeerror"] == 0:
-            outputhtml = " "
-        elif session["mensajeerror"] == 2:
-            outputhtml = "YA EXISTE EL INMUEBLE"
-        elif session["mensajeerror"] == 1:
-            outputhtml = "DADO DE ALTA CORRECTAMENTE<p>Calle: {0}<br>Numero: {1}</p>".format(anterior_calle,
-                                                                                             anterior_numero)
+        outputhtml = managerlogica.generarmensajeerror(session["mensajeerror"], anterior_calle, anterior_numero)
 
         return jsonify({"data": outputhtml, "errores": session["mensajeerror"]})
 
     if "calle" and "numero" and "cp" and "habitaciones" and "localidad" and "numerobanos" \
             and "tipocasa" and "dueno" and "totalmetros" \
             in session:
-
-        tiponegocio_alquiler = False
-        tiponegocio_venta = False
-
-        if "tiponegocio_alquiler" in session:
-            session.pop("tiponegocio_alquiler")
-            tiponegocio_alquiler = True
-
-        if "tiponegocio_venta" in session:
-            session.pop("tiponegocio_venta")
-            tiponegocio_venta = True
-
-        variables = {
-            "calle": session.pop("calle"),
-            "cp": session.pop("cp"),
-            "habitaciones": session.pop("habitaciones"),
-            "localidad": session.pop("localidad"),
-            "numero": session.pop("numero"),
-            "banos": session.pop("banos"),
-            "wasap": session.pop("wasap"),
-            "tipocasa": session.pop("tipocasa"),
-            "telefonodueno": session.pop("telefonodueno"),
-            "calledueno": session.pop("calledueno"),
-            "numerodueno": session.pop("numerodueno"),
-
-            "tiponegocio_alquiler": tiponegocio_alquiler,
-            "tiponegocio_venta": tiponegocio_venta,
-
-            "latitude_gps": session.pop("latitude_gps"),
-            "longitude_gps": session.pop("longitude_gps"),
-            "dueno": session.pop("dueno"),
-            "precioventa": session.pop("precioventa"),
-            "precioalquiler": session.pop("precioalquiler"),
-            "totalmetros": session.pop("totalmetros"),
-            "nombre": session.pop("nombre"),
-            "precision": session.pop("precision")
-        }
-
-        return render_template("alta_piso_borrar.txt", **variables)
+        variables = managerlogica.mostrarvivienda()
+        return render_template("alta_piso_admin.html", **variables)
 
     if "mensajeerror" in session:
         session.pop("mensajeerror")
@@ -251,143 +206,13 @@ def recibir_alta_piso():
             and "banos" and "tipocasa" and "numero" and "dueno" and "telefonodueno" in request.form:
 
         # comprobacion de si ya existe el piso en la db
-        ok = managermongo.comprobarexisteinmueble(
-            request.form["calle"],
-            request.form["numero"]
-        )
-        if ok == True:
-
-            try:
-                length_files = int(request.form["files_len"])
-                habitaciones = int(request.form["habitaciones"])
-                banyos = int(request.form["banos"])
-                precioventa = int(request.form["precioventa"])
-                precioalquiler = int(request.form["precioalquiler"])
-                totalmetros = int(request.form["totalmetros"])
-
-            except ValueError:
-                raise Exception("no podido convertir")
-
-            datosarchivos = []
-            for i in range(0, length_files):
-                if "files_{0}_datafile".format(i) in request.form:
-                    datafile_b64 = request.form["files_{0}_datafile".format(i)]
-
-                    if sys.getsizeof(datafile_b64) > app.config["MAX_CONTENT_LENGTH"]:
-                        continue
-
-                    nombrefile_from_form = secure_filename(request.form["files_{0}_filename".format(i)])
-
-                    if datafile_b64 == "" or nombrefile_from_form == "":
-                        raise Exception("campo vacio {0}".format(nombrefile_from_form))
-
-                    nombrefile = datetime.utcnow().strftime("%d-%b-%Y-%H.%M.%S.%f_") + nombrefile_from_form
-
-                    tamanoarchivo_bytes = sys.getsizeof(datafile_b64)
-
-                    sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-                    lent = math.floor(math.log(tamanoarchivo_bytes) / math.log(1024))
-                    tamano_str = "{0} {1}".format(round(tamanoarchivo_bytes / math.pow(1024, lent), 2), sizes[lent])
-
-                    datosarchivos.append(
-                        {
-                            "nombrefile": nombrefile,
-                            "nombrefile_fromform": nombrefile_from_form,
-                            "tamano": tamano_str
-                        })
-
-                    print(os.path.join(app.config["CARPETA_SUBIDAS"], nombrefile))
-                    with open(os.path.join(app.config["CARPETA_SUBIDAS"], nombrefile), "wb") as arch:
-                        cad_cero = datafile_b64.find(',')
-                        imagen_data64 = datafile_b64[cad_cero + 1:]
-                        arch.write(base64.decodebytes(imagen_data64.encode()))
-                        arch.close()
-
-            tiponegocio_alquiler = False
-            tiponegocio_venta = False
-            if "tiponegocio_alquiler" in request.form:
-                tiponegocio_alquiler = True
-
-            if "tiponegocio_venta" in request.form:
-                tiponegocio_venta = True
-
-            ok = managermongo.altaproducto(
-                request.form["calle"],
-                request.form["cp"],
-                habitaciones,
-                request.form["localidad"],
-                request.form["numero"],
-                banyos,
-                request.form["wasap"],
-                request.form["tipocasa"],
-                request.form["telefonodueno"],
-                request.form["calledueno"],
-                request.form["numerodueno"],
-                tiponegocio_alquiler,
-                tiponegocio_venta,
-                request.form["latitude_gps"],
-                request.form["longitude_gps"],
-                request.form["dueno"],
-                precioventa,
-                precioalquiler,
-                totalmetros,
-                request.form["nombre"],
-                request.form["precision"],
-                datosarchivos
-
-            )
-
-            if ok == True:
-                session["mensajeerror"] = errores.insertado_correctamente
-                session["anterior_calle"] = request.form["calle"]
-                session["anterior_numero"] = request.form["numero"]
-            else:
-                session["mensajeerror"] = errores.no_insertado
+        posible_insercion = managerlogica.comprobarexisteinmueble(request.form["calle"], request.form["numero"])
+        if posible_insercion == True:
+            managerlogica.alta_vivienda(request.form, app.config["MAX_CONTENT_LENGTH"], app.config["CARPETA_SUBIDAS"])
         else:
-            # ya existe mensaje de error
-            session["mensajeerror"] = errores.no_insertado
-            session["anterior_calle"] = request.form["calle"]
-            session["anterior_numero"] = request.form["numero"]
+            # ya existe
+            managerlogica.procesar_formulario_noposibleinsercion(request.form)
 
-            session["calle"] = request.form["calle"]
-            session["cp"] = request.form["cp"]
-            session["habitaciones"] = request.form["habitaciones"]
-            session["localidad"] = request.form["localidad"]
-            session["numero"] = request.form["numero"]
-            session["banos"] = request.form["banos"]
-            session["wasap"] = request.form["wasap"]
-            session["tipocasa"] = request.form["tipocasa"]
-            session["telefonodueno"] = request.form["telefonodueno"]
-            session["calledueno"] = request.form["calledueno"]
-            session["numerodueno"] = request.form["numerodueno"]
-
-            if "tiponegocio_alquiler" in request.form:
-                session["tiponegocio_alquiler"] = True
-
-            if "tiponegocio_venta" in request.form:
-                session["tiponegocio_venta"] = True
-
-            session["latitude_gps"] = request.form["latitude_gps"]
-            session["longitude_gps"] = request.form["longitude_gps"]
-            session["dueno"] = request.form["dueno"]
-            session["precioventa"] = request.form["precioventa"]
-            session["precioalquiler"] = request.form["precioalquiler"]
-            session["totalmetros"] = request.form["totalmetros"]
-            session["nombre"] = request.form["nombre"]
-            session["precision"] = request.form["precision"]
-
-    # return jsonify({"data": render_template("external_resp.html",
-    #                                         mesanjeerror=session["mensajeerror"],
-    #                                         anterior_calle=session["anterior_calle"],
-    #                                         anterior_numero=session["anterior_numero"])
-    #                 })
-
-    # return jsonify({"data": {
-    #     "mesanjeerror": session["mensajeerror"],
-    #     "anterior_calle": session["anterior_calle"],
-    #     "anterior_numero": session["anterior_numero"]
-    # }
-    # })
     return redirect(url_for("alta_piso"))
 
 
@@ -406,12 +231,13 @@ def ver_piso_para_modificar_get():
     if "usuario" not in session or "password" not in session:
         return redirect(url_for("admin_login"))
     else:
-        ok = managermongo.comprobaradmin(session["usuario"], session["password"])
+        ok = managermongo.comprobar_existencia_usuario(session["usuario"], session["password"])
         if ok == False:
             return redirect(url_for("admin_login"))
 
     if "mensajeerror" in session:
         outputhtml = managerlogica.generarmensajeerror(session["mensajeerror"])
+        session.pop("mensajeerror")
 
         return jsonify({"data": outputhtml, "errores": session["mensajeerror"]})
 
@@ -427,7 +253,7 @@ def ver_piso_para_modificar():
     if "usuario" not in session or "password" not in session:
         return redirect(url_for("admin_login"))
     else:
-        ok = managermongo.comprobaradmin(session["usuario"], session["password"])
+        ok = managermongo.comprobar_existencia_usuario(session["usuario"], session["password"])
         if ok == False:
             return redirect(url_for("admin_login"))
 
@@ -444,7 +270,7 @@ def modificar_vivienda():
     if "usuario" not in session or "password" not in session:
         return redirect(url_for("admin_login"))
     else:
-        ok = managermongo.comprobaradmin(session["usuario"], session["password"])
+        ok = managermongo.comprobar_existencia_usuario(session["usuario"], session["password"])
         if ok == False:
             return redirect(url_for("admin_login"))
 
@@ -463,7 +289,6 @@ def modificar_vivienda():
             # todo: mostrar mensaje de error
             session["mensajeerror"] = ok
         return redirect(url_for("ver_piso_para_modificar_get"))
-
 
     return redirect(url_for("menu_admin"))
 
