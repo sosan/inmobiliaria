@@ -5,7 +5,7 @@ bs4==0.0.1
 certifi==2022.12.7
 chardet==3.0.4
 Click==7.1.2
-cssselect==1.1.0
+cssselect==1.2.0
 dnspy==3.1
 dnspython==1.16.0
 dominate==2.7.0
