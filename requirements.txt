@@ -24,7 +24,7 @@ MarkupSafe==1.1.1
 monotonic==1.6
 parse==1.14.0
 pep8==1.7.1
-pycodestyle==2.5.0
+pycodestyle==2.10.0
 pyee==6.0.0
 pymongo==3.10.0
 pyppeteer==0.0.25
