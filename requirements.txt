@@ -32,7 +32,7 @@ pyquery==1.4.3
 python-engineio==3.14.2
 python-socketio==4.6.1
 redis==4.5.5
-requests==2.30.0
+requests==2.31.0
 requests-html==0.10.0
 rq==1.14.1
 six==1.16.0
