@@ -34,7 +34,7 @@ python-socketio==4.6.1
 redis==4.5.5
 requests==2.31.0
 requests-html==0.10.0
-rq==1.14.1
+rq==1.15.0
 six==1.16.0
 soupsieve==1.9.6
 tqdm==4.65.0
