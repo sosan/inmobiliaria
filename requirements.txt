@@ -8,7 +8,7 @@ Click==8.1.7
 cssselect==1.2.0
 dnspy==3.1
 dnspython==2.6.1
-dominate==2.8.0
+dominate==2.9.1
 eventlet==0.35.2
 fake-useragent==1.5.1
 Flask==2.3.3
