@@ -36,7 +36,7 @@ requests==2.31.0
 requests-html==0.10.0
 rq==1.15.1
 six==1.16.0
-soupsieve==2.4.1
+soupsieve==2.5
 tqdm==4.65.0
 urllib3==2.2.1
 visitor==0.1.3
