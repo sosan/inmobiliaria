@@ -26,7 +26,7 @@ parse==1.20.1
 pep8==1.7.1
 pycodestyle==2.11.1
 pyee==11.1.0
-pymongo==4.6.3
+pymongo==4.10.1
 pyppeteer==2.0.0
 pyquery==2.0.0
 python-engineio==4.9.0
