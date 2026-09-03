@@ -25,7 +25,7 @@ monotonic==1.6
 parse==1.20.1
 pep8==1.7.1
 pycodestyle==2.11.1
-pyee==11.1.0
+pyee==11.1.1
 pymongo==4.6.3
 pyppeteer==2.0.0
 pyquery==2.0.0
