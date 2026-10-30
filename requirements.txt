@@ -2,7 +2,7 @@ appdirs==1.4.4
 autopep8==2.1.0
 beautifulsoup4==4.12.3
 bs4==0.0.2
-certifi==2024.2.2
+certifi==2024.7.4
 chardet==5.2.0
 Click==8.1.7
 cssselect==1.2.0
